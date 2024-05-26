@@ -8,28 +8,42 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// import models
+import espol.edu.ec.autosell.model.Usuario;
+
+// Import views
+import espol.edu.ec.autosell.view.LoginView;
+
+// import controllers
+import espol.edu.ec.autosell.controller.LoginController;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage mainStage;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        //scene = new Scene(loadFXML("primary"), 640, 480);
+        mainStage = stage;
+        ShowLogin();
+        mainStage.setTitle("AutoSell - Login");
+        mainStage.show();
     }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
+    
+    public void ShowLogin() {
+        // Crear la vista y el modelo para asociarlo con el controlador
+        Usuario user_model = new Usuario();
+        LoginView login_view = new LoginView();
+        LoginController login_controller = new LoginController(user_model, login_view);
+        
+        scene = new Scene(login_view.getView(), 400, 300);
+        
+        mainStage.setScene(scene);
+    } 
 
     public static void main(String[] args) {
         launch();

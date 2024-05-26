@@ -1,4 +1,7 @@
-package espol.edu.ec.autosell;
+package espol.edu.ec.autosell.model;
+
+// Import Enums
+import espol.edu.ec.autosell.utils.UserRole;
 
 public class Usuario {
     String idUsuario ;
@@ -9,6 +12,10 @@ public class Usuario {
         this.idUsuario = idUsuario;
         this.contrasenia = contrasenia;
         this.rol = rol;
+    }
+    
+    public Usuario() {
+        
     }
 
     @Override
