@@ -1,6 +1,7 @@
 package espol.edu.ec.autosell;
 
-public abstract class Usuario {
+public class Usuario {
     String idUsuario ;
+    UserRole tipo;
     
 }
