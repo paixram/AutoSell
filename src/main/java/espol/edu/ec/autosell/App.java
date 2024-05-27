@@ -44,6 +44,9 @@ public class App extends Application {
         
         mainStage.setScene(scene);
     } 
+    public static void setRoot(Parent root) {
+        scene.setRoot(root);
+    }
 
     public static void main(String[] args) {
         launch();

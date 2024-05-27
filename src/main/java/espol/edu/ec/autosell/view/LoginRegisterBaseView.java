@@ -23,7 +23,7 @@ public abstract class LoginRegisterBaseView {
     
     
     public LoginRegisterBaseView() {
-        base_view = new HBox(100);
+        base_view = new HBox(20);
         base_view.setStyle("-fx-background-color: white;");
         base_view.setAlignment(Pos.CENTER);
         // Solo la parte del formulario sera dinamico;

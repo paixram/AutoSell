@@ -18,6 +18,8 @@ import espol.edu.ec.autosell.view.LoginView;
 
 // Enums
 import espol.edu.ec.autosell.utils.UserRole;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 /**
  *
  * @author José Miguel
@@ -26,7 +28,7 @@ public class LoginController {
     
     private Usuario user_model;
     private LoginView login_view;
-    
+    private List<Usuario> usuarios;
     public LoginController(Usuario um, LoginView lv) {
         user_model = um;
         login_view = lv;
@@ -34,35 +36,36 @@ public class LoginController {
     }
     
     public void initialize() {
-        System.out.println("Se llamo a initioalize de logi9n");
+        login_view.getLoginButton().setOnAction(e -> validateLogin());
     }
 
-    /*@FXML
-    private TextField usuarioField;
+    private void validateLogin() {
+        String idUsuario = login_view.getUsernameField().getText();
+        String contrasenia = login_view.getContraseniaField().getText();
 
-    @FXML
-    private PasswordField contraseniaField;
-
-    
-    private List<Usuario> usuarios = List.of(new Usuario("comprador", "123", UserRole.COMPRADOR),new Usuario("vendedor", "456", UserRole.VENDEDOR));
-
-    @FXML
-    private void iniciarSesion(ActionEvent event) throws IOException {
-        String usuario = usuarioField.getText();
-        String contrasenia = contraseniaField.getText();
-
-        for (Usuario u : usuarios) {
-            if (u.getIdUsuario().equals(usuario) && u.validarContrasenia(contrasenia)) {
-                if (u.getRole() == UserRole.COMPRADOR) {
-                    //App.setRoot("comprador");
-                } else if (u.getRole() == UserRole.VENDEDOR) {
-                    //App.setRoot("vendedor");
+        for (Usuario usuario : usuarios) {
+            if (usuario.getIdUsuario().equals(idUsuario) && usuario.validarContrasenia(contrasenia)) {
+                if (usuario.getRole() == UserRole.COMPRADOR) {
+                    showAlert("Bienvenido", "Bienvenido comprador!", AlertType.INFORMATION);
+                    // Aquí se puede cambiar la escena a la vista del comprador
+                  
+                } else if (usuario.getRole() == UserRole.VENDEDOR) {
+                    showAlert("Bienvenido", "Bienvenido vendedor!", AlertType.INFORMATION);
+                    // Aquí se puede cambiar la escena a la vista del vendedor
+                   
                 }
                 return;
             }
         }
 
-       
-        System.out.println("Usuario o contraseña incorrectos");
-    }*/
+        showAlert("Error", "Usuario o contraseña incorrectos", AlertType.ERROR);
+    }
+
+    private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
