@@ -45,25 +45,54 @@ public class LoginView extends LoginRegisterBaseView {
         usernameField = new TextField();
         usernameField.setPromptText("Username");
         usernameField.setMaxWidth(250);
+        usernameField.setPrefHeight(40); // Set preferred height
+        usernameField.setPrefWidth(250);
         
         contraseniaField = new PasswordField();
         contraseniaField.setPromptText("Password");
         contraseniaField.setMaxWidth(250);
+        contraseniaField.setPrefHeight(40); // Set preferred height
+        contraseniaField.setPrefWidth(250); 
+        
         loginButton = new Button("Login");
+        loginButton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +     // Bordes cuadrados
+            "-fx-border-radius: 10; " +         // Bordes cuadrados
+            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
+            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
+            "-fx-border-color: black; " +      // Color del borde
+            "-fx-border-width: 2px;" +         // Ancho del borde
+            "-fx-cursor: hand;"
+        );
+        
         signUpButton=new Button("Signup");
+        signUpButton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +     // Bordes cuadrados
+            "-fx-border-radius: 10; " +         // Bordes cuadrados
+            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
+            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
+            "-fx-border-color: black; " +      // Color del borde
+            "-fx-border-width: 2px;" +          // Ancho del borde
+            "-fx-cursor: hand;"
+        );
         
         // View Logic
         Font fontBold = Font.font("Arial", FontWeight.BOLD, 12);
         loginButton.setFont(fontBold);
         signUpButton.setFont(fontBold);
-        loginButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        //loginButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
         //  --------------- Login Form -----------------
         VBox logform = new VBox(10);
         welcome.setText("Sign in");
         welcome.setFont(Font.font(30));
         signUp.setText("New User?");
         signUp.setFont(fontBold);
-        signUpButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        //signUpButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        
         
         //entrar.setText("Entrar");
         //entrar.setFont(Font.font(10));
