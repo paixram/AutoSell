@@ -34,7 +34,7 @@ public class LoginController {
     }
     
     public void initialize() {
-        
+        System.out.println("Se llamo a initioalize de logi9n");
     }
 
     /*@FXML

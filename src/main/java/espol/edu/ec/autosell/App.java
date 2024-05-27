@@ -40,7 +40,7 @@ public class App extends Application {
         LoginView login_view = new LoginView();
         LoginController login_controller = new LoginController(user_model, login_view);
         
-        scene = new Scene(login_view.getView(), 400, 300);
+        scene = new Scene(login_view.getView(), 800, 600);
         
         mainStage.setScene(scene);
     } 
