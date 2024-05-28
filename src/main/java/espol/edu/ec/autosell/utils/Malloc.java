@@ -25,7 +25,7 @@ public class Malloc<E> implements List<E> {
     private static int len;
     
     //  Object for handle
-    E[] __DATA_BLOCK__;
+    private E[] __DATA_BLOCK__;
     
     public Malloc(int size) {
         __DATA_BLOCK__ = (E[]) new Object[size];
@@ -71,7 +71,26 @@ public class Malloc<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        resize();
+        
+        __DATA_BLOCK__[len++] = e;
+        
+        return true;
+    }
+    
+    public boolean resize() {
+        if(len < cap) return false;
+        
+        // Si la longitud(los huecos ocupados) es mayor o igual que la capacidad(tamaño que soporta el array)
+        // Doblar la capacidad del array copiar los elementos del anterior array al nuevo array
+        cap = cap * 2;
+        E[] resized_array = (E[]) new Object[cap];
+        System.arraycopy(__DATA_BLOCK__, 0, resized_array, 0, len);
+        __DATA_BLOCK__ = resized_array;
+        return true;
+        
+    
     }
 
     @Override
@@ -111,7 +130,11 @@ public class Malloc<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(index < 0 || index >= cap) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + cap);
+        }
+        
+        return (E) __DATA_BLOCK__[index];
     }
 
     @Override
@@ -126,7 +149,17 @@ public class Malloc<E> implements List<E> {
 
     @Override
     public E remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(index < 0 || index >= cap) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + cap);
+        }
+        
+        E remove_element = (E)__DATA_BLOCK__[index];
+        System.arraycopy(__DATA_BLOCK__, index + 1, __DATA_BLOCK__, index, len-index-1);
+    
+        __DATA_BLOCK__[--len] = null;
+        
+        
+        return remove_element;
     }
 
     @Override
