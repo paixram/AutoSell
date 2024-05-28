@@ -71,4 +71,12 @@ public class MallocTest {
         malloc.forEach(result::append);
         assertEquals("123", result.toString());
     }
+
+    @Test
+    public void testIndexOf() {
+        malloc.add(1);
+        malloc.add(2);
+        malloc.add(3);
+        assertEquals(2, malloc.indexOf(3));
+    }
 }

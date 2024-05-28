@@ -161,9 +161,17 @@ public class Malloc<E> implements List<E>, Iterable<E> {
 
     @Override
     public int indexOf(Object o) {
+        int position = 0;
         
+        E objectParser = (E) o;
+        
+        for(int i = 0; i < len; i++) {
+            if(__DATA_BLOCK__[i].equals(o)) {
+                return i;
+            }
+        }
         // Buscar un objeto en el array devolver el indice
-        return 0;
+        return -1;
 
     }
 
