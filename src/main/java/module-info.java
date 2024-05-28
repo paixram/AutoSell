@@ -4,4 +4,5 @@ module espol.edu.ec.autosell {
 
     opens espol.edu.ec.autosell to javafx.fxml;
     exports espol.edu.ec.autosell;
+    exports espol.edu.ec.autosell.utils;
 }

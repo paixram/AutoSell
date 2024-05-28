@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
  *
  * @author Luizzz
  */
-public class Malloc<E> implements List<E> {
+public class Malloc<E> implements List<E>, Iterable<E> {
     
     // Presets
     private static int DEFAULT_SIZE = 5;
@@ -41,7 +42,7 @@ public class Malloc<E> implements List<E> {
     
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return cap;
     }
 
     @Override
@@ -54,10 +55,6 @@ public class Malloc<E> implements List<E> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public Object[] toArray() {
@@ -164,7 +161,10 @@ public class Malloc<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        // Buscar un objeto en el array devolver el indice
+        return 0;
+
     }
 
     @Override
@@ -210,6 +210,33 @@ public class Malloc<E> implements List<E> {
     @Override
     public void forEach(Consumer<? super E> action) {
         List.super.forEach(action); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
+    @Override
+    public Iterator<E> iterator() {
+        return new MallocIterator();
+    }
+    
+    public class MallocIterator implements Iterator<E> {
+        private int currentIndex;
+        
+        public MallocIterator() {
+            
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < cap;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return (E) __DATA_BLOCK__[currentIndex++];
+        }
+        
     }
     
 }
