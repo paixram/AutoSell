@@ -1,0 +1,7 @@
+juan123,pass123
+maria456,456pass
+pedro789,789pedro
+vendedor1,v1pass
+vendedor2,v2pass
+vendedor3,v3pass
+

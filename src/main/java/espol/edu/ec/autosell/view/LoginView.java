@@ -18,11 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
  * @author Luizzz
@@ -133,6 +128,10 @@ public class LoginView extends LoginRegisterBaseView {
 
     public Button getLoginButton() {
         return loginButton;
+    }
+
+    public Button getSignUpButton() {
+         return signUpButton;
     }
     
 }

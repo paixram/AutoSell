@@ -16,6 +16,8 @@ import espol.edu.ec.autosell.view.LoginView;
 
 // import controllers
 import espol.edu.ec.autosell.controller.LoginController;
+import espol.edu.ec.autosell.utils.Metodos;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -24,10 +26,11 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage mainStage;
+    private static final String filePath = "src/main/sources/file/archivo.txt";
 
     @Override
     public void start(Stage stage) throws IOException {
-        //scene = new Scene(loadFXML("primary"), 640, 480);
+       
         mainStage = stage;
         ShowLogin();
         mainStage.setTitle("AutoSell - Login");
@@ -35,7 +38,9 @@ public class App extends Application {
     }
     
     public void ShowLogin() {
-        // Crear la vista y el modelo para asociarlo con el controlador
+        
+        
+        List<String[]> data = Metodos.readDataFromFile(filePath);
         Usuario user_model = new Usuario();
         LoginView login_view = new LoginView();
         LoginController login_controller = new LoginController(user_model, login_view);

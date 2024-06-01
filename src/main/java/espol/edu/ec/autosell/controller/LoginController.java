@@ -9,15 +9,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.List;
-
-// Models
 import espol.edu.ec.autosell.model.Usuario;
-
-// views
+import espol.edu.ec.autosell.utils.Metodos;
 import espol.edu.ec.autosell.view.LoginView;
-
-// Enums
 import espol.edu.ec.autosell.utils.UserRole;
+import espol.edu.ec.autosell.view.CompradorView;
+import espol.edu.ec.autosell.view.RegisterView;
+import espol.edu.ec.autosell.view.VendedorView;
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 /**
@@ -28,15 +27,20 @@ public class LoginController {
     
     private Usuario user_model;
     private LoginView login_view;
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios= new ArrayList<>();
+    private List<String[]> userData;
+
     public LoginController(Usuario um, LoginView lv) {
         user_model = um;
         login_view = lv;
         initialize();
+        this.userData = Metodos.readDataFromFile("src/main/resources/file/archivo.txt");
+        this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
     }
     
     public void initialize() {
         login_view.getLoginButton().setOnAction(e -> validateLogin());
+        login_view.getSignUpButton().setOnAction(e -> showRegister());
     }
 
     private void validateLogin() {
@@ -48,11 +52,11 @@ public class LoginController {
                 if (usuario.getRole() == UserRole.COMPRADOR) {
                     showAlert("Bienvenido", "Bienvenido comprador!", AlertType.INFORMATION);
                     // Aquí se puede cambiar la escena a la vista del comprador
-                  
+                    new CompradorView().show();
                 } else if (usuario.getRole() == UserRole.VENDEDOR) {
                     showAlert("Bienvenido", "Bienvenido vendedor!", AlertType.INFORMATION);
                     // Aquí se puede cambiar la escena a la vista del vendedor
-                   
+                    new VendedorView().show();
                 }
                 return;
             }
@@ -60,7 +64,10 @@ public class LoginController {
 
         showAlert("Error", "Usuario o contraseña incorrectos", AlertType.ERROR);
     }
-
+    private void showRegister() {
+        RegisterView registerView = new RegisterView();
+        registerView.show();
+    }
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
