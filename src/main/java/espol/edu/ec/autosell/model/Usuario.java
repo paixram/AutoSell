@@ -1,9 +1,14 @@
 package espol.edu.ec.autosell.model;
 
 // Import Enums
+import dumpfmm.Almacenable;
+import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.utils.UserRole;
 
-public class Usuario {
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
+public class Usuario implements Almacenable {
     String idUsuario ;
     String contrasenia;
     UserRole rol;
@@ -48,7 +53,5 @@ public class Usuario {
     public void setRol(UserRole rol){
         this.rol = rol;
     }
-    
-
-    
+      
 }

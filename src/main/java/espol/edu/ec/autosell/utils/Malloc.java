@@ -46,8 +46,8 @@ public class Malloc<E> implements List<E>, Iterable<E> {
     }
 
     @Override
-    public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean isEmpty() {  
+        return this.len == 0;
     }
 
     @Override
@@ -102,7 +102,15 @@ public class Malloc<E> implements List<E>, Iterable<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if(c.isEmpty()) return false;
+        
+        c.forEach(element -> {
+            System.out.println(element);
+            add(element);
+        });
+        
+        return true;
     }
 
     @Override
@@ -226,7 +234,7 @@ public class Malloc<E> implements List<E>, Iterable<E> {
     }
     
     public class MallocIterator implements Iterator<E> {
-        private int currentIndex;
+        private int currentIndex = 0;
         
         public MallocIterator() {
             

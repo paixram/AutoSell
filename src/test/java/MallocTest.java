@@ -79,4 +79,23 @@ public class MallocTest {
         malloc.add(3);
         assertEquals(2, malloc.indexOf(3));
     }
+    
+    @Test
+    public void testAddAll() {
+        Malloc<Integer> sourceList = new Malloc<>(3);
+        sourceList.add(1);
+        sourceList.add(2);
+        sourceList.add(3);
+        System.out.println("SIze source malloc: " + sourceList.size());
+       
+        malloc.addAll(sourceList);
+
+        assertEquals(3, malloc.size()); // Verifica que se hayan agregado todos los elementos
+        //assertTrue(malloc.contains(1)); // Verifica que se haya agregado el elemento 1
+        //assertTrue(malloc.contains(2)); // Verifica que se haya agregado el elemento 2
+        //assertTrue(malloc.contains(3)); // Verifica que se haya agregado el elemento 3
+        assertEquals(0, malloc.indexOf(1));
+        assertEquals(1, malloc.indexOf(2));
+        assertEquals(2, malloc.indexOf(3));
+    }
 }
