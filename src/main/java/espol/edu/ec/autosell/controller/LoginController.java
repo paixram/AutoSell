@@ -19,6 +19,7 @@ import espol.edu.ec.autosell.view.VendedorView;
 import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 /**
  *
  * @author José Miguel
@@ -29,10 +30,11 @@ public class LoginController {
     private LoginView login_view;
     private List<Usuario> usuarios= new ArrayList<>();
     private List<String[]> userData;
-
-    public LoginController(Usuario um, LoginView lv) {
+    private Stage primaryStage;
+    public LoginController(Usuario um, LoginView lv, Stage primaryStage) {
         user_model = um;
         login_view = lv;
+        this.primaryStage = primaryStage;
         initialize();
         this.userData = Metodos.readDataFromFile("src/main/resources/file/archivo.txt");
         this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
@@ -49,13 +51,14 @@ public class LoginController {
 
         for (Usuario usuario : usuarios) {
             if (usuario.getIdUsuario().equals(idUsuario) && usuario.validarContrasenia(contrasenia)) {
+                primaryStage.close();
                 if (usuario.getRole() == UserRole.COMPRADOR) {
-                    showAlert("Bienvenido", "Bienvenido comprador!", AlertType.INFORMATION);
-                    // Aquí se puede cambiar la escena a la vista del comprador
+                    
+                    
                     new CompradorView().show();
                 } else if (usuario.getRole() == UserRole.VENDEDOR) {
-                    showAlert("Bienvenido", "Bienvenido vendedor!", AlertType.INFORMATION);
-                    // Aquí se puede cambiar la escena a la vista del vendedor
+                    
+                    
                     new VendedorView().show();
                 }
                 return;

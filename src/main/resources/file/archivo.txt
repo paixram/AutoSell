@@ -1,7 +1,6 @@
-juan123,pass123
-maria456,456pass
-pedro789,789pedro
-vendedor1,v1pass
-vendedor2,v2pass
-vendedor3,v3pass
-
+juan123,pass123,COMPRADOR
+maria456,456pass,COMPRADOR
+pedro789,789pedro,COMPRADOR
+vendedor1,v1pass,VENDEDOR
+vendedor2,v2pass,VENDEDOR
+vendedor3,v3pass,VENDEDOR

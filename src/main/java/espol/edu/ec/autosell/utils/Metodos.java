@@ -97,12 +97,12 @@ public class Metodos<E> {
         List<Usuario> usuarios= new ArrayList<>();
         List<String[]>data=Metodos.readDataFromFile(filePath);
         for(String[]Ddata : data){
-            if(Ddata.length>=2){
+            if(Ddata.length>=3){
             
             String idUsuario=Ddata[0];
             String contrasenia=Ddata[1];
-            
-            Usuario usuario=new Usuario(idUsuario,contrasenia,null);
+            UserRole role = UserRole.valueOf(Ddata[2]); 
+            Usuario usuario = new Usuario(idUsuario, contrasenia, role);
             usuarios.add(usuario);
         }
         
@@ -111,7 +111,7 @@ public class Metodos<E> {
     public static void writeUsersToFile(String filePath, List<Usuario> usuarios) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Usuario usuario : usuarios) {
-                writer.write(usuario.getIdUsuario() + "," + usuario.getContrasenia() + "," + usuario.getRole());
+                writer.write(usuario.getIdUsuario() + "," + usuario.getContrasenia() + "," + usuario.getRole().toString());
                 writer.newLine();
             }
         } catch (IOException e) {

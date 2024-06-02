@@ -26,7 +26,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage mainStage;
-    private static final String filePath = "src/main/sources/file/archivo.txt";
+    private static final String filePath = "src/main/resources/file/archivo.txt";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -43,7 +43,7 @@ public class App extends Application {
         List<String[]> data = Metodos.readDataFromFile(filePath);
         Usuario user_model = new Usuario();
         LoginView login_view = new LoginView();
-        LoginController login_controller = new LoginController(user_model, login_view);
+        LoginController login_controller = new LoginController(user_model, login_view,mainStage);
         
         scene = new Scene(login_view.getView(), 800, 600);
         
