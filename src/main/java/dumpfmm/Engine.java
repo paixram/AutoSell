@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 /*
 Main primitives starts with _ and ends with _
@@ -20,24 +21,27 @@ Main primitives starts with _ and ends with _
  *
  * @author Luizzz
  */
-public class Core {
+public class Engine {
     // Set Engine Configs
     private static char _SEPARATOR_ = ',';
     private static String _EXTENSION_ = ".dfm"; // DFM = Dump File Model, extension estandar para el proyecto.
     
-    public Core() {
+    // Query settings
+    protected String __QUERY__ = "";
+    
+    public Engine() {
         
     }
     
-    public Core(String ext) {
+    public Engine(String ext) {
         _EXTENSION_ = ext;
     }
     
-    public Core(char separator) {
+    public Engine(char separator) {
         _SEPARATOR_ = separator;
     }
     
-    public Core(String ext, char separator) {
+    public Engine(String ext, char separator) {
         _EXTENSION_ = ext;
         _SEPARATOR_ = separator;
     }
@@ -68,6 +72,15 @@ public class Core {
             }catch(IOException e) {
                 System.out.println("[ - CheckForModel() ] Dumpfmm Intern Engine Error: " + e.getMessage());
             }
+        }
+    }
+    
+    // TODO: Hacer los metodos de lectura del query
+    public static void RunQuery(String query, HashMap<String, HashMap<String, Object>> md) {
+        // TODO: Se lee la query y se interpreta
+        int position = 0;
+        while(position <= query.length()) {
+            // TODO: Leer cada palabra y darle sentido, tokenizar la query y luego crear un arbol
         }
     }
     
