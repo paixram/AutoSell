@@ -15,11 +15,11 @@ import java.util.HashMap;
  * @author Luizzz
  */
 
-public class dumpfmm extends Core {
+public class dumpfmm extends Engine implements Query {
     
     // Stablish data location and configs
     protected String _USER_HOME_DIRECTORY_ = System.getProperty("user.home");
-    protected String _WORK_SPACE_ = _USER_HOME_DIRECTORY_ + "/.dumpfmm_cache";
+    protected String _WORK_SPACE_ = _USER_HOME_DIRECTORY_ + "/.dumpfmm";
     
     // Stablish Hashmap with models and metadata
     protected HashMap<String, HashMap<String, Object>> models_metadata = new HashMap();
@@ -57,7 +57,7 @@ public class dumpfmm extends Core {
         HashMap<String, Object> metadata = new HashMap(); 
         
         HashMap<String, String> fields = model.getFields();   // Field name - Field Type
-        String path_r = _WORK_SPACE_ + "/" + modelName + Core.getExtension();
+        String path_r = _WORK_SPACE_ + "/" + modelName + Engine.getExtension();
         
         metadata.put("Fields", fields);
         metadata.put("Path Reference", path_r);
@@ -72,4 +72,67 @@ public class dumpfmm extends Core {
     }
     
     // TODO: Hacer las funciones basicas de recoleccion, insercion, eliminacion y actualizacion de datos en los archivos dfm
+
+    @Override
+    public <R> Query FindByField(String field, FindType ft, R value) {
+        
+        switch(ft) {
+            case EQUALS:
+                super.__QUERY__ += "WHEN " + field + "==" + value;
+                break;
+                
+            case GREAT_THAN:
+                super.__QUERY__ += "WHEN " + field + ">" + value;
+                break;
+            
+            case LESS_THAN:
+                super.__QUERY__ += "WHEN " + field + "<" + value;
+                break;
+            
+            case GREAT_OR_EQUALS_THAN:
+                super.__QUERY__ += "WHEN " + field + ">=" + value;
+                break;
+            
+            case LESS_OR_EQUALS_THAN:
+                super.__QUERY__ += "WHEN " + field + "<=" + value;
+                break;
+        }
+        
+        return this;
+    }
+
+    @Override
+    public Query From(String model) {
+        super.__QUERY__ += "FROM " + model + " ";
+        return this;
+    }
+
+    @Override
+    public Query Get(String fieldName) {
+        super.__QUERY__ += "GET " + fieldName + " ";
+        return this;
+    }
+
+    @Override
+    public Query Update(String fieldName, String value) {
+        super.__QUERY__ += "UPDATE " + fieldName + "=" + value + " ";
+        return this;
+    }
+
+    @Override
+    public Query Delete() {
+        super.__QUERY__ += "DELETE ";
+        return this;
+    }
+
+    @Override
+    public String toQuery() {
+        return super.__QUERY__;
+    }
+    
+    public void executeQuery(String query) {
+        Engine.RunQuery(query, models_metadata);
+    }
+
+   
 }

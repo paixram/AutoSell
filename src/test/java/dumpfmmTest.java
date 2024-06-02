@@ -1,5 +1,4 @@
 
-import dumpfmm.DumpFileModelEngine;
 import dumpfmm.dumpfmm;
 import espol.edu.ec.autosell.model.Usuario;
 import static org.junit.Assert.assertEquals;
@@ -16,7 +15,7 @@ import org.junit.Test;
  */
 public class dumpfmmTest {
     @Test
-    public void testAddAll() {
+     public void testAddAll() {
         dumpfmm mydb = new dumpfmm();
         
         // Models
@@ -26,6 +25,9 @@ public class dumpfmmTest {
         mydb.RegModel(user_model);
        
        //System.out.println( System.getProperty("user.home"));
-        
+       // Consults by find
+       String my_query = mydb.From("Usuario").Get("[...]").FindByFieldEQ("idUsuario", 1).toQuery();
+       
+       System.out.println("My Query: " + my_query);
     }
 }
