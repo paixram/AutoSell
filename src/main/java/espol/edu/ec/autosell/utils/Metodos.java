@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 
 public class Metodos<E> {
 
@@ -118,6 +124,53 @@ public class Metodos<E> {
             e.printStackTrace();
         }
     }
+    
+    public static List<Vehiculo> cargarVehiculos(String filePath) {
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 6) {String id = parts[0];String marca = parts[1];String modelo = parts[2]; double precio = Double.parseDouble(parts[3]);int kilometraje = Integer.parseInt(parts[4]); String foto = parts[5];vehiculos.add(new Vehiculo(id, marca, modelo, precio, kilometraje, foto));
+                } else {
+                    System.out.println("Error: La línea no tiene el formato esperado.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return vehiculos;
+    }
+    public static MenuBar crearBarraSuperior() {
+        
+        MenuBar menuBar = new MenuBar();
+        Menu menuFile = new Menu("Archivo");
+        Menu menuEdit = new Menu("Editar");
+        Menu menuView = new Menu("Ver");
+       
+        MenuItem menuItemNew = new MenuItem("Nuevo");
+        MenuItem menuItemOpen = new MenuItem("Abrir");
+        MenuItem menuItemSave = new MenuItem("Guardar");
+        MenuItem menuItemExit = new MenuItem("Salir");
+        menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemExit);
+       
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuView);
+
+        return menuBar;
+    }
+    public static VBox crearListaVehiculos(List<Vehiculo> vehiculos) {
+        VBox listaVehiculos = new VBox();
+        listaVehiculos.setAlignment(Pos.CENTER_LEFT);
+        listaVehiculos.setSpacing(10);
+        for (Vehiculo vehiculo : vehiculos) {
+            Label labelVehiculo = new Label(vehiculo.getMarca() + " " + vehiculo.getModelo());
+            listaVehiculos.getChildren().add(labelVehiculo);
+        }
+
+        return listaVehiculos;
+    }
+    
+    
 }
     
 

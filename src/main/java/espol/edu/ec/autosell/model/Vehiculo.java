@@ -16,9 +16,9 @@ public class Vehiculo {
     private String modelo;
     private double precio;
     private int km;
-    private List<String> fotos;
+    private String fotos;
 
-    public Vehiculo(String id, String marca, String modelo, double precio, int km, List<String> fotos) {
+    public Vehiculo(String id, String marca, String modelo, double precio, int km,String fotos) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -52,7 +52,7 @@ public class Vehiculo {
         return km;
     }
 
-    public List<String> getFotos() {
+    public String getFotos() {
         return fotos;
     }
 
@@ -76,7 +76,7 @@ public class Vehiculo {
         this.km = km;
     }
 
-    public void setFotos(List<String> fotos) {
+    public void setFotos(String fotos) {
         this.fotos = fotos;
     }
     

@@ -17,6 +17,7 @@ import espol.edu.ec.autosell.view.LoginView;
 // import controllers
 import espol.edu.ec.autosell.controller.LoginController;
 import espol.edu.ec.autosell.utils.Metodos;
+import espol.edu.ec.autosell.view.PrincipalView;
 import java.util.List;
 
 /**
@@ -29,13 +30,17 @@ public class App extends Application {
     private static final String filePath = "src/main/resources/file/archivo.txt";
 
     @Override
-    public void start(Stage stage) throws IOException {
-       
-        mainStage = stage;
-        ShowLogin();
-        mainStage.setTitle("AutoSell - Login");
-        mainStage.show();
+    public void start(Stage primaryStage) {
+        PrincipalView principalView = new PrincipalView(true); // Asumimos que el usuario es vendedor
+        principalView.mostrar();
     }
+    //public void start(Stage stage) throws IOException {
+       
+      //  mainStage = stage;
+       // ShowLogin();
+       // mainStage.setTitle("AutoSell - Login");
+       // mainStage.show();
+    //}
     
     public void ShowLogin() {
         

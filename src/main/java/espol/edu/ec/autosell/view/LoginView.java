@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 /**
  *
@@ -34,8 +35,10 @@ public class LoginView extends LoginRegisterBaseView {
     private Button loginButton;
     private Button signUpButton;
     private Label signUp = new Label();;
+    
     public LoginView() {
         super();
+        
         login_form = new StackPane();
         usernameField = new TextField();
         usernameField.setPromptText("Username");
@@ -133,5 +136,6 @@ public class LoginView extends LoginRegisterBaseView {
     public Button getSignUpButton() {
          return signUpButton;
     }
+    
     
 }
