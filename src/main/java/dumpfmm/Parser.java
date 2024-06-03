@@ -121,9 +121,45 @@ public class Parser {
         return new GetQuery(model, columns, cd, pathReference, model_arguments);
     }
     
-    private Query parseSetQuery(String model) {
+    private Query parseSetQuery(String model) {// FROM Usuarios SET 12, luis, V
+        // parsear el setQuery 
+        System.out.println("Curreent TOken: " + currentToken().getType());
         
-        return null; // Aqui quede
+        // Recoger todos los campos de la metadata del model 
+        HashMap<String, Object> model_sets = metadata.get(model);
+        HashMap<String, String> model_arguments = (HashMap<String, String>) model_sets.get("Fields");
+        
+        // Verificar que la cantidad de elementos a insertar no sea mayor a los argumentos existentes
+        System.out.println("Modeeel: " + model_arguments);
+        
+        Malloc<String> v = new Malloc();
+        int position = 0;
+        while(currentToken < tokens.size() && currentToken().getType() != TokenType.ENDQUERY) {
+            if(CurrentTypeTokenIs(TokenType.NUMBER) || CurrentTypeTokenIs(TokenType.IDENTIFIER) || CurrentTypeTokenIs(TokenType.STRING)) {
+                v.add(currentToken().getValue());
+                peek();
+            }
+            
+            if(CurrentTokenIs(TokenType.COMMA, ",")) {
+                peek();
+            }
+            
+            position++;
+           
+        }
+        
+        // Validar longitud de los datos
+        if(v.size() > model_arguments.size()) {
+            throw new RuntimeException("Too many arguments in the SET query for Model :" + model);
+        }
+        
+        validateValues(v, model_arguments);
+        v = cleanComillas(v);
+        
+        String pathReference = (String) model_sets.get("Path Reference");
+        //System.out.println("DATTOS:  " + values);
+        // Formatear data con los valores
+        return new SetQuery(model, v, pathReference, model_arguments); // Aqui quede
     }
 
     private Condition parseCondition(HashMap<String, String> md) {
@@ -165,11 +201,74 @@ public class Parser {
         }
 
         String value = currentToken().getValue();
+        
+        if(currentToken().getType() == TokenType.STRING) {
+            value = value.replaceAll("\"", "");
+        }
 
         Condition conditional_n = new Condition(pre_targetColumn, condition_type, value, currentToken().getType());
 
         peek();
         return conditional_n;
+    }
+    
+    private void validateValues(Malloc<String> values, HashMap<String, String> modelArguments) {
+        int index = 0;
+        for(Map.Entry<String, String> entry : modelArguments.entrySet()) {
+            String fieldName = entry.getKey();
+            String fieldType = entry.getValue().split(",")[0];
+            
+            if(index < values.size()) {
+                String value = values.get(index);
+                validateValueType(value, fieldType, fieldName);
+                index++;
+            }else{
+                throw new RuntimeException("Missing value for field: " + fieldName);
+            }
+        }
+    }
+    
+    private void validateValueType(String value, String expectedType, String fieldName) {
+        switch (expectedType) {
+            case "String":
+                if (!isString(value)) {
+                    throw new RuntimeException("Expected a String for field '" + fieldName + "' but found: " + value);
+                }
+                break;
+            case "int":
+                if (!isInteger(value)) {
+                    throw new RuntimeException("Expected an int for field '" + fieldName + "' but found: " + value);
+                }
+                break;
+            default:
+                //throw new RuntimeException("Unknown type for field '" + fieldName + "': " + expectedType);
+        }
+    }
+    
+    private Malloc<String> cleanComillas(Malloc<String> obj) {
+        Malloc<String> nv = new Malloc();
+        for(String ob : obj) {
+            if(isString(ob)) {
+                nv.add(ob.replaceAll("\"", ""));
+            }else{
+                nv.add(ob);
+            }
+        }
+        
+        return nv;
+    }
+    
+    private boolean isString(String value) {
+        return value.startsWith("\"") && value.endsWith("\"");
+    }
+
+    private boolean isInteger(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     // Error handler
@@ -182,11 +281,17 @@ public class Parser {
         throw new RuntimeException("Unexpected token: " + token);
     }
     
+    
     private boolean CurrentTokenIs(TokenType type, String value) {
         Token token = currentToken();
         return token.getType() == type && token.getValue().equals(value);
     }
-
+    
+    private boolean CurrentTypeTokenIs(TokenType type) {
+        Token token = currentToken();
+        return token.getType() == type;
+    }
+    
     private void CheckModelExist(String model) {
         if (!metadata.containsKey(model)) {
             throw new RuntimeException("The model " + model + " dont exists!");

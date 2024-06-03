@@ -65,7 +65,7 @@ abstract class Query {
         return matchingRows;
     }
     
-    private static HashMap<String, Object> parseAndValidate(String data, HashMap<String, String> fieldMap) {
+    protected static HashMap<String, Object> parseAndValidate(String data, HashMap<String, String> fieldMap) {
         HashMap<String, Object> row = new HashMap();
         String[] parts = data.split(",");
         fieldMap.forEach((K, V) -> {
@@ -91,14 +91,14 @@ abstract class Query {
     private static Object convertAndValidate(String value, String fieldType) {
         try {
             switch (fieldType) {
+                default:
                 case "String":
                     return value;
                 case "int":
                     return Integer.parseInt(value);
                 case "double":
                     return Double.parseDouble(value);
-                default:
-                    throw new IllegalArgumentException("Tipo de campo desconocido: " + fieldType);
+                
             }
         } catch (Exception e) {
             System.out.println("Error al convertir el valor: " + value + " al tipo: " + fieldType);

@@ -26,7 +26,7 @@ public class dumpfmmTest {
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
-       String my_query = mydb.From("Usuario").Get("contrasenia").FindByFieldEQ("idUsuario", 1).toQuery();
+       String my_query = mydb.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "Waza").toQuery();
        
        System.out.println("My Query: " + my_query);
        
@@ -45,7 +45,7 @@ public class dumpfmmTest {
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
-       String my_query = mydb.From("Usuario").Set("2,luchazo,V").toQuery();
+       String my_query = mydb.From("Usuario").Set("\"1,\"luchazo\",V").toQuery();
        
        System.out.println("My Query: " + my_query);
        

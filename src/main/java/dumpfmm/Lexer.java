@@ -81,7 +81,7 @@ public class Lexer {
         String value = query.substring(start, position);
         position++;
         
-        return new Token(TokenType.STRING, value);
+        return new Token(TokenType.STRING, "\""+ value + "\"");
     }
     
     private Token Consultor_OR_Identifier() {

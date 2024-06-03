@@ -9,8 +9,10 @@ package dumpfmm;
 
 import espol.edu.ec.autosell.utils.Malloc;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,6 +98,24 @@ public class Engine {
         Query que = pa.parse();
         Malloc<HashMap<String, Object>> results = que.execute();
         return results;
+    }
+    
+    public static boolean WriteRAWModelFile(String path_model, String data_to_write) {
+        try {
+           BufferedWriter bw = new BufferedWriter(new FileWriter(path_model));
+           
+           bw.write(data_to_write + "\n");
+           
+           bw.close();
+        }catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Open Reader File Error: " + e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Open while close Reader File Error: " + e);
+        }
+        
+        return false;
     }
     
     public static Malloc<String> ReadRAWModelFile(String path_model) {
