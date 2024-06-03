@@ -34,7 +34,7 @@ public class GetQuery extends Query {
     
     
     // Operar bajo estas condiciones y sacar los campos requeridos en columns
-    public void Run() {
+    public Malloc<HashMap<String, Object>> Run() {
         Malloc<HashMap<String, Object>> data = super.DumpFileModelDataFORMAT(this.pathReference, fields);
         System.out.println("Formatted data: ");
         for(HashMap<String, Object> s : data) {
@@ -50,22 +50,26 @@ public class GetQuery extends Query {
             }
             
             // Devolver solo los campos que estan en columns
-            Malloc<HashMap<String, String>> result = filterFields(filter_data, this.columns);
+            Malloc<HashMap<String, Object>> result = filterFields(filter_data, this.columns);
             System.out.println("Resultados con campos especificados: ");
-            for (HashMap<String, String> obj : result) {
+            for (HashMap<String, Object> obj : result) {
                 System.out.println("Objeto con campos especificados: " + obj);
             }
+            
+            return result;
         }
+        
+        return data;
     }
     
-    private Malloc<HashMap<String, String>> filterFields(Malloc<HashMap<String, Object>> data, HashMap<String, String> columns) {
-        Malloc<HashMap<String, String>> result = new Malloc<>();
+    private Malloc<HashMap<String, Object>> filterFields(Malloc<HashMap<String, Object>> data, HashMap<String, String> columns) {
+        Malloc<HashMap<String, Object>> result = new Malloc<>();
 
         for (HashMap<String, Object> row : data) {
-            HashMap<String, String> filteredRow = new HashMap<>();
+            HashMap<String, Object> filteredRow = new HashMap<>();
             for (String column : columns.keySet()) {
                 if (row.containsKey(column)) {
-                    filteredRow.put(column, row.get(column).toString());
+                    filteredRow.put(column, row.get(column));
                 }
             }
             result.add(filteredRow);
@@ -75,7 +79,7 @@ public class GetQuery extends Query {
     }
 
     @Override
-    public void execute() {
-        this.Run();
+    public Malloc<HashMap<String, Object>> execute() {
+        return this.Run();
     }
 }

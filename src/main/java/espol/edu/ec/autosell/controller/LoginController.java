@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package espol.edu.ec.autosell.controller;
+import espol.edu.ec.autosell.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -42,7 +43,7 @@ public class LoginController {
     
     public void initialize() {
         login_view.getLoginButton().setOnAction(e -> validateLogin());
-        login_view.getSignUpButton().setOnAction(e -> showRegister());
+        login_view.getSignUpButton().setOnAction(e -> App.ShowRegister());
     }
 
     private void validateLogin() {
@@ -67,10 +68,7 @@ public class LoginController {
 
         showAlert("Error", "Usuario o contraseña incorrectos", AlertType.ERROR);
     }
-    private void showRegister() {
-        RegisterView registerView = new RegisterView();
-        registerView.show();
-    }
+  
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

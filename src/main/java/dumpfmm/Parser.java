@@ -46,6 +46,8 @@ public class Parser {
             switch (op) {
                 case "GET":
                     return parseGetQuery(model);
+                case "SET":
+                    return parseSetQuery(model);
                 case "UPDATE":
                     break;
                 case "DELETE":
@@ -117,6 +119,11 @@ public class Parser {
         // Ver para otras reglas como el Limit: 1, 2 etc
         String pathReference = (String) model_sets.get("Path Reference");
         return new GetQuery(model, columns, cd, pathReference, model_arguments);
+    }
+    
+    private Query parseSetQuery(String model) {
+        
+        return null; // Aqui quede
     }
 
     private Condition parseCondition(HashMap<String, String> md) {

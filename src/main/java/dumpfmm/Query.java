@@ -106,7 +106,7 @@ abstract class Query {
         }
     }
     
-    public abstract void execute();
+    public abstract Malloc<HashMap<String, Object>> execute();
 
     @Override
     public String toString() {

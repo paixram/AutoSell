@@ -99,6 +99,7 @@ public class Lexer {
     public boolean isConsultor(String value) {
         Malloc<String> consultors = new Malloc();
         consultors.add("GET");
+        consultors.add("SET");
         consultors.add("FROM");
         consultors.add("UPDATE");
         consultors.add("DELETE");

@@ -70,15 +70,6 @@ public class RegisterView extends LoginRegisterBaseView {
         register_form.getChildren().add(regform);
 
         base_view.getChildren().add(register_form);
-        Scene scene = new Scene(base_view, 600, 400); // Mismo tamaño que LoginView
-        Stage stage = new Stage();
-        stage.setTitle("Registro de Usuario");
-        stage.setScene(scene);
-    }
-
-    public void show() {
-        Stage stage = (Stage) base_view.getScene().getWindow();
-        stage.show();
     }
 
     public TextField getUsernameField() {

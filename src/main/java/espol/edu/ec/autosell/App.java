@@ -16,8 +16,11 @@ import espol.edu.ec.autosell.view.LoginView;
 
 // import controllers
 import espol.edu.ec.autosell.controller.LoginController;
+import espol.edu.ec.autosell.controller.PrincipalController;
+import espol.edu.ec.autosell.controller.RegisterController;
 import espol.edu.ec.autosell.utils.Metodos;
 import espol.edu.ec.autosell.view.PrincipalView;
+import espol.edu.ec.autosell.view.RegisterView;
 import java.util.List;
 
 /**
@@ -30,9 +33,23 @@ public class App extends Application {
     private static final String filePath = "src/main/resources/file/archivo.txt";
 
     @Override
-    public void start(Stage primaryStage) {
-        PrincipalView principalView = new PrincipalView(true); // Asumimos que el usuario es vendedor
-        principalView.mostrar();
+    public void start(Stage stage) {
+        //PrincipalView principalView = new PrincipalView(true); // Asumimos que el usuario es vendedor
+        //principalView.mostrar();
+        mainStage = stage;
+        showPrincipalView();
+        mainStage.setTitle("AutoSell - Página Principal");
+        mainStage.show();
+        
+    }
+    
+    public void showPrincipalView() {
+        PrincipalView pv = new PrincipalView();
+        PrincipalController pc = new PrincipalController(pv);
+        
+        scene = new Scene(pv.getView(), 800, 600);
+        
+        mainStage.setScene(scene);
     }
     //public void start(Stage stage) throws IOException {
        
@@ -42,8 +59,7 @@ public class App extends Application {
        // mainStage.show();
     //}
     
-    public void ShowLogin() {
-        
+    public static void ShowLogin() {
         
         List<String[]> data = Metodos.readDataFromFile(filePath);
         Usuario user_model = new Usuario();
@@ -53,7 +69,20 @@ public class App extends Application {
         scene = new Scene(login_view.getView(), 800, 600);
         
         mainStage.setScene(scene);
+        mainStage.setTitle("AutoSell - Inicio de sesion");
     } 
+    
+    public static void ShowRegister() {
+        RegisterView register_view = new RegisterView();
+        Usuario user_model = new Usuario();
+        RegisterController register_controller = new RegisterController(register_view);
+        
+        scene = new Scene(register_view.getView(), 800, 600);
+        
+        mainStage.setScene(scene);
+        mainStage.setTitle("AutoSell - Registro de Usuario");
+    }
+    
     public static void setRoot(Parent root) {
         scene.setRoot(root);
     }

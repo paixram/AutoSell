@@ -131,18 +131,26 @@ public class dumpfmm extends Engine implements Queriable {
 
     @Override
     public Queriable Delete() {
-        super.__QUERY__ += "DELETE ";
+        
         return this;
     }
-
+    
+    @Override
+    public Queriable Set(String values) {
+        super.__QUERY__ += "SET " + values;
+        return this;
+    }
+    
     @Override
     public String toQuery() {
         return super.__QUERY__;
     }
     
-    public void executeQuery(String query) {
-        Engine.RunQuery(query, models_metadata);
+    public Malloc<HashMap<String, Object>> executeQuery(String query) {
+        return Engine.RunQuery(query, models_metadata);
     }
+
+    
 
    
 }

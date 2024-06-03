@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class dumpfmmTest {
     @Test
-     public void testAddAll() {
+     public void getQuery() {
         dumpfmm mydb = new dumpfmm();
         
         // Models
@@ -27,6 +27,25 @@ public class dumpfmmTest {
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
        String my_query = mydb.From("Usuario").Get("contrasenia").FindByFieldEQ("idUsuario", 1).toQuery();
+       
+       System.out.println("My Query: " + my_query);
+       
+       mydb.executeQuery(my_query);
+    }
+     
+     @Test
+     public void setQuery() {
+        dumpfmm mydb = new dumpfmm();
+        
+        // Models
+        Usuario user_model = new Usuario();
+        
+        // Register models
+        mydb.RegModel(user_model);
+       
+       //System.out.println( System.getProperty("user.home"));
+       // Consults by find
+       String my_query = mydb.From("Usuario").Set("2,luchazo,V").toQuery();
        
        System.out.println("My Query: " + my_query);
        

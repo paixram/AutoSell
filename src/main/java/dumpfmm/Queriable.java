@@ -12,6 +12,7 @@ package dumpfmm;
 /*
  - Ejemplo de una consulta: FROM ... GET/UPDATE/DELETE [Spec Field]/[... all fields] WHEN field_target =/<=/=>/</> data_target
  - Sample for find/get: FROM Usuarios GET Id WHEN Name = "Luis"
+ - Sample for Set: FROM Usuarios SET (valores para los argumentos del modelo)
  - Sample for Update: FROM Usuarios UPDATE Name = "Luis", Id = 1, ... When Id = 2;
  - Sample for Delete: FROM Usuarios DELETE WHEN Id = 2;
 */
@@ -40,6 +41,7 @@ public interface Queriable {
     // Queriable Builder Methods
     Queriable From(String model);
     Queriable Get(String fieldName);
+    Queriable Set(String values);
     Queriable Update(String fieldName, String value);
     Queriable Delete();
     

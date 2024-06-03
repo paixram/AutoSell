@@ -83,7 +83,7 @@ public class Engine {
     }
     
     // TODO: Hacer los metodos de lectura del query
-    public static void RunQuery(String query, HashMap<String, HashMap<String, Object>> md) {
+    public static Malloc<HashMap<String, Object>> RunQuery(String query, HashMap<String, HashMap<String, Object>> md) {
         // TODO: Se lee la query y se interpreta
         
         Lexer query_lexer = new Lexer(query); // Lee la query y la tokeniza
@@ -94,9 +94,8 @@ public class Engine {
         }
         Parser pa = new Parser(tokens, md);
         Query que = pa.parse();
-        que.execute();
-        
-        // Lee los tokens y arma el arbol sintactico
+        Malloc<HashMap<String, Object>> results = que.execute();
+        return results;
     }
     
     public static Malloc<String> ReadRAWModelFile(String path_model) {
