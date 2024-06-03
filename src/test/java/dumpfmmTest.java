@@ -45,7 +45,7 @@ public class dumpfmmTest {
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
-       String my_query = mydb.From("Usuario").Set("\"1,\"lucho\",V").toQuery();
+       String my_query = mydb.From("Usuario").Set("\"1\",\"lucho\",V").toQuery();
        
        System.out.println("My Query: " + my_query);
        

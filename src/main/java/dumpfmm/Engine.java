@@ -102,7 +102,7 @@ public class Engine {
     
     public static boolean WriteRAWModelFile(String path_model, String data_to_write) {
         try {
-           BufferedWriter bw = new BufferedWriter(new FileWriter(path_model));
+           BufferedWriter bw = new BufferedWriter(new FileWriter(path_model, true));
            
            bw.write(data_to_write + "\n");
            
