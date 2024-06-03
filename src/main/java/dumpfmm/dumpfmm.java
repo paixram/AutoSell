@@ -15,7 +15,7 @@ import java.util.HashMap;
  * @author Luizzz
  */
 
-public class dumpfmm extends Engine implements Query {
+public class dumpfmm extends Engine implements Queriable {
     
     // Stablish data location and configs
     protected String _USER_HOME_DIRECTORY_ = System.getProperty("user.home");
@@ -74,11 +74,11 @@ public class dumpfmm extends Engine implements Query {
     // TODO: Hacer las funciones basicas de recoleccion, insercion, eliminacion y actualizacion de datos en los archivos dfm
 
     @Override
-    public <R> Query FindByField(String field, FindType ft, R value) {
+    public <R> Queriable FindByField(String field, FindType ft, R value) {
         
         switch(ft) {
             case EQUALS:
-                super.__QUERY__ += "WHEN " + field + "==" + value;
+                super.__QUERY__ += "WHEN " + field + "=" + formatValue(value);
                 break;
                 
             case GREAT_THAN:
@@ -100,27 +100,37 @@ public class dumpfmm extends Engine implements Query {
         
         return this;
     }
+    
+    private <R> String formatValue(R value) {
+        if (value instanceof String) {
+            return "\"" + value + "\"";
+        } else if (value instanceof Number) {
+            return value.toString();
+        } else {
+            throw new IllegalArgumentException("Tipo de valor no soportado: " + value.getClass().getName());
+        }
+    }
 
     @Override
-    public Query From(String model) {
+    public Queriable From(String model) {
         super.__QUERY__ += "FROM " + model + " ";
         return this;
     }
 
     @Override
-    public Query Get(String fieldName) {
+    public Queriable Get(String fieldName) {
         super.__QUERY__ += "GET " + fieldName + " ";
         return this;
     }
 
     @Override
-    public Query Update(String fieldName, String value) {
+    public Queriable Update(String fieldName, String value) {
         super.__QUERY__ += "UPDATE " + fieldName + "=" + value + " ";
         return this;
     }
 
     @Override
-    public Query Delete() {
+    public Queriable Delete() {
         super.__QUERY__ += "DELETE ";
         return this;
     }

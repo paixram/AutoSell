@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package espol.edu.ec.autosell.utils;
-
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -14,19 +9,16 @@ import java.util.function.Consumer;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-/**
- *
- * @author Luizzz
- */
+
 public class Malloc<E> implements List<E>, Iterable<E> {
     
     // Presets
-    private static int DEFAULT_SIZE = 5;
-    private static int cap;
-    private static int len;
+    private static final int DEFAULT_SIZE = 5;
     
-    //  Object for handle
+    // Object for handle
     private E[] __DATA_BLOCK__;
+    private int len;
+    private int cap;
     
     public Malloc(int size) {
         __DATA_BLOCK__ = (E[]) new Object[size];
@@ -42,190 +34,225 @@ public class Malloc<E> implements List<E>, Iterable<E> {
     
     @Override
     public int size() {
-        return cap;
+        return len;
     }
 
     @Override
     public boolean isEmpty() {  
-        return this.len == 0;
+        return len == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = 0; i < len; i++) {
+            if (__DATA_BLOCK__[i].equals(o)) {
+                return true;
+            }
+        }
+        return false;
     }
-
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        E[] array = (E[]) new Object[len];
+        System.arraycopy(__DATA_BLOCK__, 0, array, 0, len);
+        return array;
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        /*if (a.length < len) {
+            return (T[]) System.arraycopy(__DATA_BLOCK__, 0, (T[]) new Object[len], 0, len);
+        }
+        System.arraycopy(__DATA_BLOCK__, 0, a, 0, len);
+        if (a.length > len) {
+            a[len] = null;
+        }
+        return a;*/
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public boolean add(E e) {
-        
-        resize();
-        
+        reajustar();
         __DATA_BLOCK__[len++] = e;
-        
         return true;
     }
     
-    public boolean resize() {
-        if(len < cap) return false;
-        
-        // Si la longitud(los huecos ocupados) es mayor o igual que la capacidad(tamaño que soporta el array)
-        // Doblar la capacidad del array copiar los elementos del anterior array al nuevo array
-        cap = cap * 2;
-        E[] resized_array = (E[]) new Object[cap];
-        System.arraycopy(__DATA_BLOCK__, 0, resized_array, 0, len);
-        __DATA_BLOCK__ = resized_array;
-        return true;
-        
+    private void reajustar() {
+        if (len >= cap) {
+            AumentarCapacidad(cap * 2);
+        }
+    }
     
+    private void AumentarCapacidad(int newCap) {
+        E[] newCustomArray = (E[]) new Object[newCap];
+        System.arraycopy(__DATA_BLOCK__, 0, newCustomArray, 0, len);
+        __DATA_BLOCK__ = newCustomArray;
+        cap = newCap;
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        
-        if(c.isEmpty()) return false;
-        
-        c.forEach(element -> {
-            System.out.println(element);
-            add(element);
-        });
-        
+        int index = indexOf(o);
+        if (index == -1) {
+            return false;
+        }
+        remove(index);
         return true;
     }
 
     @Override
+    public boolean containsAll(Collection<?> c) {
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        boolean modified = false;
+        for (E e : c) {
+            if (add(e)) {
+                modified = true;
+            }
+        }
+        return modified;
+    }
+
+    @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        boolean modified = false;
+        for (Object o : c) {
+            if (remove(o)) {
+                modified = true;
+            }
+        }
+        return modified;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = 0; i < len; i++) {
+            __DATA_BLOCK__[i] = null;
+        }
+        len = 0;
     }
 
     @Override
     public E get(int index) {
-        if(index < 0 || index >= cap) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + cap);
+        if (index < 0 || index >= len) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + len);
         }
-        
-        return (E) __DATA_BLOCK__[index];
+        return __DATA_BLOCK__[index];
     }
 
     @Override
     public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (index < 0 || index >= len) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + len);
+        }
+        E oldValue = __DATA_BLOCK__[index];
+        __DATA_BLOCK__[index] = element;
+        return oldValue;
     }
 
     @Override
     public void add(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (index < 0 || index > len) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + len);
+        }
+        reajustar();
+        System.arraycopy(__DATA_BLOCK__, index, __DATA_BLOCK__, index + 1, len - index);
+        __DATA_BLOCK__[index] = element;
+        len++;
     }
 
     @Override
     public E remove(int index) {
-        if(index < 0 || index >= cap) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + cap);
+        if (index < 0 || index >= len) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + len);
         }
-        
-        E remove_element = (E)__DATA_BLOCK__[index];
-        System.arraycopy(__DATA_BLOCK__, index + 1, __DATA_BLOCK__, index, len-index-1);
-    
+        E removedElement = __DATA_BLOCK__[index];
+        int numMoved = len - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(__DATA_BLOCK__, index + 1, __DATA_BLOCK__, index, numMoved);
+        }
         __DATA_BLOCK__[--len] = null;
-        
-        
-        return remove_element;
+        return removedElement;
     }
 
     @Override
     public int indexOf(Object o) {
-        int position = 0;
-        
-        E objectParser = (E) o;
-        
-        for(int i = 0; i < len; i++) {
-            if(__DATA_BLOCK__[i].equals(o)) {
+        for (int i = 0; i < len; i++) {
+            if (__DATA_BLOCK__[i].equals(o)) {
                 return i;
             }
         }
-        // Buscar un objeto en el array devolver el indice
         return -1;
-
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = len - 1; i >= 0; i--) {
+            if (__DATA_BLOCK__[i].equals(o)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public <T> T[] toArray(IntFunction<T[]> generator) {
-        return List.super.toArray(generator); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return List.super.toArray(generator);
     }
 
     @Override
     public boolean removeIf(Predicate<? super E> filter) {
-        return List.super.removeIf(filter); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return List.super.removeIf(filter);
     }
 
     @Override
     public Stream<E> stream() {
-        return List.super.stream(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return List.super.stream();
     }
 
     @Override
     public Stream<E> parallelStream() {
-        return List.super.parallelStream(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return List.super.parallelStream();
     }
 
     @Override
     public void forEach(Consumer<? super E> action) {
-        List.super.forEach(action); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        List.super.forEach(action);
     }
     
     @Override
@@ -237,12 +264,11 @@ public class Malloc<E> implements List<E>, Iterable<E> {
         private int currentIndex = 0;
         
         public MallocIterator() {
-            
         }
 
         @Override
         public boolean hasNext() {
-            return currentIndex < cap;
+            return currentIndex < len;
         }
 
         @Override
@@ -250,9 +276,27 @@ public class Malloc<E> implements List<E>, Iterable<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            return (E) __DATA_BLOCK__[currentIndex++];
+            return __DATA_BLOCK__[currentIndex++];
         }
-        
     }
     
+    @Override
+    public String toString() {
+        if (len == 0) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        for (int i = 0; i < len; i++) {
+            sb.append(__DATA_BLOCK__[i]);
+            if (i < len - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 }

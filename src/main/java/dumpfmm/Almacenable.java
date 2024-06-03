@@ -20,9 +20,11 @@ public interface Almacenable {
         HashMap<String, String> fields = new HashMap();
       
         Field[] fld = this.getClass().getDeclaredFields();
-
+        
+        int index = 0;
         for(Field fl : fld) {
-            fields.put(fl.getName(), fl.getType().getSimpleName());
+            fields.put(fl.getName(), fl.getType().getSimpleName() + "," + index);
+            index++;
         }
 
         return fields;

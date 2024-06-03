@@ -26,8 +26,10 @@ public class dumpfmmTest {
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
-       String my_query = mydb.From("Usuario").Get("[...]").FindByFieldEQ("idUsuario", 1).toQuery();
+       String my_query = mydb.From("Usuario").Get("contrasenia").FindByFieldEQ("idUsuario", 1).toQuery();
        
        System.out.println("My Query: " + my_query);
+       
+       mydb.executeQuery(my_query);
     }
 }

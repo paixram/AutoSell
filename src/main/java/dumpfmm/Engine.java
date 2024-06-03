@@ -7,6 +7,10 @@
 
 package dumpfmm;
 
+import espol.edu.ec.autosell.utils.Malloc;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +29,9 @@ public class Engine {
     // Set Engine Configs
     private static char _SEPARATOR_ = ',';
     private static String _EXTENSION_ = ".dfm"; // DFM = Dump File Model, extension estandar para el proyecto.
+    
+    // lexer cofigs
+    private static int position = 0;
     
     // Query settings
     protected String __QUERY__ = "";
@@ -78,11 +85,41 @@ public class Engine {
     // TODO: Hacer los metodos de lectura del query
     public static void RunQuery(String query, HashMap<String, HashMap<String, Object>> md) {
         // TODO: Se lee la query y se interpreta
-        int position = 0;
-        while(position <= query.length()) {
-            // TODO: Leer cada palabra y darle sentido, tokenizar la query y luego crear un arbol
+        
+        Lexer query_lexer = new Lexer(query); // Lee la query y la tokeniza
+        Malloc<Token> tokens = query_lexer.tokenizer();
+        
+        for(Token s : tokens) {
+            System.out.println(s);
         }
+        Parser pa = new Parser(tokens, md);
+        Query que = pa.parse();
+        que.execute();
+        
+        // Lee los tokens y arma el arbol sintactico
     }
+    
+    public static Malloc<String> ReadRAWModelFile(String path_model) {
+        Malloc<String> __DATA__ = new Malloc();
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader(path_model));
+            
+            String line;
+            while((line = bf.readLine()) != null) {
+                __DATA__.add(line);
+            }
+            
+            bf.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Open Reader File Error: " + e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Open while close Reader File Error: " + e);
+        }
+        return __DATA__;
+    }
+    
     
     // getters and setters
     public static String getExtension() {

@@ -8,13 +8,15 @@ package dumpfmm;
  *
  * @author Luizzz
  */
-public enum QueryTokens {
-    FROM,
-    GET,
-    UPDATE,
-    DELETE,
-    WHEN,
-    ALL,
-    ARRAY_DATA
+public enum TokenType {
+    CONSULTOR,
+    IDENTIFIER,
+    OPERATOR,
+    WHITESPACE,
+    NUMBER,
+    ENDQUERY,
+    COMMA,
+    DOT,
+    STRING,
+    UNKNOWN
 }
-
