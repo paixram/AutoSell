@@ -34,7 +34,6 @@ public class Condition {
             case STRING:
                 return evaluateString((String) fieldValue);
             case NUMBER:
-                System.out.println("Por aqui paja");
                 return evaluateInteger(Integer.valueOf(fieldValue.toString()));
             default:
                 throw new IllegalArgumentException("Tipo de valor desconocido: " + type_value);
