@@ -14,15 +14,16 @@ import javafx.stage.Stage;
  *
  * @author José Miguel
  */
-public class CompradorView {
+public class CompradorView extends PrincipalView{
     private Stage stage;
 
     public CompradorView() {
-        stage = new Stage();
-        initialize();
+        super();
+        //stage = new Stage();
+        
     }
 
-    private void initialize() {
+    /*private void initialize() {
         StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
 
@@ -33,7 +34,7 @@ public class CompradorView {
         stage.setScene(scene);
         stage.setTitle("Vista del Comprador");
     }
-
+    */
     public void show() {
         stage.show();
     }

@@ -64,15 +64,16 @@ public class RegisterController {
 
         
         showAlert("Registro Exitoso", "Usuario registrado correctamente", AlertType.INFORMATION);
-        if (role == UserRole.COMPRADOR) {
+        App.ShowLogin();
+        /*if (role == UserRole.COMPRADOR) {
             new CompradorView().show();
         } else if (role == UserRole.VENDEDOR) {
             new VendedorView().show();
-        }
+        }*/
 
         
-        Stage stage = (Stage) registerView.getSignUpButton().getScene().getWindow();
-        stage.close();
+        //Stage stage = (Stage) registerView.getSignUpButton().getScene().getWindow();
+        //stage.close();
     }
 
     private void showAlert(String title, String message, AlertType alertType) {

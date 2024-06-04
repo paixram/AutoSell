@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  *
  * @author José Miguel
  */
-public class VendedorView {
+public class VendedorView extends PrincipalView{
     private Stage stage;
 
     public VendedorView() {

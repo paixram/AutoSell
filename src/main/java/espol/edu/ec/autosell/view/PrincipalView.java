@@ -37,16 +37,39 @@ public class PrincipalView {
     public PrincipalView() {
         //login_view.getLoginButton().setOnAction(e -> validateLogin());
         //login_view.getSignUpButton().setOnAction(e -> showRegister());
-        root = new BorderPane();
-        MenuBar menuBar = crearBarraSuperior();
-        root.setTop(menuBar);
-
-        VBox topContainer = new VBox();
-        topContainer.setAlignment(Pos.CENTER);
+         root = new BorderPane();
+        
+        // Contenedor para el botón de inicio de sesión a la derecha
+        Button loginButton = new Button("Iniciar Sesión");
+        loginButton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +     // Bordes cuadrados
+            "-fx-border-radius: 10; " +         // Bordes cuadrados
+            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
+            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
+            "-fx-border-color: black; " +      // Color del borde
+            "-fx-border-width: 2px;" +          // Ancho del borde
+            "-fx-cursor: hand;"
+        );
+        loginButton.setOnAction(event -> {
+            // Abrir nueva ventana con LoginView
+            App.ShowLogin();
+        });
+        HBox loginContainer = new HBox();
+        loginContainer.setAlignment(Pos.TOP_RIGHT);
+        loginContainer.getChildren().add(loginButton);
+        
+        // Contenedor para el título AutoSell centrado
         Label titleLabel = new Label("AutoSell");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        topContainer.getChildren().addAll(menuBar, titleLabel);
-        root.setTop(topContainer);// LOGICA PARA PRESENTAR LAS PUBLICACIONES
+        HBox titleContainer = new HBox();
+        titleContainer.setAlignment(Pos.CENTER);
+        titleContainer.getChildren().add(titleLabel);
+        
+        // Agregar los contenedores al BorderPane
+        root.setTop(loginContainer);
+        root.setCenter(titleContainer);
 
         // Barra inferior con navegación y acciones
         HBox bottomBar = crearBarraInferior();
@@ -58,41 +81,41 @@ public class PrincipalView {
         bottomBar.setAlignment(Pos.CENTER);
 
         Button anteriorButton = new Button("Anterior");
+        anteriorButton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +     // Bordes cuadrados
+            "-fx-border-radius: 10; " +         // Bordes cuadrados
+            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
+            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
+            "-fx-border-color: black; " +      // Color del borde
+            "-fx-border-width: 2px;" +          // Ancho del borde
+            "-fx-cursor: hand;"
+        );
         Button siguienteButton = new Button("Siguiente");
+        siguienteButton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +     // Bordes cuadrados
+            "-fx-border-radius: 10; " +         // Bordes cuadrados
+            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
+            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
+            "-fx-border-color: black; " +      // Color del borde
+            "-fx-border-width: 2px;" +          // Ancho del borde
+            "-fx-cursor: hand;"
+        );
+        /* just for sellers /  solo para los vendedores
         Button crearButton = new Button("Crear Vehículo");
         Button editarButton = new Button("Editar Vehículo");
         Button eliminarButton = new Button("Eliminar Vehículo");
-
+        */
         
 
-        bottomBar.getChildren().addAll(anteriorButton, siguienteButton, crearButton, editarButton, eliminarButton);
+        bottomBar.getChildren().addAll(anteriorButton, siguienteButton);
         return bottomBar;
     }
 
-    public MenuBar crearBarraSuperior() {
-        MenuBar menuBar = new MenuBar();
-        Menu menuFile = new Menu("Archivo");
-        Menu menuEdit = new Menu("Editar");
-        Menu menuView = new Menu("Ver");
-       
-        MenuItem menuItemNew = new MenuItem("Nuevo");
-        MenuItem menuItemOpen = new MenuItem("Abrir");
-        MenuItem menuItemSave = new MenuItem("Guardar");
-        MenuItem menuItemExit = new MenuItem("Salir");
-        menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemExit);
-        
-        Menu menuLogin = new Menu("Inicio de Sesión");
-        MenuItem menuItemLogin = new MenuItem("Iniciar Sesión");
-        menuItemLogin.setOnAction(event -> {
-            // Abrir nueva ventana con LoginView
-            App.ShowLogin();
-        });
-        menuLogin.getItems().add(menuItemLogin);
-
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuLogin);
-
-        return menuBar;
-    } 
+    
     
     public BorderPane getView() {
         return root;
