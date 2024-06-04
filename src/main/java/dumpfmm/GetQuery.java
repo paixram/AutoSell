@@ -38,7 +38,7 @@ public class GetQuery extends Query {
         Malloc<HashMap<String, Object>> data = super.DumpFileModelDataFORMAT(this.pathReference, fields);
         System.out.println("Formatted data: ");
         for(HashMap<String, Object> s : data) {
-            System.out.println(s);
+            System.out.println("As:" + s);
         }
         
         if(this.conditions.size() >= 1) {

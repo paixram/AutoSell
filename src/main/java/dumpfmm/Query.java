@@ -6,6 +6,7 @@ package dumpfmm;
 
 import espol.edu.ec.autosell.utils.Malloc;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -66,7 +67,7 @@ abstract class Query {
     }
     
     protected static HashMap<String, Object> parseAndValidate(String data, HashMap<String, String> fieldMap) {
-        HashMap<String, Object> row = new HashMap();
+        HashMap<String, Object> row = new LinkedHashMap();
         String[] parts = data.split(",");
         fieldMap.forEach((K, V) -> {
             String fieldName = K;

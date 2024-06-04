@@ -6,6 +6,7 @@ package dumpfmm;
 
 import espol.edu.ec.autosell.utils.Malloc;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -65,8 +66,8 @@ public class Parser {
 
         // Recoger todos los campos de la metadata del model 
         HashMap<String, Object> model_sets = metadata.get(model);
-        HashMap<String, String> model_arguments = (HashMap<String, String>) model_sets.get("Fields");
-
+        HashMap<String, String> model_arguments = (LinkedHashMap<String, String>) model_sets.get("Fields");
+        
         while (currentToken().getType() != TokenType.CONSULTOR && currentToken().getType() != TokenType.NUMBER && currentToken().getType() != TokenType.ENDQUERY) {
             switch (currentToken().getValue()) {
                 case ".":

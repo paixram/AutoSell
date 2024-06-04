@@ -6,7 +6,11 @@ package dumpfmm;
 
 import espol.edu.ec.autosell.utils.Malloc;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -17,16 +21,22 @@ public interface Almacenable {
         return this.getClass().getSimpleName();
     };
     default HashMap<String, String> getFields() {
-        HashMap<String, String> fields = new HashMap();
+        HashMap<String, String> fields = new LinkedHashMap();
       
         Field[] fld = this.getClass().getDeclaredFields();
+        
+        Arrays.sort(fld, Comparator.comparingInt(f -> {
+            FieldOrder order = f.getAnnotation(FieldOrder.class);
+            System.out.println("ORDER: " + order.order() + "Wioth: " + f);
+            return order.order();
+        }));
         
         int index = 0;
         for(Field fl : fld) {
             fields.put(fl.getName(), fl.getType().getSimpleName() + "," + index);
             index++;
         }
-
+        System.out.println("FIELDS: " + fields);
         return fields;
     };
 }
