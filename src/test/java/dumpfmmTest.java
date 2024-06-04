@@ -31,7 +31,7 @@ public class dumpfmmTest {
        String query_raw = "FROM Usuario GET ..";
        System.out.println("My Query: " + my_query);
        
-       mydb.executeQuery(query_raw);
+       System.out.println(mydb.executeQuery(query_raw));
     }
      
      @Test
