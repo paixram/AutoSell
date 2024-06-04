@@ -67,7 +67,7 @@ public class Parser {
         HashMap<String, Object> model_sets = metadata.get(model);
         HashMap<String, String> model_arguments = (HashMap<String, String>) model_sets.get("Fields");
 
-        while (currentToken().getType() != TokenType.CONSULTOR && currentToken().getType() != TokenType.NUMBER) {
+        while (currentToken().getType() != TokenType.CONSULTOR && currentToken().getType() != TokenType.NUMBER && currentToken().getType() != TokenType.ENDQUERY) {
             switch (currentToken().getValue()) {
                 case ".":
                     peek();
@@ -97,7 +97,6 @@ public class Parser {
                     }
 
             }
-
         }
 
         System.out.println("Query: " + columns.toString() + " - SIZE: " + columns.size());
@@ -278,7 +277,7 @@ public class Parser {
             peek();
             return token;
         }
-        throw new RuntimeException("Unexpected token: " + token);
+        throw new RuntimeException("Unexpected tokenn: " + token);
     }
     
     

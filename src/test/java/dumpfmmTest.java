@@ -26,11 +26,11 @@ public class dumpfmmTest {
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
-       String my_query = mydb.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "Waza").toQuery();
-       
+       String my_query = mydb.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "lucho").toQuery();
+       String query_raw = "FROM Usuario GET rol,idUsuario WHEN contrasenia=\"lucho\"";
        System.out.println("My Query: " + my_query);
        
-       mydb.executeQuery(my_query);
+       mydb.executeQuery(query_raw);
     }
      
      @Test
@@ -46,9 +46,10 @@ public class dumpfmmTest {
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
        String my_query = mydb.From("Usuario").Set("\"1\",\"lucho\",V").toQuery();
+       String query_raw = "FROM Usuario SET \"2\", \"Juan\", C";
        
        System.out.println("My Query: " + my_query);
        
-       mydb.executeQuery(my_query);
+       mydb.executeQuery(query_raw);
     }
 }

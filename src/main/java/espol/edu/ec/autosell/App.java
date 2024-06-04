@@ -1,5 +1,6 @@
 package espol.edu.ec.autosell;
 
+import dumpfmm.dumpfmm;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +19,7 @@ import espol.edu.ec.autosell.view.LoginView;
 import espol.edu.ec.autosell.controller.LoginController;
 import espol.edu.ec.autosell.controller.PrincipalController;
 import espol.edu.ec.autosell.controller.RegisterController;
-import espol.edu.ec.autosell.utils.Metodos;
+import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
 import java.util.List;
@@ -31,6 +32,9 @@ public class App extends Application {
     private static Scene scene;
     private static Stage mainStage;
     private static final String filePath = "src/main/resources/file/archivo.txt";
+    
+    // Database Settings
+    public static dumpfmm database;
 
     @Override
     public void start(Stage stage) {
@@ -61,7 +65,6 @@ public class App extends Application {
     
     public static void ShowLogin() {
         
-        List<String[]> data = Metodos.readDataFromFile(filePath);
         Usuario user_model = new Usuario();
         LoginView login_view = new LoginView();
         LoginController login_controller = new LoginController(user_model, login_view,mainStage);
@@ -88,6 +91,17 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        
+        // Database settings
+        database = new dumpfmm();
+        // Definir modelos
+        Usuario user_model = new Usuario();
+        Vehiculo vehiculo_model = new Vehiculo();
+        
+        // Registrar modelos
+        database.RegModel(user_model);
+        database.RegModel(vehiculo_model);
+        
         launch();
     }
     

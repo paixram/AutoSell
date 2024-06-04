@@ -9,12 +9,14 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class Usuario implements Almacenable {
-    String idUsuario ;
+    int idUsuario ;
+    String username;
     String contrasenia;
-    UserRole rol;
+    UserRole rol; 
 
-    public Usuario(String idUsuario, String contrasenia, UserRole rol) {
+    public Usuario(int idUsuario, String username, String contrasenia, UserRole rol) {
         this.idUsuario = idUsuario;
+        this.username = username;
         this.contrasenia = contrasenia;
         this.rol = rol;
     }
@@ -38,15 +40,19 @@ public class Usuario implements Almacenable {
     public boolean validarContrasenia(String contrasenia) {
         return this.contrasenia.equals(contrasenia);
     }    
-    public String getIdUsuario(){
+    public int getIdUsuario(){
         return idUsuario;
+    }
+    
+    public String getUsername(){
+        return username;
     }
     
     public UserRole getRole(){
         return rol;
     }
     
-    public void setIdUsuario(String idUsuario){
+    public void setIdUsuario(int idUsuario){
         this.idUsuario = idUsuario;
     }
     

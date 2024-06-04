@@ -4,10 +4,11 @@
  */
 package espol.edu.ec.autosell.controller;
 
+import espol.edu.ec.autosell.App;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import espol.edu.ec.autosell.model.Usuario;
-import espol.edu.ec.autosell.utils.Metodos;
+import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.utils.UserRole;
 import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.CompradorView;
@@ -17,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -31,7 +33,7 @@ public class RegisterController {
     public RegisterController(RegisterView rv) {
         registerView = rv;
         initialize();
-        this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
+        //this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
     }
     
     public void initialize() {
@@ -45,18 +47,20 @@ public class RegisterController {
 
       
         for (Usuario usuario : usuarios) {
-            if (usuario.getIdUsuario().equals(username)) {
+            if (usuario.getUsername().equals(username)) {
                 showAlert("Error", "El usuario ya existe", AlertType.ERROR);
                 return;
             }
         }
 
         
-        Usuario nuevoUsuario = new Usuario(username, password, role);
-        usuarios.add(nuevoUsuario);
-
+        //Usuario nuevoUsuario = new Usuario(username, password, role);
+        //usuarios.add(nuevoUsuario);
+        String query = "FROM Usuario GET ..";
+        Malloc<HashMap<String, Object>> results = App.database.executeQuery(query);
+        System.out.println(results);
         
-        Metodos.writeUsersToFile("src/main/resources/file/archivo.txt", usuarios);
+        //Metodos.writeUsersToFile("src/main/resources/file/archivo.txt", usuarios);
 
         
         showAlert("Registro Exitoso", "Usuario registrado correctamente", AlertType.INFORMATION);

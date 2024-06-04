@@ -5,7 +5,6 @@
 package espol.edu.ec.autosell.controller;
 
 import espol.edu.ec.autosell.model.Vehiculo;
-import espol.edu.ec.autosell.utils.Metodos;
 import espol.edu.ec.autosell.view.PrincipalView;
 import java.util.List;
 import javafx.geometry.Pos;
@@ -73,8 +72,8 @@ public class PrincipalController {
     }
     
     private void cargarVehiculos() {
-        List<Vehiculo> vehiculos = Metodos.cargarVehiculos("ruta.txt");
-        listaVehiculos.getItems().addAll(vehiculos);
+        //List<Vehiculo> vehiculos = Metodos.cargarVehiculos("ruta.txt");
+        //listaVehiculos.getItems().addAll(vehiculos);
     }
     
     

@@ -4,13 +4,14 @@
  */
 package espol.edu.ec.autosell.model;
 
+import dumpfmm.Almacenable;
 import java.util.List;
 
 /**
  *
  * @author José Miguel
  */
-public class Vehiculo {
+public class Vehiculo implements Almacenable {
     private String id;
     private String marca;
     private String modelo;
@@ -25,6 +26,10 @@ public class Vehiculo {
         this.precio = precio;
         this.km = km;
         this.fotos = fotos;
+    }
+    
+    public Vehiculo() {
+    
     }
 
     @Override

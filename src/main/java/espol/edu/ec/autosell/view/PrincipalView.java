@@ -9,7 +9,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import espol.edu.ec.autosell.utils.Metodos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

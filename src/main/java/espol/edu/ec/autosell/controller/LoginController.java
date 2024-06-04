@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.List;
 import espol.edu.ec.autosell.model.Usuario;
-import espol.edu.ec.autosell.utils.Metodos;
 import espol.edu.ec.autosell.view.LoginView;
 import espol.edu.ec.autosell.utils.UserRole;
 import espol.edu.ec.autosell.view.CompradorView;
@@ -37,8 +36,8 @@ public class LoginController {
         login_view = lv;
         this.primaryStage = primaryStage;
         initialize();
-        this.userData = Metodos.readDataFromFile("src/main/resources/file/archivo.txt");
-        this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
+        //this.userData = Metodos.readDataFromFile("src/main/resources/file/archivo.txt");
+        //this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
     }
     
     public void initialize() {
@@ -47,11 +46,11 @@ public class LoginController {
     }
 
     private void validateLogin() {
-        String idUsuario = login_view.getUsernameField().getText();
+        String username = login_view.getUsernameField().getText();
         String contrasenia = login_view.getContraseniaField().getText();
 
         for (Usuario usuario : usuarios) {
-            if (usuario.getIdUsuario().equals(idUsuario) && usuario.validarContrasenia(contrasenia)) {
+            if (usuario.getUsername().equals(username) && usuario.validarContrasenia(contrasenia)) {
                 primaryStage.close();
                 if (usuario.getRole() == UserRole.COMPRADOR) {
                     
