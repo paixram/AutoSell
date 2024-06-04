@@ -19,6 +19,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 public class PrincipalView {
@@ -39,9 +42,12 @@ public class PrincipalView {
         MenuBar menuBar = crearBarraSuperior();
         root.setTop(menuBar);
 
-        // Área central con la lista de vehículos
-        //listaVehiculos = new ListView<>();
-        root.setCenter(new Label("fedf")); // LOGICA PARA PRESENTAR LAS PUBLICACIONES
+        VBox topContainer = new VBox();
+        topContainer.setAlignment(Pos.CENTER);
+        Label titleLabel = new Label("AutoSell");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        topContainer.getChildren().addAll(menuBar, titleLabel);
+        root.setTop(topContainer);// LOGICA PARA PRESENTAR LAS PUBLICACIONES
 
         // Barra inferior con navegación y acciones
         HBox bottomBar = crearBarraInferior();

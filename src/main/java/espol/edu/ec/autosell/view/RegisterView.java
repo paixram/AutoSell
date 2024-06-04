@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -37,22 +38,22 @@ public class RegisterView extends LoginRegisterBaseView {
         
         usernameField = new TextField();
         usernameField.setPromptText("Username");
-        usernameField.setMaxWidth(200);
+        usernameField.setMaxWidth(250);
         usernameField.setPrefHeight(40);
-        usernameField.setPrefWidth(200);
+        usernameField.setPrefWidth(250);
 
         passwordField = new PasswordField();
         passwordField.setPromptText("Password");
-        passwordField.setMaxWidth(200);
+        passwordField.setMaxWidth(250);
         passwordField.setPrefHeight(40);
-        passwordField.setPrefWidth(200); 
+        passwordField.setPrefWidth(250); 
 
         
         roleComboBox = new ComboBox<>();
         roleComboBox.getItems().addAll(UserRole.COMPRADOR, UserRole.VENDEDOR);
-        roleComboBox.setMaxWidth(200);
+        roleComboBox.setMaxWidth(250);
         roleComboBox.setPrefHeight(40);
-        roleComboBox.setPrefWidth(200);
+        roleComboBox.setPrefWidth(250);
 
         
         signUpButton = new Button("Sign Up");
@@ -68,7 +69,7 @@ public class RegisterView extends LoginRegisterBaseView {
         regform.setAlignment(Pos.CENTER);
         regform.getChildren().addAll(welcome, usernameField, passwordField, roleComboBox, signUpButton);
         register_form.getChildren().add(regform);
-
+        HBox.setHgrow(register_form, Priority.ALWAYS);
         base_view.getChildren().add(register_form);
     }
 
