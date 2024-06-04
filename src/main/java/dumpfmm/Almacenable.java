@@ -26,9 +26,13 @@ public interface Almacenable {
         Field[] fld = this.getClass().getDeclaredFields();
         
         Arrays.sort(fld, Comparator.comparingInt(f -> {
-            FieldOrder order = f.getAnnotation(FieldOrder.class);
-            System.out.println("ORDER: " + order.order() + "Wioth: " + f);
-            return order.order();
+            if (f.isAnnotationPresent(FieldOrder.class)) {
+        FieldOrder order = f.getAnnotation(FieldOrder.class);
+        return order.order();
+      } else {
+        // Handle fields without FieldOrder (optional)
+        return Integer.MAX_VALUE; // Assuming higher order for fields without annotation
+      }
         }));
         
         int index = 0;

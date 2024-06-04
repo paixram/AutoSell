@@ -54,14 +54,14 @@ public class LoginController {
         String username = login_view.getUsernameField().getText();
         String contrasenia = login_view.getContraseniaField().getText();
 
-        for (Usuario usuario : usuarios) {
-            if (usuario.getUsername().equals(username) && usuario.validarContrasenia(contrasenia)) {
+        for (HashMap<String, Object> usuario : usuarios) {
+            if (usuario.get("username").equals(username) && usuario.get("contrasenia").equals(contrasenia)) {
                 primaryStage.close();
-                if (usuario.getRole() == UserRole.COMPRADOR) {
+                if (usuario.get("rol") == UserRole.COMPRADOR) {
                     
                     
                     new CompradorView().show();
-                } else if (usuario.getRole() == UserRole.VENDEDOR) {
+                } else if (usuario.get("rol") == UserRole.VENDEDOR) {
                     
                     
                     new VendedorView().show();
