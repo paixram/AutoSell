@@ -11,12 +11,14 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.List;
 import espol.edu.ec.autosell.model.Usuario;
+import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.view.LoginView;
 import espol.edu.ec.autosell.utils.UserRole;
 import espol.edu.ec.autosell.view.CompradorView;
 import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.VendedorView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -28,7 +30,7 @@ public class LoginController {
     
     private Usuario user_model;
     private LoginView login_view;
-    private List<Usuario> usuarios= new ArrayList<>();
+    private Malloc<HashMap<String, Object>> usuarios= new Malloc<>();
     private List<String[]> userData;
     private Stage primaryStage;
     public LoginController(Usuario um, LoginView lv, Stage primaryStage) {
@@ -41,6 +43,9 @@ public class LoginController {
     }
     
     public void initialize() {
+        String query_raw = "FROM Usuario GET ..";
+        Malloc<HashMap<String, Object>> Qu=App.database.executeQuery(query_raw);
+        this.usuarios=Qu;
         login_view.getLoginButton().setOnAction(e -> validateLogin());
         login_view.getSignUpButton().setOnAction(e -> App.ShowRegister());
     }
