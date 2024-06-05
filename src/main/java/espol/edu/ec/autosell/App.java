@@ -22,6 +22,7 @@ import espol.edu.ec.autosell.controller.RegisterController;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class App extends Application {
     private static Scene scene;
     private static Stage mainStage;
     private static final String filePath = "src/main/resources/file/archivo.txt";
-    
+    private static List<Vehiculo> vehiculos = new ArrayList<>();
     // Database Settings
     public static dumpfmm database;
 
@@ -49,7 +50,7 @@ public class App extends Application {
     
     public void showPrincipalView() {
         PrincipalView pv = new PrincipalView();
-        PrincipalController pc = new PrincipalController(pv);
+        PrincipalController pc = new PrincipalController(pv,vehiculos);
         
         scene = new Scene(pv.getView(), 800, 600);
         

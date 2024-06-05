@@ -6,7 +6,9 @@ package espol.edu.ec.autosell.controller;
 
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.view.PrincipalView;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,16 +23,24 @@ import javafx.scene.layout.HBox;
  */
 public class PrincipalController {
     private PrincipalView principal_view;
+    private int currentIndex = 0;
+    private List<Vehiculo> vehiculos;
     
-    private ListView<Vehiculo> listaVehiculos;
-    
-    public PrincipalController(PrincipalView pv) {
+    public PrincipalController(PrincipalView pv, List<Vehiculo> vehiculos) {
         principal_view = pv;
+        this.vehiculos = vehiculos;
         initialize();
     }
     
     public void initialize() {
-        principal_view.anteriorButton.setOnAction(event -> {
+        principal_view.getAnteriorButton().setOnAction(e -> showPreviousVehicle());
+        principal_view.getSiguienteButton().setOnAction(e -> showNextVehicle());
+        principal_view.getCrearButton().setOnAction(e -> createVehicle());
+        principal_view.getEditarButton().setOnAction(e -> editVehicle());
+        principal_view.getEliminarButton().setOnAction(e -> deleteVehicle());
+        updateView();
+    }
+        /*principal_view.anteriorButton.setOnAction(event -> {
             int currentIndex = listaVehiculos.getSelectionModel().getSelectedIndex();
             if (currentIndex > 0) {
                 listaVehiculos.getSelectionModel().select(currentIndex - 1);
@@ -43,7 +53,7 @@ public class PrincipalController {
                 listaVehiculos.getSelectionModel().select(currentIndex + 1);
             }
         });
-
+        
         principal_view.crearButton.setOnAction(event -> {
             //abrirVentanaCrearVehiculo();
             //CrearVehiculoView crearVehiculoView = new CrearVehiculoView();
@@ -70,11 +80,122 @@ public class PrincipalController {
             }
         });
     }
-    
+    }
     private void cargarVehiculos() {
         //List<Vehiculo> vehiculos = Metodos.cargarVehiculos("ruta.txt");
         //listaVehiculos.getItems().addAll(vehiculos);
+    }*/
+    private void showPreviousVehicle() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateView();
+        }
+    }
+
+    private void showNextVehicle() {
+        if (currentIndex < vehiculos.size() - 1) {
+            currentIndex++;
+            updateView();
+        }
+    }
+
+    private void updateView() {
+    if (!vehiculos.isEmpty() && currentIndex >= 0 && currentIndex < vehiculos.size()) {
+        Vehiculo currentVehicle = vehiculos.get(currentIndex);
+        principal_view.updateVehicleDetails(currentVehicle);
+    } else {
+        if (vehiculos.isEmpty()) {
+            System.out.println("No hay vehículos disponibles para mostrar.");
+        } else {
+            System.out.println("El índice está fuera de los límites de la lista de vehículos.");
+        }
+    }
+}
+
+    public void createVehicle() {
+        Vehiculo nuevoVehiculo = new Vehiculo();
+        
+        vehiculos.add(nuevoVehiculo);
+        currentIndex = vehiculos.size() - 1;
+        updateView();
+}
+
+    public void editVehicle() {
+        Vehiculo vehiculoActual = vehiculos.get(currentIndex);
+        
+        updateView();
+    }
+
+    public void deleteVehicle() {
+        if (!vehiculos.isEmpty()) {
+            vehiculos.remove(currentIndex);
+            if (currentIndex >= vehiculos.size()) {
+                currentIndex = vehiculos.size() - 1;
+            }
+            updateView();
+        }
+    }
+    public void sortByPrice() {
+        vehiculos.sort(Comparator.comparingDouble(Vehiculo::getPrecio));
+        currentIndex = 0;
+        updateView();
+    }
+
+    public void sortByKilometraje() {
+        vehiculos.sort(Comparator.comparingDouble(Vehiculo::getKm));
+        currentIndex = 0;
+        updateView();
+    }
+     public void applySelectedFilter() {
+        String selectedFilter = principal_view.getSelectedFilter();
+        
+        switch (selectedFilter) {
+            case "Marca y Modelo":
+                filterByMarcaModelo();
+                break;
+            case "Precio":
+                filterByPrecio();
+                break;
+            case "Kilometraje":
+                filterByKilometraje();
+                break;
+            
+        }
+    }
+    private void filterByMarcaModelo() {
+        String marca = principal_view.getMarca();
+        String modelo = principal_view.getModelo();
+        
+        List<Vehiculo> filteredList = vehiculos.stream()
+            .filter(v -> v.getMarca().equalsIgnoreCase(marca) && v.getModelo().equalsIgnoreCase(modelo))
+            .collect(Collectors.toList());
+        
+        updateFilteredView(filteredList);
     }
     
+    private void filterByPrecio() {
+        double minPrecio = principal_view.getMinPrecio();
+        double maxPrecio = principal_view.getMaxPrecio();
+        
+        List<Vehiculo> filteredList = vehiculos.stream()
+            .filter(v -> v.getPrecio() >= minPrecio && v.getPrecio() <= maxPrecio)
+            .collect(Collectors.toList());
+        
+        updateFilteredView(filteredList);
+    }
     
+    private void filterByKilometraje() {
+        double minKm = principal_view.getMinKilometraje();
+        double maxKm = principal_view.getMaxKilometraje();
+        
+        List<Vehiculo> filteredList = vehiculos.stream()
+            .filter(v -> v.getKm() >= minKm && v.getKm() <= maxKm)
+            .collect(Collectors.toList());
+        
+        updateFilteredView(filteredList);
+    } 
+     public void updateFilteredView(List<Vehiculo> filteredVehicles) {
+        
+        principal_view.updateVehicleDetails(filteredVehicles);
+    }
 }

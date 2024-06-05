@@ -85,4 +85,5 @@ public class Vehiculo implements Almacenable {
         this.fotos = fotos;
     }
     
+    
 }

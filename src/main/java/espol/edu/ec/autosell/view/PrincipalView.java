@@ -14,18 +14,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
 public class PrincipalView {
-    
+    private Label vehicleDetailsLabel;
     public BorderPane root;
     
     // Items
@@ -34,6 +36,13 @@ public class PrincipalView {
     public Button crearButton = new Button();
     public Button editarButton = new Button();
     public Button eliminarButton = new Button();
+    private ComboBox<String> filterComboBox = new ComboBox<>();
+    private TextField marcaTextField = new TextField();
+    private TextField modeloTextField = new TextField();
+    private TextField minPrecioTextField = new TextField();
+    private TextField maxPrecioTextField = new TextField();
+    private TextField minKmTextField = new TextField();
+    private TextField maxKmTextField = new TextField();
     
     public PrincipalView() {
         //login_view.getLoginButton().setOnAction(e -> validateLogin());
@@ -142,9 +151,91 @@ public class PrincipalView {
             "-fx-cursor: hand;"
         );
     }
+
+    public Button getAnteriorButton() {
+        return anteriorButton;
+    }
+
+    public Button getSiguienteButton() {
+        return siguienteButton;
+    }
+
+    public Button getCrearButton() {
+        return crearButton;
+    }
+
+    public Button getEditarButton() {
+        return editarButton;
+    }
+
+    public Button getEliminarButton() {
+        return eliminarButton;
+    }
     
     public BorderPane getView() {
         return root;
+    }
+    public void updateVehicleDetails(List<Vehiculo> vehiculos) {
+        if (vehiculos.isEmpty()) {
+        // Si la lista está vacía, establece el texto en vacío o algún mensaje indicando que no hay vehículos disponibles
+            vehicleDetailsLabel.setText("No hay vehículos disponibles.");
+        } else {
+        // Si la lista no está vacía, obtén los detalles del primer vehículo de la lista
+            Vehiculo vehiculo = vehiculos.get(0);
+            String details = "Marca: " + vehiculo.getMarca() + "\n" +"Modelo: " + vehiculo.getModelo() + "\n" +"Precio: $" + vehiculo.getPrecio() + "\n" +"Kilometraje: " + vehiculo.getKm() + " km";
+            vehicleDetailsLabel.setText(details);
+    }
+}
+
+    public String getSelectedFilter() {
+    // Suponiendo que tienes un ComboBox llamado filterComboBox
+        return filterComboBox.getValue(); // Retorna el valor seleccionado del ComboBox
+}
+
+    public String getMarca() {
+        // Suponiendo que tienes un TextField llamado marcaTextField
+        return marcaTextField.getText(); // Retorna el texto ingresado en el TextField de la marca
+    }
+
+    public String getModelo() {
+        // Suponiendo que tienes un TextField llamado modeloTextField
+        return modeloTextField.getText(); // Retorna el texto ingresado en el TextField del modelo
+    }
+
+    public double getMinPrecio() {
+        // Suponiendo que tienes un TextField llamado minPrecioTextField para el precio mínimo
+        try {
+            return Double.parseDouble(minPrecioTextField.getText()); // Retorna el valor parseado del TextField de precio mínimo
+        } catch (NumberFormatException e) {
+            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+        }
+    }
+
+    public double getMaxPrecio() {
+        // Suponiendo que tienes un TextField llamado maxPrecioTextField para el precio máximo
+        try {
+            return Double.parseDouble(maxPrecioTextField.getText()); // Retorna el valor parseado del TextField de precio máximo
+        } catch (NumberFormatException e) {
+            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+        }
+    }
+
+    public double getMinKilometraje() {
+        // Suponiendo que tienes un TextField llamado minKmTextField para el kilometraje mínimo
+        try {
+            return Double.parseDouble(minKmTextField.getText()); // Retorna el valor parseado del TextField de kilometraje mínimo
+        } catch (NumberFormatException e) {
+            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+        }
+    }
+
+    public double getMaxKilometraje() {
+        // Suponiendo que tienes un TextField llamado maxKmTextField para el kilometraje máximo
+        try {
+            return Double.parseDouble(maxKmTextField.getText()); // Retorna el valor parseado del TextField de kilometraje máximo
+        } catch (NumberFormatException e) {
+            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+        }
     }
 }
 
