@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.controller;
 
+import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -56,12 +57,20 @@ public class RegisterController {
         
         //Usuario nuevoUsuario = new Usuario(username, password, role);
         //usuarios.add(nuevoUsuario);
-        String query = "FROM Usuario GET ..";
-        Malloc<HashMap<String, Object>> results = App.database.executeQuery(query);
-        System.out.println(results);
+        String query = "FROM Usuario GET .. WHEN username = \"" + username + "\""; // Verificar si usuario existe
+        Response results = App.database.executeQuery(query);
+        
+        if(!results.isEmptyResult()) {
+            showAlert("User Already Exists", "Este usuario ya existe en la base de datos", AlertType.WARNING);
+            return;
+        }
         
         //Metodos.writeUsersToFile("src/main/resources/file/archivo.txt", usuarios);
-
+        
+        // Insertar el usuario en la DB
+        String register_query = "FROM Usuario SET AUTOINCREMENT, \"" + username + "\",\"" + password + "\"" + "\"" + role.toString()+ "\"";
+        
+        App.database.executeQuery(register_query);
         
         showAlert("Registro Exitoso", "Usuario registrado correctamente", AlertType.INFORMATION);
         App.ShowLogin();

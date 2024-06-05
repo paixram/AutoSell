@@ -8,6 +8,7 @@ package dumpfmm;
 // Cada model tendra que implementar la interface Almacenable para poder operar sobre ella
 import espol.edu.ec.autosell.utils.Malloc;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -22,7 +23,7 @@ public class dumpfmm extends Engine implements Queriable {
     protected String _WORK_SPACE_ = _USER_HOME_DIRECTORY_ + "/.dumpfmm";
     
     // Stablish Hashmap with models and metadata
-    protected HashMap<String, HashMap<String, Object>> models_metadata = new HashMap();
+    protected LinkedHashMap<String, LinkedHashMap<String, Object>> models_metadata = new LinkedHashMap();
     
     public dumpfmm() {
         // Si el workspace no existe entonces crear el workspace
@@ -54,9 +55,9 @@ public class dumpfmm extends Engine implements Queriable {
         if(models_metadata.containsKey(modelName)) return false; // Si el modelo exsite entonces no volver a registrarlo
         
         // Si el modelo no esta registrado o no existe en el hashmap entonces cargarlos con su informacion
-        HashMap<String, Object> metadata = new HashMap(); 
+        LinkedHashMap<String, Object> metadata = new LinkedHashMap(); 
         
-        HashMap<String, String> fields = model.getFields();   // Field name - Field Type
+        LinkedHashMap<String, String> fields = model.getFields();   // Field name - Field Type
         String path_r = _WORK_SPACE_ + "/" + modelName + Engine.getExtension();
         
         metadata.put("Fields", fields);
@@ -146,7 +147,7 @@ public class dumpfmm extends Engine implements Queriable {
         return super.__QUERY__;
     }
     
-    public Malloc<HashMap<String, Object>> executeQuery(String query) {
+    public Response executeQuery(String query) {
         return Engine.RunQuery(query, models_metadata);
     }
 

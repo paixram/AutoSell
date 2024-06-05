@@ -6,6 +6,7 @@ package dumpfmm;
 
 import espol.edu.ec.autosell.utils.Malloc;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -30,7 +31,7 @@ public class SetQuery extends Query {
     
     public void Run() {
         // Coger lo ya existente y volver a incluirlo junto a la data nueva
-        Malloc<HashMap<String, Object>> data = super.DumpFileModelDataFORMAT(this.pathReference, fields);
+        Malloc<LinkedHashMap<String, Object>> data = super.DumpFileModelDataFORMAT(this.pathReference, fields);
         //Query.parseAndValidate(, fields)
         // Juntar la data
         String data_outformatted = String.join(",", this.values);
@@ -41,7 +42,7 @@ public class SetQuery extends Query {
     }
 
     @Override
-    public Malloc<HashMap<String, Object>> execute() {
+    public Response execute() {
         this.Run();
         return null;
     }

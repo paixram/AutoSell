@@ -5,6 +5,7 @@
 package espol.edu.ec.autosell.model;
 
 import dumpfmm.Almacenable;
+import dumpfmm.FieldOrder;
 import java.util.List;
 
 /**
@@ -12,11 +13,23 @@ import java.util.List;
  * @author José Miguel
  */
 public class Vehiculo implements Almacenable {
+    
+    @FieldOrder(order = 1)
     private String id;
+    
+    @FieldOrder(order = 2)
     private String marca;
+    
+    @FieldOrder(order = 3)
     private String modelo;
+    
+    @FieldOrder(order = 4)
     private double precio;
+    
+    @FieldOrder(order = 5)
     private int km;
+    
+    @FieldOrder(order = 6)
     private String fotos;
 
     public Vehiculo(String id, String marca, String modelo, double precio, int km,String fotos) {

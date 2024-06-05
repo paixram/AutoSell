@@ -27,7 +27,7 @@ abstract class Query {
         return model;
     }
     
-    public Malloc<HashMap<String, Object>> DumpFileModelDataFORMAT(String pathReference, HashMap<String, String> fields) {
+    public static Malloc<LinkedHashMap<String, Object>> DumpFileModelDataFORMAT(String pathReference, HashMap<String, String> fields) {
         //Malloc<String> leer toda la data desde los archivos
         Malloc<String> raw_data = Engine.ReadRAWModelFile(pathReference);
         // TODO: Formatear los datos en un mapa de Hash
@@ -36,7 +36,11 @@ abstract class Query {
         //HashMap<Integer, Malloc<>>
         System.out.println("FIELFS: " + fields);
         
-        Malloc<HashMap<String, Object>> formattedData = new Malloc<>();
+        Malloc<LinkedHashMap<String, Object>> formattedData = new Malloc<>();
+        
+        if(raw_data.isEmpty()) {
+            return formattedData;
+        }
         
         for(String data : raw_data) {
             System.out.println("DATA: " + data);
@@ -46,10 +50,10 @@ abstract class Query {
         return formattedData;
     }
     
-    protected Malloc<HashMap<String, Object>> FilterByConditions(Malloc<HashMap<String, Object>> rows, Malloc<Condition> conditions) {
-        Malloc<HashMap<String, Object>> matchingRows = new Malloc();
+    protected Malloc<LinkedHashMap<String, Object>> FilterByConditions(Malloc<LinkedHashMap<String, Object>> rows, Malloc<Condition> conditions) {
+        Malloc<LinkedHashMap<String, Object>> matchingRows = new Malloc();
         
-        for(HashMap<String, Object> row : rows) {
+        for(LinkedHashMap<String, Object> row : rows) {
             boolean matchesAll = true;
             for(Condition condition : conditions) {
                 if(!condition.evaluate(row)) {
@@ -66,8 +70,8 @@ abstract class Query {
         return matchingRows;
     }
     
-    protected static HashMap<String, Object> parseAndValidate(String data, HashMap<String, String> fieldMap) {
-        HashMap<String, Object> row = new LinkedHashMap();
+    protected static LinkedHashMap<String, Object> parseAndValidate(String data, HashMap<String, String> fieldMap) {
+        LinkedHashMap<String, Object> row = new LinkedHashMap();
         String[] parts = data.split(",");
         fieldMap.forEach((K, V) -> {
             String fieldName = K;
@@ -107,7 +111,7 @@ abstract class Query {
         }
     }
     
-    public abstract Malloc<HashMap<String, Object>> execute();
+    public abstract Response execute();
 
     @Override
     public String toString() {

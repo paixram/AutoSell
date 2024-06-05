@@ -20,8 +20,8 @@ public interface Almacenable {
     default String getSID() {
         return this.getClass().getSimpleName();
     };
-    default HashMap<String, String> getFields() {
-        HashMap<String, String> fields = new LinkedHashMap();
+    default LinkedHashMap<String, String> getFields() {
+        LinkedHashMap<String, String> fields = new LinkedHashMap();
       
         Field[] fld = this.getClass().getDeclaredFields();
         
