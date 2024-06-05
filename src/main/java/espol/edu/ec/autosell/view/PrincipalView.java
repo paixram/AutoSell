@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -41,7 +42,8 @@ public class PrincipalView {
         
         // Contenedor para el botón de inicio de sesión a la derecha
         Button loginButton = new Button("Iniciar Sesión");
-        loginButton.setStyle(
+        configurarBoton(loginButton);
+         /*loginButton.setStyle(
             "-fx-background-color: black;" +
             "-fx-text-fill: white;" +
             "-fx-background-radius: 5; " +     // Bordes cuadrados
@@ -51,7 +53,7 @@ public class PrincipalView {
             "-fx-border-color: black; " +      // Color del borde
             "-fx-border-width: 2px;" +          // Ancho del borde
             "-fx-cursor: hand;"
-        );
+        );*/
         loginButton.setOnAction(event -> {
             // Abrir nueva ventana con LoginView
             App.ShowLogin();
@@ -59,9 +61,9 @@ public class PrincipalView {
         HBox loginContainer = new HBox();
         loginContainer.setAlignment(Pos.TOP_RIGHT);
         loginContainer.getChildren().add(loginButton);
-        
+        root.setTop(loginContainer);
         // Contenedor para el título AutoSell centrado
-        Label titleLabel = new Label("AutoSell");
+        /*Label titleLabel = new Label("AutoSell");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         HBox titleContainer = new HBox();
         titleContainer.setAlignment(Pos.CENTER);
@@ -70,7 +72,17 @@ public class PrincipalView {
         // Agregar los contenedores al BorderPane
         root.setTop(loginContainer);
         root.setCenter(titleContainer);
-
+        */
+        ScrollPane scrollPane = new ScrollPane();
+        VBox mainContent = new VBox();
+        mainContent.setAlignment(Pos.TOP_CENTER);
+        // Aquí puedes agregar contenido a mainContent
+        Label titleLabel = new Label("AutoSell");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        mainContent.getChildren().add(titleLabel);
+        scrollPane.setContent(mainContent);
+        scrollPane.setFitToWidth(true);
+        root.setCenter(scrollPane);
         // Barra inferior con navegación y acciones
         HBox bottomBar = crearBarraInferior();
         root.setBottom(bottomBar);
@@ -81,7 +93,8 @@ public class PrincipalView {
         bottomBar.setAlignment(Pos.CENTER);
 
         Button anteriorButton = new Button("Anterior");
-        anteriorButton.setStyle(
+        configurarBoton(anteriorButton);
+        /*anteriorButton.setStyle(
             "-fx-background-color: black;" +
             "-fx-text-fill: white;" +
             "-fx-background-radius: 5; " +     // Bordes cuadrados
@@ -91,9 +104,10 @@ public class PrincipalView {
             "-fx-border-color: black; " +      // Color del borde
             "-fx-border-width: 2px;" +          // Ancho del borde
             "-fx-cursor: hand;"
-        );
+        );*/
         Button siguienteButton = new Button("Siguiente");
-        siguienteButton.setStyle(
+        configurarBoton(siguienteButton);
+       /* siguienteButton.setStyle(
             "-fx-background-color: black;" +
             "-fx-text-fill: white;" +
             "-fx-background-radius: 5; " +     // Bordes cuadrados
@@ -114,8 +128,20 @@ public class PrincipalView {
         bottomBar.getChildren().addAll(anteriorButton, siguienteButton);
         return bottomBar;
     }
-
     
+    private void configurarBoton(Button boton) {
+        boton.setStyle(
+            "-fx-background-color: black;" +
+            "-fx-text-fill: white;" +
+            "-fx-background-radius: 5; " +
+            "-fx-border-radius: 10; " +
+            "-fx-font-size: 15px; " +
+            "-fx-padding: 5 10; " +
+            "-fx-border-color: black; " +
+            "-fx-border-width: 2px;" +
+            "-fx-cursor: hand;"
+        );
+    }
     
     public BorderPane getView() {
         return root;

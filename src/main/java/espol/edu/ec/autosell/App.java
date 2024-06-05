@@ -102,6 +102,13 @@ public class App extends Application {
         database.RegModel(user_model);
         database.RegModel(vehiculo_model);
         
+        String my_query = database.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "lucho").toQuery();
+       //String query_raw = "FROM Usuario GET rol,idUsuario WHEN contrasenia=\"lolilu324\"";
+       String query_raw = "FROM Usuario GET ..";
+       System.out.println("My Query: " + my_query);
+       
+       System.out.println(database.executeQuery(query_raw));
+        
         launch();
     }
     
