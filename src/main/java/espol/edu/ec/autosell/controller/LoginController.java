@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package espol.edu.ec.autosell.controller;
+import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.VendedorView;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -30,7 +32,7 @@ public class LoginController {
     
     private Usuario user_model;
     private LoginView login_view;
-    private Malloc<HashMap<String, Object>> usuarios= new Malloc<>();
+    //private Malloc<HashMap<String, Object>> usuarios= new Malloc<>();
     private List<String[]> userData;
     private Stage primaryStage;
     public LoginController(Usuario um, LoginView lv, Stage primaryStage) {
@@ -43,9 +45,7 @@ public class LoginController {
     }
     
     public void initialize() {
-        String query_raw = "FROM Usuario GET ..";
-        Malloc<HashMap<String, Object>> Qu=App.database.executeQuery(query_raw);
-        this.usuarios=Qu;
+        //this.usuarios=Qu;
         login_view.getLoginButton().setOnAction(e -> validateLogin());
         login_view.getSignUpButton().setOnAction(e -> App.ShowRegister());
     }
@@ -53,25 +53,31 @@ public class LoginController {
     private void validateLogin() {
         String username = login_view.getUsernameField().getText();
         String contrasenia = login_view.getContraseniaField().getText();
-
-        for (HashMap<String, Object> usuario : usuarios) {
-            if (usuario.get("username").equals(username) && usuario.get("contrasenia").equals(contrasenia)) {
-                primaryStage.close();
-                if (usuario.get("rol") == UserRole.COMPRADOR) {
-                    
-                    
-                    new CompradorView().show();
-                } else if (usuario.get("rol") == UserRole.VENDEDOR) {
-                    
-                    
-                    new VendedorView().show();
-                }
-                return;
-            }
+        
+        String query_user_find = "FROM Usuario GET .. WHEN username=\"" + username + "\"";
+        Response r = App.database.executeQuery(query_user_find);
+        
+        
+        
+        if(r.isEmptyResult()) {
+            showAlert("Error", "Usuario no encontrado", AlertType.ERROR);
+            return;
+        }
+        
+        LinkedHashMap<String, Object> user_data = r.getUnique();
+            
+        if(!user_data.get("contrasenia").equals(contrasenia)) {   
+            showAlert("Error", "Contraseña no valida", AlertType.ERROR);
+            return;
         }
 
-        showAlert("Error", "Usuario o contraseña incorrectos", AlertType.ERROR);
+            
+        showAlert("Succesfull", "Usuario encontrado", AlertType.CONFIRMATION);
+                
+        // TODO: Aqui ya se obtiene el usuario, verficiar si es comprador o vendedor y crear las vistas
+        // ShowHome(); o algo asi
     }
+    
   
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);

@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /*
 Main primitives starts with _ and ends with _
@@ -85,7 +86,7 @@ public class Engine {
     }
     
     // TODO: Hacer los metodos de lectura del query
-    public static Malloc<HashMap<String, Object>> RunQuery(String query, HashMap<String, HashMap<String, Object>> md) {
+    public static Response RunQuery(String query, LinkedHashMap<String, LinkedHashMap<String, Object>> md) {
         // TODO: Se lee la query y se interpreta
         
         Lexer query_lexer = new Lexer(query); // Lee la query y la tokeniza
@@ -96,7 +97,7 @@ public class Engine {
         }
         Parser pa = new Parser(tokens, md);
         Query que = pa.parse();
-        Malloc<HashMap<String, Object>> results = que.execute();
+        Response results = que.execute();
         return results;
     }
     

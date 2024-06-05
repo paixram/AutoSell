@@ -17,9 +17,9 @@ public class Parser {
 
     private Malloc<Token> tokens;
     private int currentToken;
-    private HashMap<String, HashMap<String, Object>> metadata;
+    private LinkedHashMap<String, LinkedHashMap<String, Object>> metadata;
 
-    public Parser(Malloc<Token> tokens, HashMap<String, HashMap<String, Object>> md) {
+    public Parser(Malloc<Token> tokens, LinkedHashMap<String, LinkedHashMap<String, Object>> md) {
         this.tokens = tokens;
         this.metadata = md;
         this.currentToken = 0;
@@ -62,11 +62,11 @@ public class Parser {
 
     private Query parseGetQuery(String model) {
         // Get query settings
-        HashMap<String, String> columns = new HashMap<>();
+        LinkedHashMap<String, String> columns = new LinkedHashMap<>();
 
         // Recoger todos los campos de la metadata del model 
-        HashMap<String, Object> model_sets = metadata.get(model);
-        HashMap<String, String> model_arguments = (LinkedHashMap<String, String>) model_sets.get("Fields");
+        LinkedHashMap<String, Object> model_sets = (LinkedHashMap<String, Object>) metadata.get(model);
+        LinkedHashMap<String, String> model_arguments = (LinkedHashMap<String, String>) model_sets.get("Fields");
         
         while (currentToken().getType() != TokenType.CONSULTOR && currentToken().getType() != TokenType.NUMBER && currentToken().getType() != TokenType.ENDQUERY) {
             switch (currentToken().getValue()) {
@@ -132,11 +132,74 @@ public class Parser {
         // Verificar que la cantidad de elementos a insertar no sea mayor a los argumentos existentes
         System.out.println("Modeeel: " + model_arguments);
         
+        String pathReference = (String) model_sets.get("Path Reference");
         Malloc<String> v = new Malloc();
+        // Verificar que exista un autoincrement
+        /*if(currentToken().getType() == TokenType.IDENTIFIER && currentToken().getValue().equals("AUTOINCREMENT")) {
+            // Obtener todos
+            //String query = "FROM " + model + "GET ..";
+            Malloc<LinkedHashMap<String, Object>> data = Query.DumpFileModelDataFORMAT(pathReference, model_arguments);
+            System.out.println("DATAAAAAAA: " + data);
+            int size = data.size();
+            LinkedHashMap<String, Object> last_model = data.get(size - 1);
+            System.out.println("DATAAAAAAA: " + last_model);
+            //last_model.get(); // en la key va el field 0
+            String target_id = "";
+            for(Map.Entry<String,String> d : model_arguments.entrySet()) {
+                String index = d.getValue().split(",")[1];
+                if(index.equals("0")) {
+                    target_id = d.getKey();
+                }
+            }
+        }*/
+        
+        
         int position = 0;
+        int field_reader_count = 0;
         while(currentToken < tokens.size() && currentToken().getType() != TokenType.ENDQUERY) {
             if(CurrentTypeTokenIs(TokenType.NUMBER) || CurrentTypeTokenIs(TokenType.IDENTIFIER) || CurrentTypeTokenIs(TokenType.STRING)) {
+                //System.out.println("Autoincremento: " + currentToken().getValue());
+                
+                // Comprobar si llega un AUTOINCREMENT
+                if(currentToken().getType() == TokenType.IDENTIFIER && currentToken().getValue().equals("AUTOINCREMENT")) {
+                    Malloc<LinkedHashMap<String, Object>> data = Query.DumpFileModelDataFORMAT(pathReference, model_arguments);
+                    
+                    int size = data.size();
+                    System.out.println("Sizee: " + data.toString());
+                    if(size == 0) {
+                        v.add("0");
+                        peek();
+                        field_reader_count++;
+                        continue;
+                    }
+                    LinkedHashMap<String, Object> last_model = data.get(size - 1);
+                    //last_model.get(); // en la key va el field 0
+                    String target_field = "";
+                    for(Map.Entry<String,String> d : model_arguments.entrySet()) {
+                        String index = d.getValue().split(",")[1];
+                        if(index.equals(String.valueOf(field_reader_count))) {
+                            target_field = d.getKey();
+                        }
+                    }
+                    
+                    System.out.println("EL target ID fue: " + target_field);
+                    int target = 0;
+                    try{
+                        target = (int)last_model.get(target_field);
+                    }catch(ClassCastException d) {
+                        throw new RuntimeException("Serveral Error: The field " + target_field + " cannot be AUTOINCREMENT because the field is not Integer");
+                    }
+                    
+                    int new_increment = ++target;
+                    System.out.print("Nuevo incremento: " + new_increment);
+                    v.add(String.valueOf(new_increment));
+                    peek();
+                    field_reader_count++;
+                    continue;
+                }
+                
                 v.add(currentToken().getValue());
+                field_reader_count++;
                 peek();
             }
             
@@ -156,7 +219,7 @@ public class Parser {
         validateValues(v, model_arguments);
         v = cleanComillas(v);
         
-        String pathReference = (String) model_sets.get("Path Reference");
+        
         //System.out.println("DATTOS:  " + values);
         // Formatear data con los valores
         return new SetQuery(model, v, pathReference, model_arguments); // Aqui quede
