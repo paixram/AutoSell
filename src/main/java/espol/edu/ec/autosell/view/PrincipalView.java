@@ -54,12 +54,15 @@ public class PrincipalView {
     
     public PrincipalView() {
         //this.is_registered = reg;
+        root = new BorderPane();
+        
+        showButtons();
     }
     
-    private void ShowButton() {
+    private void ShowLoginButton() {
     //login_view.getLoginButton().setOnAction(e -> validateLogin());
         //login_view.getSignUpButton().setOnAction(e -> showRegister());
-         root = new BorderPane();
+         //root = new BorderPane();
         
         // Contenedor para el botón de inicio de sesión a la derecha
         Button loginButton = new Button("Iniciar Sesión");
@@ -80,12 +83,16 @@ public class PrincipalView {
             // Abrir nueva ventana con LoginView
             App.ShowLogin();
         });
-        
         // HBOX
         HBox loginContainer = new HBox();
         loginContainer.setAlignment(Pos.TOP_RIGHT);
         loginContainer.getChildren().add(loginButton);
         root.setTop(loginContainer);
+        
+    }
+    
+    public void showButtons() {
+        
         // Contenedor para el título AutoSell centrado
         /*Label titleLabel = new Label("AutoSell");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
