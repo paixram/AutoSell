@@ -102,7 +102,7 @@ public class PrincipalController {
     private void updateView() {
     if (!vehiculos.isEmpty() && currentIndex >= 0 && currentIndex < vehiculos.size()) {
         Vehiculo currentVehicle = vehiculos.get(currentIndex);
-        principal_view.updateVehicleDetails(currentVehicle);
+        principal_view.updateVehicleDetails((List<Vehiculo>) currentVehicle);
     } else {
         if (vehiculos.isEmpty()) {
             System.out.println("No hay vehículos disponibles para mostrar.");
