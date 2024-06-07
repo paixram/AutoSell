@@ -53,4 +53,23 @@ public class dumpfmmTest {
        
        mydb.executeQuery(query_raw);
     }
+    @Test
+     public void setVehiculos() {
+        dumpfmm mydb = new dumpfmm();
+        
+        // Models
+        Usuario user_model = new Usuario();
+        
+        // Register models
+        mydb.RegModel(user_model);
+       
+       //System.out.println( System.getProperty("user.home"));
+       // Consults by find
+       String my_query = mydb.From("Usuario").Set("\"1\",\"lucho\",V").toQuery();
+       String query_raw = "FROM Usuario SET AUTOINCREMENT,\"Juan\",\"Elluan\", C";
+       
+       System.out.println("My Query: " + my_query);
+       
+       mydb.executeQuery(query_raw);
+    }
 }
