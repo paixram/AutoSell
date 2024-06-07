@@ -15,7 +15,6 @@ import javafx.stage.Stage;
  * @author José Miguel
  */
 public class CompradorView extends PrincipalView{
-    private Stage stage;
 
     public CompradorView() {
         super();
@@ -35,7 +34,5 @@ public class CompradorView extends PrincipalView{
         stage.setTitle("Vista del Comprador");
     }
     */
-    public void show() {
-        stage.show();
-    }
+   
 }

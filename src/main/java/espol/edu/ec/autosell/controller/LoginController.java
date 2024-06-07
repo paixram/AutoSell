@@ -73,7 +73,12 @@ public class LoginController {
 
             
         showAlert("Succesfull", "Usuario encontrado", AlertType.CONFIRMATION);
-                
+        
+        switch((String)(user_data.get("rol"))) {
+            case "VENDEDOR":
+                break;
+            case "COMPRADOR":
+        }
         // TODO: Aqui ya se obtiene el usuario, verficiar si es comprador o vendedor y crear las vistas
         // ShowHome(); o algo asi
     }

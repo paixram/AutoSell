@@ -28,10 +28,10 @@ public class dumpfmmTest {
        // Consults by find
        String my_query = mydb.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "lucho").toQuery();
        //String query_raw = "FROM Usuario GET rol,idUsuario WHEN contrasenia=\"lolilu324\"";
-       String query_raw = "FROM Usuario GET ..";
+       String query_raw = "FROM Usuario GET idUsuario";
        System.out.println("My Query: " + my_query);
        
-       System.out.println(mydb.executeQuery(query_raw));
+       System.out.println("Data: " + (mydb.executeQuery(query_raw).data()).toString());
     }
      
      @Test

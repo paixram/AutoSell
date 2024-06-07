@@ -1,6 +1,7 @@
 package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.App;
+import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
 import java.util.List;
 import javafx.scene.Scene;
@@ -27,8 +28,13 @@ import javafx.scene.text.FontWeight;
 
 
 public class PrincipalView {
+    
+    // Class settings
+    public boolean is_registered;
+    
     private Label vehicleDetailsLabel;
     public BorderPane root;
+    
     
     // Items
     public Button anteriorButton = new Button();
@@ -44,8 +50,14 @@ public class PrincipalView {
     private TextField minKmTextField = new TextField();
     private TextField maxKmTextField = new TextField();
     
+    
+    
     public PrincipalView() {
-        //login_view.getLoginButton().setOnAction(e -> validateLogin());
+        //this.is_registered = reg;
+    }
+    
+    private void ShowButton() {
+    //login_view.getLoginButton().setOnAction(e -> validateLogin());
         //login_view.getSignUpButton().setOnAction(e -> showRegister());
          root = new BorderPane();
         
@@ -63,10 +75,13 @@ public class PrincipalView {
             "-fx-border-width: 2px;" +          // Ancho del borde
             "-fx-cursor: hand;"
         );*/
+         
         loginButton.setOnAction(event -> {
             // Abrir nueva ventana con LoginView
             App.ShowLogin();
         });
+        
+        // HBOX
         HBox loginContainer = new HBox();
         loginContainer.setAlignment(Pos.TOP_RIGHT);
         loginContainer.getChildren().add(loginButton);
@@ -96,6 +111,8 @@ public class PrincipalView {
         HBox bottomBar = crearBarraInferior();
         root.setBottom(bottomBar);
     }
+    
+    
     
     private HBox crearBarraInferior() {
         HBox bottomBar = new HBox(10);

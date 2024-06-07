@@ -15,10 +15,8 @@ import javafx.stage.Stage;
  * @author José Miguel
  */
 public class VendedorView extends PrincipalView{
-    private Stage stage;
 
     public VendedorView() {
-        stage = new Stage();
         initialize();
     }
 
@@ -28,13 +26,5 @@ public class VendedorView extends PrincipalView{
 
         Label welcomeLabel = new Label("Bienvenido, Vendedor!");
         root.getChildren().add(welcomeLabel);
-
-        Scene scene = new Scene(root, 400, 300);
-        stage.setScene(scene);
-        stage.setTitle("Vista del Vendedor");
-    }
-
-    public void show() {
-        stage.show();
     }
 }
