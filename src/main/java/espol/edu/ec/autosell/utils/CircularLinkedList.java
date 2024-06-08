@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package espol.edu.ec.autosell.utils;
+import java.util.Comparator;
 import java.util.LinkedList;
 /**
  *
@@ -76,6 +77,24 @@ public class CircularLinkedList<E> {
 
     public int size() {
         return size;
+    }
+    public void sort(Comparator<E> comparator) {
+        if (size <= 1) {
+            return;
+        }
+        Node<E> current = head;
+        do {
+            Node<E> innerCurrent = current.next;
+            while (innerCurrent != head) {
+                if (comparator.compare(innerCurrent.element, current.element) < 0) {
+                    E temp = current.element;
+                    current.element = innerCurrent.element;
+                    innerCurrent.element = temp;
+                }
+                innerCurrent = innerCurrent.next;
+            }
+            current = current.next;
+        } while (current != head);
     }
 }
 

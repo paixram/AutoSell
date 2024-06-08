@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -325,7 +326,18 @@ public class PrincipalView {
             updateVehicleDetails();
         }
     }
-    
+    public void ordenarPorPrecio() {
+        vehiculos.sort(Comparator.comparingInt(Vehiculo::getPrecio));
+        updateVehicleDetails();
+    }
+
+    public void ordenarPorKilometraje() {
+        vehiculos.sort(Comparator.comparingInt(Vehiculo::getKm));
+        updateVehicleDetails();
+    }
+    public void setCenter(StackPane center) {
+        root.setCenter(center);
+    }
     
 }
 

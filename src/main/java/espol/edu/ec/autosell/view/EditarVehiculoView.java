@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * @author José Miguel
  */
 
-public class EditarVehiculoView {
+public class EditarVehiculoView extends LoginRegisterBaseView{
     private VBox view;
     private TextField idTextField;
     private TextField marcaTextField;
@@ -29,6 +29,7 @@ public class EditarVehiculoView {
     private Vehiculo vehiculo;
 
     public EditarVehiculoView(PrincipalView principalView, Vehiculo vehiculo) {
+        super();
         this.principalView = principalView;
         this.vehiculo = vehiculo;
         view = new VBox(10);
@@ -53,9 +54,7 @@ public class EditarVehiculoView {
         view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, editarButton);
     }
 
-    public VBox getView() {
-        return view;
-    }
+    
 
     private void editarVehiculo() {
         String id = idTextField.getText();
