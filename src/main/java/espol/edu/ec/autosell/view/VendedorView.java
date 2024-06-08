@@ -64,12 +64,6 @@ public class VendedorView extends PrincipalView{
         HBox bottomBar = new HBox(10);
         bottomBar.setAlignment(Pos.CENTER);
 
-        Button anteriorButton = new Button("Anterior");
-        configurarBoton(anteriorButton);
-
-        Button siguienteButton = new Button("Siguiente");
-        configurarBoton(siguienteButton);
-
         Button crearButton = new Button("Crear Vehículo");
         configurarBoton(crearButton);
 

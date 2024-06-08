@@ -90,7 +90,8 @@ public class PrincipalView {
         imageView.setFitWidth(300);
         imageView.setFitHeight(200);
         imageView.setPreserveRatio(true);
-
+       
+        
         marcaModeloLabel = new Label();
         marcaModeloLabel.setFont(new Font("Arial", 24));
 
@@ -100,12 +101,42 @@ public class PrincipalView {
         precioLabel = new Label();
         precioLabel.setFont(new Font("Arial", 18));
         precioLabel.setStyle("-fx-text-fill: green;");
+
+        Button detallesButton = new Button("Detalles");
+        styleButton(detallesButton);
         updateLabels();
         
-        centerBox = new VBox(10, imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
+        StackPane publication_card = new StackPane();
+        publication_card.setPrefSize(350, 350);
+        publication_card.setMaxWidth(350);
+        publication_card.setMaxHeight(350);
+        
+        // Hbox for button items
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.BASELINE_CENTER);
+        bottomBox.getChildren().addAll(detallesButton, precioLabel);
+        bottomBox.setSpacing(140);
+        
+        // Item box
+        VBox items = new VBox();
+        items.setSpacing(5);
+        // Insertar los datos
+        items.setAlignment(Pos.CENTER);
+        items.getChildren().addAll(imageView, marcaModeloLabel, kilometrajeLabel, bottomBox);
+        
+        
+        publication_card.setStyle(" -fx-border-width: 2; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, grey, 20, 0, 0, 0);");
+        //publication_card.getChildren().addAll(imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
+        publication_card.getChildren().addAll(items);
+        
+        centerBox = new VBox(10, publication_card);
         centerBox.setAlignment(Pos.CENTER);
-        centerBox.setPadding(new Insets(20));
-        centerBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #f0f0f0; -fx-border-radius: 10; -fx-background-radius: 10;");
+        //centerBox.getChildren().add(publication_card);
+        
+        //centerBox = new VBox(10, imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
+        //centerBox.setAlignment(Pos.CENTER);
+        //centerBox.setPadding(new Insets(20));
+        //centerBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #f0f0f0; -fx-border-radius: 10; -fx-background-radius: 10;");
     
         root.setCenter(centerBox);
     }
@@ -113,10 +144,10 @@ public class PrincipalView {
     private void updateLabels() {
         Vehiculo vehiculo = this.vehiculos.getCurrent();
         if (vehiculo != null) {
-            imageView.setImage(new Image(getClass().getClassLoader().getResource("Images/Toyota-Rav4 1.jpg").toString()));
-            marcaModeloLabel.setText(vehiculo.getMarca() + vehiculo.getModelo());
-            kilometrajeLabel.setText(String.valueOf(vehiculo.getKm()));
-            precioLabel.setText(String.valueOf(vehiculo.getPrecio()));
+            imageView.setImage(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
+            marcaModeloLabel.setText(vehiculo.getMarca() + " - " + vehiculo.getModelo());
+            kilometrajeLabel.setText("Km: " + vehiculo.getKm());
+            precioLabel.setText("$" + vehiculo.getPrecio());
         }
     }
     
@@ -131,20 +162,23 @@ public class PrincipalView {
     }
     
      private void updateLabelsWithAnimation(Vehiculo vehiculo, double offset) {
-        TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), imageView);
+        StackPane publicationCard = (StackPane) centerBox.getChildren().get(0);
+
+        TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), publicationCard);
         transitionOut.setToX(offset);
         transitionOut.setOnFinished(e -> {
-            imageView.setImage(new Image(getClass().getClassLoader().getResource("Images/Toyota-Rav4 1.jpg").toString()));
-            marcaModeloLabel.setText(vehiculo.getMarca() + vehiculo.getModelo());
-            kilometrajeLabel.setText(String.valueOf(vehiculo.getKm()));
-            precioLabel.setText(String.valueOf(vehiculo.getPrecio()));
-            imageView.setTranslateX(-offset);
-            TranslateTransition transitionIn = new TranslateTransition(Duration.millis(500), imageView);
+            imageView.setImage(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
+            marcaModeloLabel.setText(vehiculo.getMarca() + " - " + vehiculo.getModelo());
+            kilometrajeLabel.setText("Km: " + vehiculo.getKm());
+            precioLabel.setText("$" + vehiculo.getPrecio());
+            publicationCard.setTranslateX(-offset);
+            TranslateTransition transitionIn = new TranslateTransition(Duration.millis(500), publicationCard);
             transitionIn.setToX(0);
             transitionIn.play();
         });
         transitionOut.play();
     }
+
     
     private void ShowLoginButton() {
     //login_view.getLoginButton().setOnAction(e -> validateLogin());
