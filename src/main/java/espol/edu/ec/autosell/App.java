@@ -133,7 +133,10 @@ public class App extends Application {
        App.database.executeQuery(query_raw2_toyota_rav4);
        App.database.executeQuery(query_raw2_hyundai_tucson);
        App.database.executeQuery(query_raw2_kia_sportage);
-        launch();
+       
+       String query_fotos= "FROM Vehiculo GET fotos";
+       App.database.executeQuery(query_fotos);
+       launch();
     }
     
 }

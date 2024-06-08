@@ -3,6 +3,7 @@ package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.utils.CircularList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -34,7 +36,7 @@ public class PrincipalView {
     
     private Label vehicleDetailsLabel;
     public BorderPane root;
-    
+    private CircularList<Vehiculo> vehiculos;
     
     // Items
     public Button anteriorButton = new Button();
@@ -49,7 +51,7 @@ public class PrincipalView {
     private TextField maxPrecioTextField = new TextField();
     private TextField minKmTextField = new TextField();
     private TextField maxKmTextField = new TextField();
-    
+    private ImageView vehiculoImageView;
     
     
     public PrincipalView() {
@@ -57,6 +59,9 @@ public class PrincipalView {
         root = new BorderPane();
         
         showButtons();
+        vehiculos = new CircularList<>();
+        
+        
     }
     
     private void ShowLoginButton() {
@@ -111,6 +116,10 @@ public class PrincipalView {
         Label titleLabel = new Label("AutoSell");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         mainContent.getChildren().add(titleLabel);
+        
+        vehicleDetailsLabel = new Label();
+        mainContent.getChildren().add(vehicleDetailsLabel);
+        
         scrollPane.setContent(mainContent);
         scrollPane.setFitToWidth(true);
         root.setCenter(scrollPane);
@@ -157,7 +166,8 @@ public class PrincipalView {
         Button eliminarButton = new Button("Eliminar Vehículo");
         */
         
-
+        //anteriorButton.setOnAction(event -> AnteriorVehiculo());
+        //siguienteButton.setOnAction(event -> SiguienteVehiculo());
         bottomBar.getChildren().addAll(anteriorButton, siguienteButton);
         return bottomBar;
     }
@@ -199,18 +209,24 @@ public class PrincipalView {
     public BorderPane getView() {
         return root;
     }
-    public void updateVehicleDetails(List<Vehiculo> vehiculos) {
-        if (vehiculos.isEmpty()) {
-        // Si la lista está vacía, establece el texto en vacío o algún mensaje indicando que no hay vehículos disponibles
-            vehicleDetailsLabel.setText("No hay vehículos disponibles.");
+    private void updateVehicleDetails() {
+        Vehiculo vehiculoActual = vehiculos.getCurrent();
+        if (vehiculoActual != null) {
+            String detalles = "Marca: " + vehiculoActual.getMarca() + "\n" + "Modelo: " + vehiculoActual.getModelo() + "\n" +"Precio: $" + vehiculoActual.getPrecio() + "\n" + "Kilometraje: " + vehiculoActual.getKm() + " km";
+            vehicleDetailsLabel.setText(detalles);
         } else {
-        // Si la lista no está vacía, obtén los detalles del primer vehículo de la lista
-            Vehiculo vehiculo = vehiculos.get(0);
-            String details = "Marca: " + vehiculo.getMarca() + "\n" +"Modelo: " + vehiculo.getModelo() + "\n" +"Precio: $" + vehiculo.getPrecio() + "\n" +"Kilometraje: " + vehiculo.getKm() + " km";
-            vehicleDetailsLabel.setText(details);
+            vehicleDetailsLabel.setText("No hay vehículos disponibles.");
+        }
     }
-}
-
+    //private void AnteriorVehiculo(){
+      //  vehiculos.getPrevious();
+        //updateVehicleDetails();
+    //}
+    //}
+     //private void SiguienteVehiculo() {
+        //vehiculos.getNext();
+        //updateVehicleDetails();
+    //}
     public String getSelectedFilter() {
     // Suponiendo que tienes un ComboBox llamado filterComboBox
         return filterComboBox.getValue(); // Retorna el valor seleccionado del ComboBox
@@ -261,5 +277,13 @@ public class PrincipalView {
             return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
         }
     }
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        vehiculos.add(vehiculo);
+        if (vehiculos.size() == 1) {
+            updateVehicleDetails();
+        }
+    }
+    
+    
 }
 
