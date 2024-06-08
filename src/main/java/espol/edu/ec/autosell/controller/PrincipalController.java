@@ -7,6 +7,7 @@ package espol.edu.ec.autosell.controller;
 import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.utils.CircularLinkedList;
 import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.view.PrincipalView;
 import java.util.Comparator;
@@ -32,7 +33,7 @@ public class PrincipalController {
     public PrincipalController(PrincipalView pv, Malloc<LinkedHashMap<String,Object>> vehiculos) {
         principal_view = pv;
         this.vehiculos = vehiculos;
-        //initialize();
+        initialize();
     }
     
     public void obtenerVehiculo(){
@@ -40,6 +41,10 @@ public class PrincipalController {
         Response resp = App.database.executeQuery(query);
         this.vehiculos = resp.data();
          
+    }
+    
+    public void initialize() {
+        generatePublications();
     }
 //    public void initialize() {
 //        principal_view.getAnteriorButton().setOnAction(e -> showPreviousVehicle());
@@ -125,6 +130,19 @@ public class PrincipalController {
         String query = "FROM Vehiculo SET" + vehicule.getId() + ",\"" +vehicule.getMarca() + ",\"" + vehicule.getModelo() + ",\"" + vehicule.getPrecio() + ",\"" + vehicule.getKm() + ",\"" + vehicule.getFotos();
         Response resp = App.database.executeQuery(query);
         this.vehiculos = resp.data();
+    }
+    
+    public static CircularLinkedList<Vehiculo> generatePublications() {
+        Malloc<Vehiculo> vehiculos = Vehiculo.getAll();
+        //principal_view.
+        CircularLinkedList<Vehiculo> ve = new CircularLinkedList<>();
+        
+        for(Vehiculo v : vehiculos) {
+            ve.add(v);
+        }
+        
+        return ve;
+        
     }
 
 //    public void editVehicle() {

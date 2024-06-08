@@ -1,6 +1,7 @@
 package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.App;
+import espol.edu.ec.autosell.controller.PrincipalController;
 import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
@@ -16,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
@@ -25,6 +27,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -40,7 +43,7 @@ public class PrincipalView {
     
     private Label vehicleDetailsLabel;
     public BorderPane root;
-    private CircularLinkedList<Vehiculo> vehiculos;
+    public CircularLinkedList<Vehiculo> vehiculos;
     
     // Items
     public Button anteriorButton = new Button();
@@ -48,6 +51,7 @@ public class PrincipalView {
     public Button crearButton = new Button();
     public Button editarButton = new Button();
     public Button eliminarButton = new Button();
+    
     private ComboBox<String> filterComboBox = new ComboBox<>();
     private TextField marcaTextField = new TextField();
     private TextField modeloTextField = new TextField();
@@ -57,19 +61,88 @@ public class PrincipalView {
     private TextField maxKmTextField = new TextField();
     private ImageView vehiculoImageView;
     
+    protected VBox centerBox;
+    
+    // Publications widgets
+    private ImageView imageView;
+    private Label marcaModeloLabel;
+    private Label kilometrajeLabel;
+    private Label precioLabel;
+    
     
     public PrincipalView(boolean reg) {
         //this.is_registered = reg;
         root = new BorderPane();
         this.is_registered = reg;
         showStackPane();
-        vehiculos = new CircularLinkedList<>();
+        vehiculos = PrincipalController.generatePublications();
         
         if(!this.is_registered) {
             ShowLoginButton();
         }
         
+        showPublications();
+    }
+    
+    public void showPublications() {
+        imageView = new ImageView();
+        imageView.setFitWidth(300);
+        imageView.setFitHeight(200);
+        imageView.setPreserveRatio(true);
+
+        marcaModeloLabel = new Label();
+        marcaModeloLabel.setFont(new Font("Arial", 24));
+
+        kilometrajeLabel = new Label();
+        kilometrajeLabel.setFont(new Font("Arial", 18));
+
+        precioLabel = new Label();
+        precioLabel.setFont(new Font("Arial", 18));
+        precioLabel.setStyle("-fx-text-fill: green;");
+        updateLabels();
         
+        centerBox = new VBox(10, imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
+        centerBox.setAlignment(Pos.CENTER);
+        centerBox.setPadding(new Insets(20));
+        centerBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #f0f0f0; -fx-border-radius: 10; -fx-background-radius: 10;");
+    
+        root.setCenter(centerBox);
+    }
+    
+    private void updateLabels() {
+        Vehiculo vehiculo = this.vehiculos.getCurrent();
+        if (vehiculo != null) {
+            imageView.setImage(new Image(getClass().getClassLoader().getResource("Images/Toyota-Rav4 1.jpg").toString()));
+            marcaModeloLabel.setText(vehiculo.getMarca() + vehiculo.getModelo());
+            kilometrajeLabel.setText(String.valueOf(vehiculo.getKm()));
+            precioLabel.setText(String.valueOf(vehiculo.getPrecio()));
+        }
+    }
+    
+    private void scrollLeft() {
+        Vehiculo prevPublicacion = this.vehiculos.prev();
+        updateLabelsWithAnimation(prevPublicacion, 600);
+    }
+
+    private void scrollRight() {
+        Vehiculo nextPublicacion = this.vehiculos.next();
+        updateLabelsWithAnimation(nextPublicacion, -600);
+    }
+    
+     private void updateLabelsWithAnimation(Vehiculo vehiculo, double offset) {
+        TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), imageView);
+        transitionOut.setToX(offset);
+        transitionOut.setOnFinished(e -> {
+            imageView.setImage(new Image(getClass().getClassLoader().getResource("Images/Toyota-Rav4 1.jpg").toString()));
+            marcaModeloLabel.setText(vehiculo.getMarca() + vehiculo.getModelo());
+            kilometrajeLabel.setText(String.valueOf(vehiculo.getKm()));
+            precioLabel.setText(String.valueOf(vehiculo.getPrecio()));
+            imageView.setTranslateX(-offset);
+            TranslateTransition transitionIn = new TranslateTransition(Duration.millis(500), imageView);
+            transitionIn.setToX(0);
+            transitionIn.play();
+        });
+        transitionOut.play();
     }
     
     private void ShowLoginButton() {
@@ -80,17 +153,7 @@ public class PrincipalView {
         // Contenedor para el botón de inicio de sesión a la derecha
         Button loginButton = new Button("Iniciar Sesión");
         configurarBoton(loginButton);
-         /*loginButton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +     // Bordes cuadrados
-            "-fx-border-radius: 10; " +         // Bordes cuadrados
-            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
-            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
-            "-fx-border-color: black; " +      // Color del borde
-            "-fx-border-width: 2px;" +          // Ancho del borde
-            "-fx-cursor: hand;"
-        );*/
+         
          
         loginButton.setOnAction(event -> {
             // Abrir nueva ventana con LoginView
@@ -105,35 +168,21 @@ public class PrincipalView {
     }
     
     public void showStackPane() {
-        
-        /*ScrollPane scrollPane = new ScrollPane();
-        VBox mainContent = new VBox();
-        mainContent.setAlignment(Pos.TOP_CENTER);
-        // Aquí puedes agregar contenido a mainContent
-        Label titleLabel = new Label("AutoSell");
-        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        mainContent.getChildren().add(titleLabel);
-        vehicleDetailsLabel = new Label();
-        mainContent.getChildren().add(vehicleDetailsLabel);
-        scrollPane.setContent(mainContent);
-        scrollPane.setFitToWidth(true);
-        root.setCenter(scrollPane);
-        // Barra inferior con navegación y acciones
-        HBox bottomBar = crearBarraInferior();
-        root.setBottom(bottomBar);*/
+       
         Label titleLabel = new Label();
         Label contentLabel = new Label();
         
         Button prevButton = new Button("<");
         styleButton(prevButton);
-
+        prevButton.setOnAction(e -> scrollLeft());
+        
         Button nextButton = new Button(">");
         styleButton(nextButton);
+        nextButton.setOnAction(e -> scrollRight());
         
-        VBox centerBox = new VBox(10, titleLabel, contentLabel);
-        centerBox.setAlignment(Pos.CENTER);
+        
 
-        root.setCenter(centerBox);
+        
         root.setLeft(prevButton);
         root.setRight(nextButton);
         
@@ -172,47 +221,7 @@ public class PrincipalView {
     
     
     
-    private HBox crearBarraInferior() {
-        HBox bottomBar = new HBox(10);
-        bottomBar.setAlignment(Pos.CENTER);
-
-        Button anteriorButton = new Button("Anterior");
-        configurarBoton(anteriorButton);
-        /*anteriorButton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +     // Bordes cuadrados
-            "-fx-border-radius: 10; " +         // Bordes cuadrados
-            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
-            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
-            "-fx-border-color: black; " +      // Color del borde
-            "-fx-border-width: 2px;" +          // Ancho del borde
-            "-fx-cursor: hand;"
-        );*/
-        Button siguienteButton = new Button("Siguiente");
-        configurarBoton(siguienteButton);
-       /* siguienteButton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +     // Bordes cuadrados
-            "-fx-border-radius: 10; " +         // Bordes cuadrados
-            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
-            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
-            "-fx-border-color: black; " +      // Color del borde
-            "-fx-border-width: 2px;" +          // Ancho del borde
-            "-fx-cursor: hand;"
-        );
-        /* just for sellers /  solo para los vendedores
-        Button crearButton = new Button("Crear Vehículo");
-        Button editarButton = new Button("Editar Vehículo");
-        Button eliminarButton = new Button("Eliminar Vehículo");
-        */
-        
-        //anteriorButton.setOnAction(event -> AnteriorVehiculo());
-        //siguienteButton.setOnAction(event -> SiguienteVehiculo());
-        bottomBar.getChildren().addAll(anteriorButton, siguienteButton);
-        return bottomBar;
-    }
+    
     
     private void configurarBoton(Button boton) {
         boton.setStyle(

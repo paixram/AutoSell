@@ -27,5 +27,6 @@ public class VendedorView extends PrincipalView{
 
         Label welcomeLabel = new Label("Bienvenido, Vendedor!");
         root.getChildren().add(welcomeLabel);
+        super.showPublications();
     }
 }

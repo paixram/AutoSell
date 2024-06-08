@@ -6,6 +6,9 @@ package espol.edu.ec.autosell.model;
 
 import dumpfmm.Almacenable;
 import dumpfmm.FieldOrder;
+import espol.edu.ec.autosell.App;
+import espol.edu.ec.autosell.utils.Malloc;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -106,6 +109,21 @@ public class Vehiculo implements Almacenable {
 
     public String getDescripcion() {
         return Descripcion;
+    }
+    
+    public static Malloc<Vehiculo> getAll() {
+        // Obtener en la query
+        String query = "FROM Vehiculo GET ..";
+        Malloc<LinkedHashMap<String, Object>> data = App.database.executeQuery(query).data();
+        
+        Malloc<Vehiculo> vehiculos = new Malloc();
+        for(LinkedHashMap<String, Object> v : data) {
+            Vehiculo new_v = new Vehiculo((String)v.get("id"), (String)v.get("marca"), (String)v.get("modelo"), (int)v.get("precio"), (int)v.get("km"), (String)v.get("fotos"), (String)v.get("Descripcion"));
+            vehiculos.add(new_v);
+            System.out.println("Vehiculo agregado: " + new_v.toString());
+        }
+        
+        return vehiculos;
     }
     
     /*

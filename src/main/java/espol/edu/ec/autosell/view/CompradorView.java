@@ -4,6 +4,9 @@
  */
 package espol.edu.ec.autosell.view;
 
+import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.utils.CircularLinkedList;
+import espol.edu.ec.autosell.utils.Malloc;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -16,6 +19,9 @@ import javafx.stage.Stage;
  */
 public class CompradorView extends PrincipalView{
 
+    
+    private CircularLinkedList<Vehiculo> publicaciones;
+    
     public CompradorView() {
         super(true);
         initialize();
@@ -24,7 +30,8 @@ public class CompradorView extends PrincipalView{
     }
 
     private void initialize() {
-        
+        // Cargar publicaciones para comprador
+        super.showPublications();
         
     }
    
