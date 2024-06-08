@@ -213,7 +213,7 @@ public class PrincipalView {
     public BorderPane getView() {
         return root;
     }
-    private void updateVehicleDetails() {
+    public void updateVehicleDetails() {
         Vehiculo vehiculoActual = vehiculos.getCurrent();
         if (vehiculoActual != null) {
             String detalles = "Marca: " + vehiculoActual.getMarca() + "\n" + "Modelo: " + vehiculoActual.getModelo() + "\n" +"Precio: $" + vehiculoActual.getPrecio() + "\n" + "Kilometraje: " + vehiculoActual.getKm() + " km";
