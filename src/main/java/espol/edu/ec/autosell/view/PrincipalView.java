@@ -32,7 +32,7 @@ import javafx.scene.text.FontWeight;
 public class PrincipalView {
     
     // Class settings
-    public boolean is_registered;
+    public boolean is_registered = false;
     
     private Label vehicleDetailsLabel;
     public BorderPane root;
@@ -54,12 +54,16 @@ public class PrincipalView {
     private ImageView vehiculoImageView;
     
     
-    public PrincipalView() {
+    public PrincipalView(boolean reg) {
         //this.is_registered = reg;
         root = new BorderPane();
-        
+        this.is_registered = reg;
         showButtons();
         vehiculos = new CircularList<>();
+        
+        if(!this.is_registered) {
+            ShowLoginButton();
+        }
         
         
     }

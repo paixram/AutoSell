@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class CompradorView extends PrincipalView{
 
     public CompradorView() {
-        super();
+        super(true);
         //stage = new Stage();
         
     }

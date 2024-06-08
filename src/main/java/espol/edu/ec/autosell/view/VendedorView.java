@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 public class VendedorView extends PrincipalView{
 
     public VendedorView() {
+        super(true);
         initialize();
     }
 

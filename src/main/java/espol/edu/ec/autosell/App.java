@@ -56,7 +56,7 @@ public class App extends Application {
     }
     
     public void showPrincipalView() {
-        PrincipalView pv = new PrincipalView();
+        PrincipalView pv = new PrincipalView(false);
         PrincipalController pc = new PrincipalController(pv,vehiculos);
         
         scene = new Scene(pv.getView(), 800, 600);

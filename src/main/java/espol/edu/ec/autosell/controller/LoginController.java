@@ -79,6 +79,7 @@ public class LoginController {
                 App.ShowVendedorView();
                 break;
             case "COMPRADOR":
+                App.showCompradorView();
         }
         // TODO: Aqui ya se obtiene el usuario, verficiar si es comprador o vendedor y crear las vistas
         // ShowHome(); o algo asi
