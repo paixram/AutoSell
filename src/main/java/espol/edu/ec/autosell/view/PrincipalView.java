@@ -3,7 +3,7 @@ package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
-import espol.edu.ec.autosell.utils.CircularList;
+import espol.edu.ec.autosell.utils.CircularLinkedList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.animation.ScaleTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -24,9 +26,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 
 
 public class PrincipalView {
@@ -36,7 +40,7 @@ public class PrincipalView {
     
     private Label vehicleDetailsLabel;
     public BorderPane root;
-    private CircularList<Vehiculo> vehiculos;
+    private CircularLinkedList<Vehiculo> vehiculos;
     
     // Items
     public Button anteriorButton = new Button();
@@ -58,8 +62,8 @@ public class PrincipalView {
         //this.is_registered = reg;
         root = new BorderPane();
         this.is_registered = reg;
-        showButtons();
-        vehiculos = new CircularList<>();
+        showStackPane();
+        vehiculos = new CircularLinkedList<>();
         
         if(!this.is_registered) {
             ShowLoginButton();
@@ -100,36 +104,70 @@ public class PrincipalView {
         
     }
     
-    public void showButtons() {
+    public void showStackPane() {
         
-        // Contenedor para el título AutoSell centrado
-        /*Label titleLabel = new Label("AutoSell");
-        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        HBox titleContainer = new HBox();
-        titleContainer.setAlignment(Pos.CENTER);
-        titleContainer.getChildren().add(titleLabel);
-        
-        // Agregar los contenedores al BorderPane
-        root.setTop(loginContainer);
-        root.setCenter(titleContainer);
-        */
-        ScrollPane scrollPane = new ScrollPane();
+        /*ScrollPane scrollPane = new ScrollPane();
         VBox mainContent = new VBox();
         mainContent.setAlignment(Pos.TOP_CENTER);
         // Aquí puedes agregar contenido a mainContent
         Label titleLabel = new Label("AutoSell");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         mainContent.getChildren().add(titleLabel);
-        
         vehicleDetailsLabel = new Label();
         mainContent.getChildren().add(vehicleDetailsLabel);
-        
         scrollPane.setContent(mainContent);
         scrollPane.setFitToWidth(true);
         root.setCenter(scrollPane);
         // Barra inferior con navegación y acciones
         HBox bottomBar = crearBarraInferior();
-        root.setBottom(bottomBar);
+        root.setBottom(bottomBar);*/
+        Label titleLabel = new Label();
+        Label contentLabel = new Label();
+        
+        Button prevButton = new Button("<");
+        styleButton(prevButton);
+
+        Button nextButton = new Button(">");
+        styleButton(nextButton);
+        
+        VBox centerBox = new VBox(10, titleLabel, contentLabel);
+        centerBox.setAlignment(Pos.CENTER);
+
+        root.setCenter(centerBox);
+        root.setLeft(prevButton);
+        root.setRight(nextButton);
+        
+        BorderPane.setAlignment(prevButton, Pos.CENTER_LEFT);
+        BorderPane.setAlignment(nextButton, Pos.CENTER_RIGHT);
+        
+       StackPane leftStack = new StackPane(prevButton);
+        StackPane rightStack = new StackPane(nextButton);
+        leftStack.setStyle("-fx-background-color: transparent;");
+        rightStack.setStyle("-fx-background-color: transparent;");
+        leftStack.setAlignment(Pos.CENTER_LEFT);
+        rightStack.setAlignment(Pos.CENTER_RIGHT);
+        leftStack.setPadding(new Insets(0, 10, 0, 10));  // Margen para el botón izquierdo
+        rightStack.setPadding(new Insets(0, 10, 0, 10)); // Margen para el botón derecho
+
+        root.setLeft(leftStack);
+        root.setRight(rightStack);
+        
+    }
+    
+    private void styleButton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
     }
     
     
