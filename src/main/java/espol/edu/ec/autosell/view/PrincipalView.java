@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -260,7 +261,7 @@ public class PrincipalView {
     public BorderPane getView() {
         return root;
     }
-    private void updateVehicleDetails() {
+    public void updateVehicleDetails() {
         Vehiculo vehiculoActual = vehiculos.getCurrent();
         if (vehiculoActual != null) {
             String detalles = "Marca: " + vehiculoActual.getMarca() + "\n" + "Modelo: " + vehiculoActual.getModelo() + "\n" +"Precio: $" + vehiculoActual.getPrecio() + "\n" + "Kilometraje: " + vehiculoActual.getKm() + " km";
@@ -334,7 +335,18 @@ public class PrincipalView {
             updateVehicleDetails();
         }
     }
-    
+    public void ordenarPorPrecio() {
+        vehiculos.sort(Comparator.comparingInt(Vehiculo::getPrecio));
+        updateVehicleDetails();
+    }
+
+    public void ordenarPorKilometraje() {
+        vehiculos.sort(Comparator.comparingInt(Vehiculo::getKm));
+        updateVehicleDetails();
+    }
+    public void setCenter(StackPane center) {
+        root.setCenter(center);
+    }
     
 }
 
