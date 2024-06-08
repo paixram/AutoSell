@@ -76,6 +76,7 @@ public class LoginController {
         
         switch((String)(user_data.get("rol"))) {
             case "VENDEDOR":
+                App.ShowVendedorView();
                 break;
             case "COMPRADOR":
         }

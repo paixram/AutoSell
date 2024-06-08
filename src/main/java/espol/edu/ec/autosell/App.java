@@ -1,6 +1,7 @@
 package espol.edu.ec.autosell;
 
 import dumpfmm.dumpfmm;
+import espol.edu.ec.autosell.controller.CompradorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,10 +20,15 @@ import espol.edu.ec.autosell.view.LoginView;
 import espol.edu.ec.autosell.controller.LoginController;
 import espol.edu.ec.autosell.controller.PrincipalController;
 import espol.edu.ec.autosell.controller.RegisterController;
+import espol.edu.ec.autosell.controller.VendedorController;
+import espol.edu.ec.autosell.model.Comprador;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.model.Vendedor;
 import espol.edu.ec.autosell.utils.Malloc;
+import espol.edu.ec.autosell.view.CompradorView;
 import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
+import espol.edu.ec.autosell.view.VendedorView;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -58,6 +64,28 @@ public class App extends Application {
         mainStage.setScene(scene);
     }
     
+    public static void ShowVendedorView() {
+        Vendedor vendedor = new Vendedor();
+        VendedorView vv = new VendedorView();
+        VendedorController vc = new VendedorController(vv, vendedor);
+        
+        scene = new Scene(vv.getView(), 800, 600);
+        
+        mainStage.setScene(scene);
+        mainStage.setTitle("AutoSell - Vendedor");
+    }
+    
+    public static void showCompradorView() {
+        Comprador comprador = new Comprador();
+        CompradorView cv = new CompradorView();
+        CompradorController cc = new CompradorController(cv, comprador);
+        
+        scene = new Scene(cv.getView(), 800, 600);
+        
+        mainStage.setScene(scene);
+        mainStage.setTitle("AutoSell - Vendedor");
+    }
+    
     //public void start(Stage stage) throws IOException {
        
       //  mainStage = stage;
@@ -77,6 +105,9 @@ public class App extends Application {
         mainStage.setScene(scene);
         mainStage.setTitle("AutoSell - Inicio de sesion");
     } 
+    
+    
+
     
     public static void ShowRegister() {
         RegisterView register_view = new RegisterView();
