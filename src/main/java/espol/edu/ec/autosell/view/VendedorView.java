@@ -45,7 +45,7 @@ public class VendedorView extends PrincipalView{
     }
 
     private HBox crearBarraInferior() {
-        HBox bottomBar = new HBox(10);
+        HBox bottomBar = new HBox(0);
         bottomBar.setAlignment(Pos.CENTER);
 
         Button crearButton = new Button("Crear Vehículo");

@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -27,7 +28,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     private TextField precioTextField;
     private TextField kmTextField;
     private TextField fotosTextField;
-    private TextField descripcionTextField;
+    private TextArea descripcionTextArea;
     private PrincipalView principalView;
 
     public CrearVehiculoView() {
@@ -54,15 +55,15 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         
         
         Label descripcionLabel = new Label("Descripción:");
-        descripcionTextField = new TextField();
-        descripcionTextField.setPrefWidth(300);
-        descripcionTextField.setPrefHeight(300);
+        descripcionTextArea = new TextArea();
+        descripcionTextArea.setPrefWidth(300);
+        descripcionTextArea.setPrefHeight(400);
         
         Button crearButton = new Button("Crear");
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> crearVehiculo());
         
-        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, crearButton);
+        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextArea, crearButton);
         
         super.base_view.getChildren().add(view);
     }
@@ -76,7 +77,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         int precio = Integer.parseInt(precioTextField.getText());
         int km = Integer.parseInt(kmTextField.getText());
         String fotos = fotosTextField.getText();
-        String descripcion = descripcionTextField.getText();
+        String descripcion = descripcionTextArea.getText();
 
         Vehiculo nuevoVehiculo = new Vehiculo(id, marca, modelo, precio, km, fotos, descripcion);
         principalView.agregarVehiculo(nuevoVehiculo);

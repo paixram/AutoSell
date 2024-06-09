@@ -4,12 +4,13 @@
  */
 package espol.edu.ec.autosell.utils;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 /**
  *
  * @author José Miguel
  */
-public class CircularLinkedList<E> {
+public class CircularLinkedList<E> implements Iterable<E> {
     private Node<E> head;
     private Node<E> tail;
     private Node<E> current;
@@ -95,6 +96,30 @@ public class CircularLinkedList<E> {
             }
             current = current.next;
         } while (current != head);
+    }
+    
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private Node<E> current = head;
+            private boolean firstIteration = true;
+
+            @Override
+            public boolean hasNext() {
+                return current != null && (firstIteration || current != head);
+            }
+
+            @Override
+            public E next() {
+                if (current == null || (!firstIteration && current == head)) {
+                    throw new java.util.NoSuchElementException();
+                }
+                E element = current.element;
+                current = current.next;
+                firstIteration = false;
+                return element;
+            }
+        };
     }
 }
 

@@ -57,6 +57,8 @@ public class PrincipalView {
     public Button crearButton = new Button();
     public Button editarButton = new Button();
     public Button eliminarButton = new Button();
+    public Button prevButton = new Button();
+    public Button nextButton = new Button();
     
     private ComboBox<String> filterComboBox = new ComboBox<>();
     private TextField marcaTextField = new TextField();
@@ -94,29 +96,84 @@ public class PrincipalView {
         HBox searchBarAndFilter = new HBox(10);
         searchBarAndFilter.setAlignment(Pos.CENTER_LEFT);
         searchBarAndFilter.setPadding(new Insets(10));
-
+        
+        // Pane for the padding
+        
+        HBox search_container = new HBox(5);
         TextField searchField = new TextField();
         searchField.setPromptText("Buscar...");
-        searchField.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
-
-        searchBarAndFilter.getChildren().add(searchField);
+        
+        searchField.setStyle("-fx-border-radius: 5; -fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0);");
+        searchField.setFont(new Font("Arial", 15));
+        
+        ImageView search_icon = new ImageView();
+        search_icon.setImage(new Image(getClass().getClassLoader().getResource("app_images/search_icon.png").toString()));
+        search_icon.setFitHeight(25);
+        search_icon.setFitWidth(25);
+        searchField.textProperty().addListener((o, ov, nv) -> {
+            this.filterVehicles(nv, null);
+        });
+        
+        search_container.setAlignment(Pos.CENTER);
+        search_container.setStyle("-fx-background-color: '#fff'; -fx-border-color: #6F6F6F; -fx-border-radius: 30");
+        search_container.setAlignment(Pos.CENTER_LEFT);
+        
+        
+        search_container.setPrefWidth(250);
+        search_container.setAlignment(Pos.CENTER);
+        search_container.getChildren().addAll(searchField, search_icon);
+        searchBarAndFilter.getChildren().addAll(search_container);
 
         ComboBox<String> filterComboBox = new ComboBox<>();
         filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
         filterComboBox.setPromptText("Seleccionar filtro...");
         filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
 
-        HBox.setHgrow(searchField, Priority.ALWAYS);
+        //HBox.setHgrow(searchField, Priority.ALWAYS);
         
         searchBarAndFilter.getChildren().add(filterComboBox);
-
+        
+        //HBox.setHgrow(search_container, Priority.ALWAYS);
+        //HBox.setHgrow(filterComboBox, Priority.ALWAYS);
+        
         //super.root.getChildren().add(searchBarAndFilter);
         root.setTop(searchBarAndFilter);
+        
+        root.setOnMouseClicked(event -> {
+            if (searchField.isFocused()) {
+                root.requestFocus();
+            }
+        });
+    }
+    
+    public void filterVehicles(String searchText, String filterType) {
+        CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
+        
+        for(Vehiculo vehicle : this.vehiculos) {
+            boolean match = false;
+            if(filterType == null || filterType.equals("Marca - Modelo")) {
+                match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
+            }
+            
+            if(match) {
+                filteredVehicles.add(vehicle);
+            }
+        }
+        
+        // Mostrar los filtrados
+        System.out.println(filteredVehicles);
+        showPublications(filteredVehicles);
     }
     
     
-    
     public void showPublications() {
+        this.showPublications(this.vehiculos);
+    }
+    
+    public void showPublications(CircularLinkedList<Vehiculo> vehiculos) {
+        prevButton.setOnAction(e -> scrollLeft(vehiculos));
+        nextButton.setOnAction(e -> scrollRight(vehiculos));
+        
         imageView = new ImageView();
         imageView.setFitWidth(300);
         imageView.setFitHeight(200);
@@ -142,7 +199,7 @@ public class PrincipalView {
             detalleView.show();
         }
     });
-    updateLabels();
+    updateLabels(vehiculos);
         
         StackPane publication_card = new StackPane();
         publication_card.setPrefSize(350, 350);
@@ -179,8 +236,8 @@ public class PrincipalView {
         root.setCenter(centerBox);
     }
     
-    private void updateLabels() {
-        Vehiculo vehiculo = this.vehiculos.getCurrent();
+    private void updateLabels(CircularLinkedList<Vehiculo> vehiculos) {
+        Vehiculo vehiculo = vehiculos.getCurrent();
         if (vehiculo != null) {
             imageView.setImage(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
             marcaModeloLabel.setText(vehiculo.getMarca() + " - " + vehiculo.getModelo());
@@ -189,13 +246,13 @@ public class PrincipalView {
         }
     }
     
-    private void scrollLeft() {
-        Vehiculo prevPublicacion = this.vehiculos.prev();
+    private void scrollLeft(CircularLinkedList<Vehiculo> vehiculos) {
+        Vehiculo prevPublicacion = vehiculos.prev();
         updateLabelsWithAnimation(prevPublicacion, 600);
     }
 
-    private void scrollRight() {
-        Vehiculo nextPublicacion = this.vehiculos.next();
+    private void scrollRight(CircularLinkedList<Vehiculo> vehiculos) {
+        Vehiculo nextPublicacion = vehiculos.next();
         updateLabelsWithAnimation(nextPublicacion, -600);
     }
     
@@ -245,13 +302,12 @@ public class PrincipalView {
         Label titleLabel = new Label();
         Label contentLabel = new Label();
         
-        Button prevButton = new Button("<");
+        prevButton = new Button("<");
         styleButton(prevButton);
-        prevButton.setOnAction(e -> scrollLeft());
         
-        Button nextButton = new Button(">");
+        nextButton = new Button(">");
         styleButton(nextButton);
-        nextButton.setOnAction(e -> scrollRight());
+        
         
         
 
