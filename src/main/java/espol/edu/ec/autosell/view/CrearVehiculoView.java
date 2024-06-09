@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     public CrearVehiculoView() {
         super();
         view = new VBox(10);
-        
+        view.setPadding(new Insets(50));
         Label idLabel = new Label("ID:");
         idTextField = new TextField();
         
@@ -51,8 +52,11 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         Label fotosLabel = new Label("Fotos:");
         fotosTextField = new TextField();
         
+        
         Label descripcionLabel = new Label("Descripción:");
         descripcionTextField = new TextField();
+        descripcionTextField.setPrefWidth(300);
+        descripcionTextField.setPrefHeight(300);
         
         Button crearButton = new Button("Crear");
         configurarBoton(crearButton);
