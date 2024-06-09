@@ -59,7 +59,9 @@ public class App extends Application {
         PrincipalView pv = new PrincipalView(false);
         PrincipalController pc = new PrincipalController(pv,vehiculos);
         
+        pv.setStyle("-fx-background-color: #FFFFFF;");
         scene = new Scene(pv.getView(), 800, 600);
+        
         
         mainStage.setScene(scene);
     }

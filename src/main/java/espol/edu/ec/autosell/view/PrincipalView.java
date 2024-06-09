@@ -45,6 +45,10 @@ public class PrincipalView {
     private Label vehicleDetailsLabel;
     public BorderPane root;
     public CircularLinkedList<Vehiculo> vehiculos;
+
+    public void setStyle(String color) {
+        root.setStyle(color);
+    }
     
     // Items
     public Button anteriorButton = new Button();
@@ -71,6 +75,8 @@ public class PrincipalView {
     private Label precioLabel;
     
     
+    
+    
     public PrincipalView(boolean reg) {
         //this.is_registered = reg;
         root = new BorderPane();
@@ -84,6 +90,8 @@ public class PrincipalView {
         
         showPublications();
     }
+    
+    
     
     public void showPublications() {
         imageView = new ImageView();
