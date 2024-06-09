@@ -28,12 +28,6 @@ public class VendedorView extends PrincipalView{
     }
 
     private void initialize() {
-        StackPane root = new StackPane();
-        root.setAlignment(Pos.CENTER);
-
-        Label welcomeLabel = new Label("Bienvenido, Vendedor!");
-        root.getChildren().add(welcomeLabel);
-        super.showPublications();
 
 
         // Agregar la barra de búsqueda y el filtro
@@ -49,14 +43,15 @@ public class VendedorView extends PrincipalView{
         filterComboBox.setPromptText("Seleccionar filtro...");
         searchBarAndFilter.getChildren().add(filterComboBox);
 
-        root.getChildren().add(searchBarAndFilter);
-
+        //super.root.getChildren().add(searchBarAndFilter);
+        super.root.setTop(searchBarAndFilter);
         // Agregar los botones en la parte inferior
         HBox bottomBar = crearBarraInferior();
-        root.getChildren().add(bottomBar);
+        super.root.setBottom(bottomBar);
 
         // Mostrar el contenido en la ventana
-        setCenter(root);
+        //setCenter(root);
+        System.out.println("Agregao");
 
     }
 
