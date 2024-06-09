@@ -39,7 +39,7 @@ public class VendedorView extends PrincipalView{
         searchBarAndFilter.getChildren().add(searchField);
 
         ComboBox<String> filterComboBox = new ComboBox<>();
-        filterComboBox.getItems().addAll("Filtro 1", "Filtro 2", "Filtro 3");
+        filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
         filterComboBox.setPromptText("Seleccionar filtro...");
         searchBarAndFilter.getChildren().add(filterComboBox);
 
@@ -51,7 +51,7 @@ public class VendedorView extends PrincipalView{
 
         // Mostrar el contenido en la ventana
         //setCenter(root);
-        System.out.println("Agregao");
+        System.out.println("Agregado");
 
     }
 
@@ -68,7 +68,7 @@ public class VendedorView extends PrincipalView{
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
 
-        bottomBar.getChildren().addAll(anteriorButton, siguienteButton, crearButton, editarButton, eliminarButton);
+        bottomBar.getChildren().addAll(crearButton, editarButton, eliminarButton);
         return bottomBar;
     }
 
@@ -85,4 +85,5 @@ public class VendedorView extends PrincipalView{
             "-fx-cursor: hand;"
         );
     }
+    
 }
