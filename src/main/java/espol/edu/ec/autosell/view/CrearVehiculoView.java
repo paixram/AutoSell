@@ -31,20 +31,28 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         super();
         this.principalView = principalView;
         view = new VBox(10);
+        
         Label idLabel = new Label("ID:");
         idTextField = new TextField();
+        
         Label marcaLabel = new Label("Marca:");
         marcaTextField = new TextField();
+        
         Label modeloLabel = new Label("Modelo:");
         modeloTextField = new TextField();
+        
         Label precioLabel = new Label("Precio:");
         precioTextField = new TextField();
+        
         Label kmLabel = new Label("Kilometraje:");
         kmTextField = new TextField();
+        
         Label fotosLabel = new Label("Fotos:");
         fotosTextField = new TextField();
+        
         Label descripcionLabel = new Label("Descripción:");
         descripcionTextField = new TextField();
+        
         Button crearButton = new Button("Crear");
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> crearVehiculo());

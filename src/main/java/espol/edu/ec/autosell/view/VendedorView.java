@@ -4,7 +4,9 @@
  */
 package espol.edu.ec.autosell.view;
 
+import espol.edu.ec.autosell.model.Vehiculo;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  *
@@ -21,7 +24,7 @@ import javafx.scene.layout.VBox;
 
 
 public class VendedorView extends PrincipalView{
-
+    private Vehiculo vehiculo;
     public VendedorView() {
         super(true);
         initialize();
@@ -61,10 +64,27 @@ public class VendedorView extends PrincipalView{
 
         Button crearButton = new Button("Crear Vehículo");
         configurarBoton(crearButton);
+        crearButton.setOnAction(event -> {
+            CrearVehiculoView crearVehiculoView = new CrearVehiculoView(this);
+            Scene scene = new Scene(crearVehiculoView.getView());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        });
 
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
-
+        editarButton.setOnAction(event -> {
+            if (vehiculo != null) { // Verifica si se ha seleccionado un vehículo
+                EditarVehiculoView editarVehiculoView = new EditarVehiculoView(this, vehiculo);
+                Scene scene = new Scene(editarVehiculoView.getView());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                System.out.println("No se ha seleccionado ningún vehículo para editar.");
+            }
+        });
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
 
@@ -72,6 +92,10 @@ public class VendedorView extends PrincipalView{
         return bottomBar;
     }
 
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+    
     private void configurarBoton(Button boton) {
         boton.setStyle(
             "-fx-background-color: black;" +
@@ -85,5 +109,6 @@ public class VendedorView extends PrincipalView{
             "-fx-cursor: hand;"
         );
     }
+    
     
 }
