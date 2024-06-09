@@ -30,6 +30,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -89,6 +90,28 @@ public class PrincipalView {
         }
         
         showPublications();
+        // Agregar la barra de búsqueda y el filtro
+        HBox searchBarAndFilter = new HBox(10);
+        searchBarAndFilter.setAlignment(Pos.CENTER_LEFT);
+        searchBarAndFilter.setPadding(new Insets(10));
+
+        TextField searchField = new TextField();
+        searchField.setPromptText("Buscar...");
+        searchField.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
+
+        searchBarAndFilter.getChildren().add(searchField);
+
+        ComboBox<String> filterComboBox = new ComboBox<>();
+        filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
+        filterComboBox.setPromptText("Seleccionar filtro...");
+        filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
+
+        HBox.setHgrow(searchField, Priority.ALWAYS);
+        
+        searchBarAndFilter.getChildren().add(filterComboBox);
+
+        //super.root.getChildren().add(searchBarAndFilter);
+        root.setTop(searchBarAndFilter);
     }
     
     

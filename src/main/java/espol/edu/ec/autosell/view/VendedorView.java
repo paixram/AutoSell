@@ -33,27 +33,7 @@ public class VendedorView extends PrincipalView{
     }
 
     private void initialize() {
-        // Agregar la barra de búsqueda y el filtro
-        VBox searchBarAndFilter = new VBox(0);
-        searchBarAndFilter.setAlignment(Pos.TOP_LEFT);
-
-        TextField searchField = new TextField();
-        searchField.setPromptText("Buscar...");
-        searchField.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
-
-        searchBarAndFilter.getChildren().add(searchField);
-
-        ComboBox<String> filterComboBox = new ComboBox<>();
-        filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
-        filterComboBox.setPromptText("Seleccionar filtro...");
-        filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
-
-        HBox.setHgrow(searchField, Priority.ALWAYS);
         
-        searchBarAndFilter.getChildren().add(filterComboBox);
-
-        //super.root.getChildren().add(searchBarAndFilter);
-        super.root.setTop(searchBarAndFilter);
         // Agregar los botones en la parte inferior
         HBox bottomBar = crearBarraInferior();
         super.root.setBottom(bottomBar);

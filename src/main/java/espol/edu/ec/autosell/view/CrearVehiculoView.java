@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -55,7 +57,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         Button crearButton = new Button("Crear");
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> crearVehiculo());
-
+        
         view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, crearButton);
         
         super.base_view.getChildren().add(view);
