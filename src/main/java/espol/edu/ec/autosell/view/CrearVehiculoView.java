@@ -27,9 +27,8 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     private TextField descripcionTextField;
     private PrincipalView principalView;
 
-    public CrearVehiculoView(PrincipalView principalView) {
+    public CrearVehiculoView() {
         super();
-        this.principalView = principalView;
         view = new VBox(10);
         
         Label idLabel = new Label("ID:");
@@ -58,6 +57,8 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         crearButton.setOnAction(event -> crearVehiculo());
 
         view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, crearButton);
+        
+        super.base_view.getChildren().add(view);
     }
 
     

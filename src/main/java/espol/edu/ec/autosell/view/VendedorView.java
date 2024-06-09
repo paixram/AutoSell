@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.view;
 
+import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,19 +33,23 @@ public class VendedorView extends PrincipalView{
     }
 
     private void initialize() {
-
-
         // Agregar la barra de búsqueda y el filtro
-        VBox searchBarAndFilter = new VBox(10);
+        VBox searchBarAndFilter = new VBox(0);
         searchBarAndFilter.setAlignment(Pos.TOP_LEFT);
 
         TextField searchField = new TextField();
         searchField.setPromptText("Buscar...");
+        searchField.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
+
         searchBarAndFilter.getChildren().add(searchField);
 
         ComboBox<String> filterComboBox = new ComboBox<>();
         filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
         filterComboBox.setPromptText("Seleccionar filtro...");
+        filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
+
+        HBox.setHgrow(searchField, Priority.ALWAYS);
+        
         searchBarAndFilter.getChildren().add(filterComboBox);
 
         //super.root.getChildren().add(searchBarAndFilter);
@@ -65,11 +71,7 @@ public class VendedorView extends PrincipalView{
         Button crearButton = new Button("Crear Vehículo");
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> {
-            CrearVehiculoView crearVehiculoView = new CrearVehiculoView(this);
-            Scene scene = new Scene(crearVehiculoView.getView());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
+            App.showCrearVehiculo();
         });
 
         Button editarButton = new Button("Editar Vehículo");
@@ -87,7 +89,15 @@ public class VendedorView extends PrincipalView{
         });
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
+        
+        crearButton.setMaxWidth(Double.MAX_VALUE);
+        editarButton.setMaxWidth(Double.MAX_VALUE);
+        eliminarButton.setMaxWidth(Double.MAX_VALUE);
 
+        HBox.setHgrow(crearButton, Priority.ALWAYS);
+        HBox.setHgrow(editarButton, Priority.ALWAYS);
+        HBox.setHgrow(eliminarButton, Priority.ALWAYS);
+        
         bottomBar.getChildren().addAll(crearButton, editarButton, eliminarButton);
         return bottomBar;
     }
@@ -97,7 +107,7 @@ public class VendedorView extends PrincipalView{
     }
     
     private void configurarBoton(Button boton) {
-        boton.setStyle(
+        /*boton.setStyle(
             "-fx-background-color: black;" +
             "-fx-text-fill: white;" +
             "-fx-background-radius: 5; " +
@@ -107,7 +117,9 @@ public class VendedorView extends PrincipalView{
             "-fx-border-color: black; " +
             "-fx-border-width: 2px;" +
             "-fx-cursor: hand;"
-        );
+        );*/
+        boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+
     }
     
     

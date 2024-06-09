@@ -26,6 +26,7 @@ import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.model.Vendedor;
 import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.view.CompradorView;
+import espol.edu.ec.autosell.view.CrearVehiculoView;
 import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.VendedorView;
@@ -86,6 +87,13 @@ public class App extends Application {
         
         mainStage.setScene(scene);
         mainStage.setTitle("AutoSell - Vendedor");
+    }
+    
+    public static void showCrearVehiculo() {
+        CrearVehiculoView crearVehiculoView = new CrearVehiculoView();
+        scene = new Scene(crearVehiculoView.getView(), 800, 600);
+        mainStage.setScene(scene);
+        mainStage.setTitle("AutoSell - Vendedor/Crear Vehiculo");
     }
     
     //public void start(Stage stage) throws IOException {
