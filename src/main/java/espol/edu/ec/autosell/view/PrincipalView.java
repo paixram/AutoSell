@@ -112,7 +112,14 @@ public class PrincipalView {
 
         Button detallesButton = new Button("Detalles");
         styleButton(detallesButton);
-        updateLabels();
+        detallesButton.setOnAction(e -> {
+        Vehiculo currentVehiculo = vehiculos.getCurrent();
+        if (currentVehiculo != null) {
+            DetalleView detalleView = new DetalleView(currentVehiculo);
+            detalleView.show();
+        }
+    });
+    updateLabels();
         
         StackPane publication_card = new StackPane();
         publication_card.setPrefSize(350, 350);
