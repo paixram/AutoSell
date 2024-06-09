@@ -234,9 +234,9 @@ public class PrincipalView {
         });
         // HBOX
         HBox loginContainer = new HBox();
-        loginContainer.setAlignment(Pos.TOP_RIGHT);
+        loginContainer.setAlignment(Pos.TOP_CENTER);
         loginContainer.getChildren().add(loginButton);
-        root.setTop(loginContainer);
+        root.setBottom(loginContainer);
         
     }
     
@@ -297,17 +297,7 @@ public class PrincipalView {
     
     
     private void configurarBoton(Button boton) {
-        boton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +
-            "-fx-border-radius: 10; " +
-            "-fx-font-size: 15px; " +
-            "-fx-padding: 5 10; " +
-            "-fx-border-color: black; " +
-            "-fx-border-width: 2px;" +
-            "-fx-cursor: hand;"
-        );
+        boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
     }
 
     public Button getAnteriorButton() {
