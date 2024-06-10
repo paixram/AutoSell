@@ -4,11 +4,14 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -26,12 +29,14 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
     private TextField descripcionTextField;
     private PrincipalView principalView;
     private Vehiculo vehiculo;
-
+    private TextArea descripcionTextArea;
     public EditarVehiculoView(PrincipalView principalView, Vehiculo vehiculo) {
         super();
         this.principalView = principalView;
         this.vehiculo = vehiculo;
         view = new VBox(10);
+        view.setMinWidth(400);
+        view.setMinHeight(550);
         Label idLabel = new Label("ID:");
         idTextField = new TextField(vehiculo.getId());
         Label marcaLabel = new Label("Marca:");
@@ -45,12 +50,15 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         Label fotosLabel = new Label("Fotos:");
         fotosTextField = new TextField(vehiculo.getFotos());
         Label descripcionLabel = new Label("Descripción:");
-        descripcionTextField = new TextField(vehiculo.getDescripcion());
+        descripcionTextArea = new TextArea(vehiculo.getDescripcion());
+        descripcionTextArea.setPrefColumnCount(15);
+        descripcionTextArea.setWrapText(true);
+             
         Button editarButton = new Button("Editar");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> editarVehiculo());
 
-        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, editarButton);
+        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextArea, editarButton);
         super.base_view.getChildren().add(view);
     }
 
@@ -63,7 +71,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         int precio = Integer.parseInt(precioTextField.getText());
         int km = Integer.parseInt(kmTextField.getText());
         String fotos = fotosTextField.getText();
-        String descripcion = descripcionTextField.getText();
+        String descripcion = descripcionTextArea.getText();
 
         vehiculo.setId(id);
         vehiculo.setMarca(marca);
@@ -75,9 +83,19 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         principalView.updateVehicleDetails();
         ((Stage) view.getScene().getWindow()).close();
     }
-    private void configurarBoton(Button boton) {
-        boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
-
+     private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 16px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
     }
 }
-
