@@ -44,6 +44,7 @@ public class PrincipalView {
     public Button eliminarButton = new Button();
     public Button prevButton = new Button();
     public Button nextButton = new Button();
+    public Button comprar = null;
     
     private ComboBox<String> filterComboBox = new ComboBox<>();
     private TextField marcaTextField = new TextField();
@@ -53,7 +54,9 @@ public class PrincipalView {
     private TextField minKmTextField = new TextField();
     private TextField maxKmTextField = new TextField();
     private ImageView vehiculoImageView;
+    public TextField searchField;
     
+    protected HBox bottomBox;
     protected VBox centerBox;
     protected Button detallesButton;
     // Publications widgets
@@ -74,9 +77,10 @@ public class PrincipalView {
         
         if(!this.is_registered) {
             ShowLoginButton();
+            showPublications();
         }
         
-        showPublications();
+
         // Agregar la barra de búsqueda y el filtro
         HBox searchBarAndFilter = new HBox(10);
         searchBarAndFilter.setAlignment(Pos.CENTER_LEFT);
@@ -85,7 +89,7 @@ public class PrincipalView {
         // Pane for the padding
         
         HBox search_container = new HBox(5);
-        TextField searchField = new TextField();
+        searchField = new TextField();
         searchField.setPromptText("Buscar...");
         
         searchField.setStyle("-fx-border-radius: 5; -fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0);");
@@ -95,9 +99,7 @@ public class PrincipalView {
         search_icon.setImage(new Image(getClass().getClassLoader().getResource("app_images/search_icon.png").toString()));
         search_icon.setFitHeight(25);
         search_icon.setFitWidth(25);
-        searchField.textProperty().addListener((o, ov, nv) -> {
-            this.filterVehicles(nv, null);
-        });
+        
         
         search_container.setAlignment(Pos.CENTER);
         search_container.setStyle("-fx-background-color: '#fff'; -fx-border-color: #6F6F6F; -fx-border-radius: 30");
@@ -127,7 +129,7 @@ public class PrincipalView {
     
     public void filterVehicles(String searchText, String filterType) {
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
-        
+        searchText = searchText.toLowerCase();
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
             if(filterType == null || filterType.equals("Marca - Modelo")) {
@@ -186,10 +188,15 @@ public class PrincipalView {
         publication_card.setMaxHeight(350);
         
         // Hbox for button items
-        HBox bottomBox = new HBox(10);
+        bottomBox = new HBox(10);
         bottomBox.setAlignment(Pos.BASELINE_CENTER);
-        bottomBox.getChildren().addAll(detallesButton, precioLabel);
-        bottomBox.setSpacing(140);
+        if(comprar == null) {
+            bottomBox.getChildren().addAll(detallesButton, precioLabel);
+        }else{
+            bottomBox.getChildren().addAll(detallesButton, comprar, precioLabel);
+        }
+        
+        bottomBox.setSpacing(25);
         
         // Item box
         VBox items = new VBox();
@@ -281,6 +288,7 @@ public class PrincipalView {
         
         nextButton = new Button(">");
         styleButton(nextButton);
+
         
         root.setLeft(prevButton);
         root.setRight(nextButton);
@@ -317,9 +325,6 @@ public class PrincipalView {
             st.play();
         });
     }
-    
-    
-    
     
     
     private void configurarBoton(Button boton) {
