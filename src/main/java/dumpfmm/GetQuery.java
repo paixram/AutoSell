@@ -42,14 +42,19 @@ public class GetQuery extends Query {
             System.out.println("As:" + s);
         }
         
+        Malloc<LinkedHashMap<String, Object>> filter_data = new Malloc();
         if(this.conditions.size() >= 1) {
-            Malloc<LinkedHashMap<String, Object>> filter_data = super.FilterByConditions(data, this.conditions);
+            filter_data = super.FilterByConditions(data, this.conditions);
             
             System.out.println("Los que cumplenm con el docfiog: ");
             for(HashMap<String, Object> objeto : filter_data ) {
                 System.out.println("Objecto: " + objeto);
             }
             
+            
+        }
+        
+        if(filter_data.size() > 0) {
             // Devolver solo los campos que estan en columns
             Malloc<LinkedHashMap<String, Object>> result = filterFields(filter_data, this.columns);
             System.out.println("Resultados con campos especificados: ");
@@ -60,7 +65,14 @@ public class GetQuery extends Query {
             return new Response(result);
         }
         
-        return new Response(data);
+        // Devolver solo los campos que estan en columns
+        Malloc<LinkedHashMap<String, Object>> result = filterFields(data, this.columns);
+        System.out.println("Resultados con campos especificados: ");
+        for (HashMap<String, Object> obj : result) {
+            System.out.println("Objeto con campos especificados: " + obj);
+        }
+        
+        return new Response(result);
     }
     
     private Malloc<LinkedHashMap<String, Object>> filterFields(Malloc<LinkedHashMap<String, Object>> data, LinkedHashMap<String, String> columns) {

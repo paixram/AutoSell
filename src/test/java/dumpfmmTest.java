@@ -1,6 +1,7 @@
 
 import dumpfmm.dumpfmm;
 import espol.edu.ec.autosell.model.Usuario;
+import espol.edu.ec.autosell.model.Vehiculo;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -20,16 +21,17 @@ public class dumpfmmTest {
         
         // Models
         Usuario user_model = new Usuario();
-        
+        Vehiculo vehiculo = new Vehiculo();
         // Register models
         mydb.RegModel(user_model);
+        mydb.RegModel(vehiculo);
        
        //System.out.println( System.getProperty("user.home"));
        // Consults by find
        String my_query = mydb.From("Usuario").Get("rol").FindByFieldEQ("contrasenia", "lucho").toQuery();
        //String query_raw = "FROM Usuario GET rol,idUsuario WHEN contrasenia=\"lolilu324\"";
 
-       String query_raw = "FROM Usuario GET idUsuario";
+       String query_raw = "FROM Vehiculo GET idVendedor";
        System.out.println("My Query: " + my_query);
        
        System.out.println("Data: " + (mydb.executeQuery(query_raw).data()).toString());

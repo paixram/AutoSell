@@ -51,6 +51,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         editarButton.setOnAction(event -> editarVehiculo());
 
         view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextField, editarButton);
+        super.base_view.getChildren().add(view);
     }
 
     
