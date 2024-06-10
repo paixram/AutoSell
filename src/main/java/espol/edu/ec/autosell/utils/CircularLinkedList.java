@@ -55,6 +55,10 @@ public class CircularLinkedList<E> implements Iterable<E> {
         }
         size++;
     }
+    
+    public void resetIndex() {
+        current = head;
+    }
 
     public E next() {
         if (current != null) {
@@ -99,6 +103,13 @@ public class CircularLinkedList<E> implements Iterable<E> {
             }
             current = current.next;
         } while (current != head);
+    }
+    
+    public E getLast() {
+        if (head == null) {
+            return null; // La lista está vacía
+        }
+        return tail.element;
     }
 
     public void remove(E element) {

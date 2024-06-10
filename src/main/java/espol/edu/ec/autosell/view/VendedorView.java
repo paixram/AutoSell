@@ -59,7 +59,7 @@ public class VendedorView extends PrincipalView{
         
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
-            if(filterType == null || filterType.equals("Marca - Modelo")) {
+            if(filterType == null || filterType.equals("Marca y Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
             }else if(filterType.equals("Precio")) {
                 try{
@@ -102,8 +102,16 @@ public class VendedorView extends PrincipalView{
         Response resp = App.database.executeQuery(query);
         CircularLinkedList<Vehiculo> vehicle = new CircularLinkedList();
         for(HashMap<String, Object> d : resp.data()) {
-            Vehiculo mb = new Vehiculo((String)d.get("id"), (String)d.get("marca"), (String)d.get("modelo"), (int)d.get("precio"), (int)d.get("km"), (String)d.get("fotos"), (String)d.get("Descripcion"), (String)d.get("idVendedor"));
-            vehicle.add(mb);
+        Vehiculo mb = new Vehiculo(
+            (int) d.get("id"), 
+            (String) d.get("marca"), 
+            (String) d.get("modelo"), 
+            (int) d.get("precio"), 
+            (int) d.get("km"), 
+            (String) d.get("fotos"), 
+            (String) d.get("Descripcion"), 
+            (String) d.get("idVendedor")
+        );            vehicle.add(mb);
         }
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);

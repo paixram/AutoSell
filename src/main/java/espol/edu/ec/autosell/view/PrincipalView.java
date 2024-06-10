@@ -30,7 +30,8 @@ public class PrincipalView {
     
     private Label vehicleDetailsLabel;
     public BorderPane root;
-    public CircularLinkedList<Vehiculo> vehiculos;
+    public static CircularLinkedList<Vehiculo> vehiculos;
+    private final ComboBox<String> orderComboBox;
 
     public void setStyle(String color) {
         root.setStyle(color);
@@ -84,6 +85,7 @@ public class PrincipalView {
 
         // Agregar la barra de búsqueda y el filtro
         HBox searchBarAndFilter = new HBox(10);
+        searchBarAndFilter.setStyle("-fx-background-color: white");
         searchBarAndFilter.setAlignment(Pos.CENTER_LEFT);
         searchBarAndFilter.setPadding(new Insets(10));
         
@@ -125,7 +127,15 @@ public class PrincipalView {
             this.filterType = filterComboBox.getValue();
             this.filterVehicles(searchField.getText(), this.filterType);
         });
-        searchBarAndFilter.getChildren().add(filterComboBox);
+        
+        orderComboBox = new ComboBox<>();
+        orderComboBox.getItems().addAll( "Precio", "Kilometraje");
+        orderComboBox.setPromptText("Ordenar Por");
+        orderComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            //filterVehicles(searchField.getText(), filterComboBox.getValue())
+            this.orderVehicles(orderComboBox.getValue());
+        });
+        searchBarAndFilter.getChildren().addAll(filterComboBox, orderComboBox);
                 
         root.setTop(searchBarAndFilter);
         
@@ -134,6 +144,18 @@ public class PrincipalView {
                 root.requestFocus();
             }
         });
+    }
+    
+    public void orderVehicles(String criterio) {
+        if(criterio.equals("Precio")) {
+            this.ordenarPorPrecio();
+        }else if(criterio.equals("Kilometraje")) {
+            this.ordenarPorKilometraje();
+        }
+        
+        vehiculos.resetIndex();
+        updateLabels(vehiculos);
+        
     }
     
     public void filterVehicles(String searchText, String filterType) {
@@ -274,6 +296,7 @@ public class PrincipalView {
         TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), publicationCard);
         transitionOut.setToX(offset);
         transitionOut.setOnFinished(e -> {
+            System.out.print("EL VEHICULOO: " + vehiculo.getFotos());
             imageView.setImage(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
             marcaModeloLabel.setText(vehiculo.getMarca() + " - " + vehiculo.getModelo());
             kilometrajeLabel.setText("Km: " + vehiculo.getKm());
@@ -392,6 +415,9 @@ public class PrincipalView {
         }
     }
     
+    public static void add_vehicle(Vehiculo v) {
+        vehiculos.add(v);
+    }
     
     public String getSelectedFilter() {
     // Suponiendo que tienes un ComboBox llamado filterComboBox
@@ -443,6 +469,8 @@ public class PrincipalView {
             return 0.0; 
         }
     }
+    
+    
     public void agregarVehiculo(Vehiculo vehiculo) {
         vehiculos.add(vehiculo);
         if (vehiculos.size() == 1) {

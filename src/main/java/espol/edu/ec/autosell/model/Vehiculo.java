@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 public class Vehiculo implements Almacenable {
     
     @FieldOrder(order = 1)
-    private String id;
+    private int id;
     
     @FieldOrder(order = 2)
     private String marca;
@@ -39,7 +39,7 @@ public class Vehiculo implements Almacenable {
     @FieldOrder(order = 8)
     private String idVendedor;
 
-    public Vehiculo(String id, String marca, String modelo, int precio, int km, String fotos, String Descripcion, String idVendedor) {
+    public Vehiculo(int id, String marca, String modelo, int precio, int km, String fotos, String Descripcion, String idVendedor) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -61,7 +61,7 @@ public class Vehiculo implements Almacenable {
         return "Vehiculo{" + "id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", precio=" + precio + ", kilometraje=" + km + ", fotos=" + fotos + '}';
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -85,7 +85,7 @@ public class Vehiculo implements Almacenable {
         return fotos;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -120,7 +120,7 @@ public class Vehiculo implements Almacenable {
         
         Malloc<Vehiculo> vehiculos = new Malloc();
         for(LinkedHashMap<String, Object> v : data) {
-            Vehiculo new_v = new Vehiculo((String)v.get("id"), (String)v.get("marca"), (String)v.get("modelo"), (int)v.get("precio"), (int)v.get("km"), (String)v.get("fotos"), (String)v.get("Descripcion"), (String)v.get("idVendedor"));
+            Vehiculo new_v = new Vehiculo((int)v.get("id"), (String)v.get("marca"), (String)v.get("modelo"), (int)v.get("precio"), (int)v.get("km"), (String)v.get("fotos"), (String)v.get("Descripcion"), (String)v.get("idVendedor"));
             vehiculos.add(new_v);
             System.out.println("Vehiculo agregado: " + new_v.toString());
         }

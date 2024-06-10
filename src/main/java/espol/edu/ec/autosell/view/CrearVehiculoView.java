@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package espol.edu.ec.autosell.view;
+import espol.edu.ec.autosell.App;
+import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.model.Vendedor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
@@ -16,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,14 +44,13 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     private File selectedFile;
     
     public Vendedor vendedor;
+    private final ImageView imageView;
     public CrearVehiculoView(Vendedor v) {
         
         super();
         this.vendedor = v;
         view = new VBox(10);
         view.setPadding(new Insets(50));
-        Label idLabel = new Label("ID:");
-        idTextField = new TextField();
         
         Label marcaLabel = new Label("Marca:");
         marcaTextField = new TextField();
@@ -67,6 +71,12 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         configurarBoton(seleccionarFotoButton);
         seleccionarFotoButton.setOnAction(event -> seleccionarFoto());
         
+        // mostrar foto
+        imageView = new ImageView();
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(100);
+        imageView.setPreserveRatio(true);
+        
         Label descripcionLabel = new Label("Descripción:");
         descripcionTextArea = new TextArea();
         descripcionTextArea.setPrefWidth(300);
@@ -76,25 +86,52 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> crearVehiculo());
         
-        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField,seleccionarFotoButton, descripcionLabel, descripcionTextArea, crearButton);
+        view.getChildren().addAll( marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField,seleccionarFotoButton, imageView, descripcionLabel, descripcionTextArea, crearButton);
         
         super.base_view.getChildren().add(view);
     }
+    
     private void seleccionarFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Foto");
         
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(view.getScene().getWindow());
+        selectedFile = fileChooser.showOpenDialog(view.getScene().getWindow());
 
         if (selectedFile != null) {
             fotosTextField.setText(selectedFile.getAbsolutePath());
+            Image image = new Image(selectedFile.toURI().toString());
+            imageView.setImage(image);
+            
+            /*try {
+                this.guardarImagen(selectedFile);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }*/
+            
+            
         }
+    }
+    
+    private String guardarImagen(File imagen) throws IOException {
+        // Define la ruta del directorio donde se guardarán las imágenes
+        String destinationDir = "src/main/resources/Images/";
+        File destDir = new File(destinationDir);
+
+        // Crea el directorio si no existe
+        if (!destDir.exists()) {
+            destDir.mkdirs();
+        }
+
+        // Copia el archivo seleccionado al directorio destino
+        System.out.println("RONWEjhgII: " + Paths.get(destinationDir + imagen.getName()));
+        Files.copy(selectedFile.toPath(), Paths.get(destinationDir + imagen.getName()));
+        
+        return "Images/" + selectedFile.getName();
     }
     
 
    private void crearVehiculo() {
-        String id = idTextField.getText();
         String marca = marcaTextField.getText();
         String modelo = modeloTextField.getText();
         int precio = Integer.parseInt(precioTextField.getText());
@@ -104,18 +141,17 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         // Mover el archivo seleccionado a la carpeta src/main/resources/Images
         if (selectedFile != null) {
             try {
-                Path destinoDir = Path.of("src/main/resources/Images");
-                if (!Files.exists(destinoDir)) {
-                    Files.createDirectories(destinoDir);
-                }
-                Path destinoPath = destinoDir.resolve(selectedFile.getName());
-                Files.copy(selectedFile.toPath(), destinoPath, StandardCopyOption.REPLACE_EXISTING);
-
-                String fotos = destinoPath.toString();
-
-                Vehiculo nuevoVehiculo = new Vehiculo(id, marca, modelo, precio, km, fotos, descripcion, vendedor.user.getSID());
-                principalView.agregarVehiculo(nuevoVehiculo);
-                ((Stage) view.getScene().getWindow()).close();
+                String fotos = guardarImagen(selectedFile);
+                
+                String query = "FROM Vehiculo SET AUTOINCREMENT,\"" + marca + "\"," + "\"" + modelo + "\"," + precio + "," + km + ",\"" + fotos + "\"," + "\"" + descripcion + "\"," + "\"" + vendedor.user.getIdUsuario() + "\"";
+                App.database.executeQuery(query);
+                   System.out.println("HOLAAAA");
+                Vehiculo v = PrincipalView.vehiculos.getLast();
+                Vehiculo nuevoVehiculo = new Vehiculo(v.getId()+1, marca, modelo, precio, km, fotos, descripcion, String.valueOf(vendedor.user.getIdUsuario()));
+                PrincipalView.add_vehicle(nuevoVehiculo);
+                //((Stage) view.getScene().getWindow()).close();
+                
+                App.ShowVendedorView(vendedor.user);
             } catch (IOException e) {
                 e.printStackTrace();
                 // Manejar el error (mostrar una alerta o mensaje al usuario)

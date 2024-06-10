@@ -59,7 +59,7 @@ public class CompradorView extends PrincipalView {
         searchText = searchText.toLowerCase();
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
-            if(filterType == null || filterType.equals("Marca - Modelo")) {
+            if(filterType == null || filterType.equals("Marca y Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
             }else if(filterType.equals("Precio")) {
                 try{

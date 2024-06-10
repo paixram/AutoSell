@@ -40,7 +40,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         view.setMinWidth(400);
         view.setMinHeight(550);
         Label idLabel = new Label("ID:");
-        idTextField = new TextField(vehiculo.getId());
+        idTextField = new TextField(String.valueOf(vehiculo.getId()));
         Label marcaLabel = new Label("Marca:");
         marcaTextField = new TextField(vehiculo.getMarca());
         Label modeloLabel = new Label("Modelo:");
@@ -88,7 +88,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         String fotos = fotosTextField.getText();
         String descripcion = descripcionTextArea.getText();
 
-        vehiculo.setId(id);
+        vehiculo.setId(Integer.parseInt(id));
         vehiculo.setMarca(marca);
         vehiculo.setModelo(modelo);
         vehiculo.setPrecio(precio);
