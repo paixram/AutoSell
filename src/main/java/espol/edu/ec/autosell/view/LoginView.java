@@ -66,30 +66,18 @@ public class LoginView extends LoginRegisterBaseView {
         Font fontBold = Font.font("Arial", FontWeight.BOLD, 12);
         loginButton.setFont(fontBold);
         signUpButton.setFont(fontBold);
-        //loginButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        
         //  --------------- Login Form -----------------
         VBox logform = new VBox(10);
         welcome.setText("Sign in");
         welcome.setFont(Font.font(30));
         signUp.setText("New User?");
         signUp.setFont(fontBold);
-        //signUpButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
         
-        
-        //entrar.setText("Entrar");
-        //entrar.setFont(Font.font(10));
         
         // Configs
         HBox.setHgrow(login_form, Priority.ALWAYS);
-       // BorderStroke borderStroke = new BorderStroke(
-          //      Color.BLUE, // Color del borde
-            //    BorderStrokeStyle.SOLID, // Estilo de línea (en este caso, línea sólida)
-              //  null, // Radios de esquina (null para esquinas rectas)
-                //new BorderWidths(2) // Grosor del borde (en este caso, 2 píxeles)
-       // );
-        //login_form.setBorder(new Border(borderStroke));
-        //login_form.setAlignment(Pos.CENTER);
-        //logform.setBorder(new Border(borderStroke));
+       
         HBox buttonsBox = new HBox(10);
         buttonsBox.getChildren().addAll( signUp,signUpButton);
         buttonsBox.setAlignment(Pos.CENTER);

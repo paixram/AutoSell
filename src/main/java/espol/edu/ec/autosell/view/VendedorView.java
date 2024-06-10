@@ -41,7 +41,7 @@ public class VendedorView extends PrincipalView{
         super.root.setBottom(bottomBar);
 
         // Mostrar el contenido en la ventana
-        //setCenter(root);
+        
         System.out.println("Agregado");
 
     }
@@ -61,16 +61,7 @@ public class VendedorView extends PrincipalView{
         editarButton.setOnAction(event -> {
             new GestionarVehiculosView(vehiculos, true, this);
         });
-            //if (vehiculo != null) { // Verifica si se ha seleccionado un vehículo
-               // EditarVehiculoView editarVehiculoView = new EditarVehiculoView(this, vehiculo);
-                //Scene scene = new Scene(editarVehiculoView.getView());
-                //Stage stage = new Stage();
-               // stage.setScene(scene);
-                //stage.show();
-            //} else {
-               // System.out.println("No se ha seleccionado ningún vehículo para editar.");
-            //}
-       
+            
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
@@ -93,21 +84,6 @@ public class VendedorView extends PrincipalView{
         this.vehiculo = vehiculo;
     }
     
-    //private void configurarBoton(Button boton) {
-        /*boton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +
-            "-fx-border-radius: 10; " +
-            "-fx-font-size: 15px; " +
-            "-fx-padding: 5 10; " +
-            "-fx-border-color: black; " +
-            "-fx-border-width: 2px;" +
-            "-fx-cursor: hand;"
-        );*/
-       // boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
-
-    //}
     private void configurarBoton(Button button) {
         button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
         button.setOnMouseEntered(e -> {
