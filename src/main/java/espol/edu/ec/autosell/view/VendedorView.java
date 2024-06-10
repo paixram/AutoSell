@@ -44,12 +44,10 @@ public class VendedorView extends PrincipalView{
         System.out.println("Agregado");
         
         super.searchField.textProperty().addListener((o, ov, nv) -> {
-            this.filterVehicles(nv, null);
+            this.filterVehicles(nv, super.filterType);
         });
         
-        super.filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filterVehicles(searchField.getText(), filterComboBox.getValue());
-        });
+        
         
         this.showPublications();
     }

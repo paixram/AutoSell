@@ -67,7 +67,7 @@ public class PrincipalView {
     
     
     
-    
+    public String filterType = null;
     
     public PrincipalView(boolean reg) {
         //this.is_registered = reg;
@@ -96,11 +96,9 @@ public class PrincipalView {
         searchField.setStyle("-fx-border-radius: 5; -fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0);");
         searchField.setFont(new Font("Arial", 15));
         searchField.textProperty().addListener((o, ov, nv) -> {
-            this.filterVehicles(nv, null);
+            this.filterVehicles(nv, this.filterType);
         });
-        filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filterVehicles(searchField.getText(), filterComboBox.getValue());
-        });
+        
         
         ImageView search_icon = new ImageView();
         search_icon.setImage(new Image(getClass().getClassLoader().getResource("app_images/search_icon.png").toString()));
@@ -122,7 +120,11 @@ public class PrincipalView {
         filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
         filterComboBox.setPromptText("Seleccionar filtro...");
         filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
-
+        filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            //filterVehicles(searchField.getText(), filterComboBox.getValue());
+            this.filterType = filterComboBox.getValue();
+            this.filterVehicles(searchField.getText(), this.filterType);
+        });
         searchBarAndFilter.getChildren().add(filterComboBox);
                 
         root.setTop(searchBarAndFilter);
@@ -136,6 +138,7 @@ public class PrincipalView {
     
     public void filterVehicles(String searchText, String filterType) {
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
+        System.out.println("Searchtext: " + searchText + "Type: " + filterType);
         searchText = searchText.toLowerCase();
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
@@ -263,6 +266,9 @@ public class PrincipalView {
     }
     
      private void updateLabelsWithAnimation(Vehiculo vehiculo, double offset) {
+         if(vehiculo == null) {
+             return;
+         }
         StackPane publicationCard = (StackPane) centerBox.getChildren().get(0);
 
         TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), publicationCard);
