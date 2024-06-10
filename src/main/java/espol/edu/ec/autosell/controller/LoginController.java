@@ -7,6 +7,7 @@ import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
 import java.util.List;
 import espol.edu.ec.autosell.model.Usuario;
+import espol.edu.ec.autosell.utils.UserRole;
 import espol.edu.ec.autosell.view.LoginView;
 import java.util.LinkedHashMap;
 import javafx.scene.control.Alert;
@@ -62,10 +63,14 @@ public class LoginController {
         
         switch((String)(user_data.get("rol"))) {
             case "VENDEDOR":
-                App.ShowVendedorView();
+                Usuario vendedor = new Usuario((int)user_data.get("idUsuario"), (String)user_data.get("username"), (String)user_data.get("contrasenia"), UserRole.valueOf(user_data.get("rol")));
+                
+                App.ShowVendedorView(vendedor);
                 break;
             case "COMPRADOR":
-                App.showCompradorView();
+                Usuario comprador = new Usuario((int)user_data.get("idUsuario"), (String)user_data.get("username"), (String)user_data.get("contrasenia"), UserRole.valueOf(user_data.get("rol")));
+                
+                App.showCompradorView(comprador);
         }
         
     }

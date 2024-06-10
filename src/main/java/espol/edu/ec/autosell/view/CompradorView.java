@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.view;
 
+import espol.edu.ec.autosell.model.Comprador;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
 import javafx.animation.ScaleTransition;
@@ -20,7 +21,9 @@ import javafx.util.Duration;
  * @author José Miguel
  */
 public class CompradorView extends PrincipalView {
-
+    
+    public Comprador comprador;
+    
     public CompradorView() {
         super(true);
         super.searchField.textProperty().addListener((o, ov, nv) -> {

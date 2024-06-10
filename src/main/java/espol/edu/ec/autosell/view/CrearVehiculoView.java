@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.model.Vendedor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,8 +37,12 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     private TextArea descripcionTextArea;
     private PrincipalView principalView;
     private File selectedFile;
-    public CrearVehiculoView() {
+    
+    public Vendedor vendedor;
+    public CrearVehiculoView(Vendedor v) {
+        
         super();
+        this.vendedor = v;
         view = new VBox(10);
         view.setPadding(new Insets(50));
         Label idLabel = new Label("ID:");
@@ -107,7 +112,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
 
                 String fotos = destinoPath.toString();
 
-                Vehiculo nuevoVehiculo = new Vehiculo(id, marca, modelo, precio, km, fotos, descripcion);
+                Vehiculo nuevoVehiculo = new Vehiculo(id, marca, modelo, precio, km, fotos, descripcion, vendedor.user.getSID());
                 principalView.agregarVehiculo(nuevoVehiculo);
                 ((Stage) view.getScene().getWindow()).close();
             } catch (IOException e) {

@@ -4,9 +4,12 @@
  */
 package espol.edu.ec.autosell.view;
 
+import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.model.Vendedor;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
+import java.util.HashMap;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,8 +25,11 @@ import javafx.util.Duration;
 
 public class VendedorView extends PrincipalView{
     private Vehiculo vehiculo;
-    public VendedorView() {
+    
+    public Vendedor vendedor;
+    public VendedorView(Vendedor vendedor) {
         super(true);
+        this.vendedor = vendedor;
         initialize();
     }
 
@@ -70,19 +76,27 @@ public class VendedorView extends PrincipalView{
         Button crearButton = new Button("Crear Vehículo");
         configurarBoton(crearButton);
         crearButton.setOnAction(event -> {
-            App.showCrearVehiculo();
+            App.showCrearVehiculo(this.vendedor);
         });
-
+        
+        // Obtener los vehiculos del vendedor
+        String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
+        Response resp = App.database.executeQuery(query);
+        CircularLinkedList<Vehiculo> vehicle = new CircularLinkedList();
+        for(HashMap<String, Object> d : resp.data()) {
+            Vehiculo mb = new Vehiculo((String)d.get("id"), (String)d.get("marca"), (String)d.get("modelo"), (int)d.get("precio"), (int)d.get("km"), (String)d.get("fotos"), (String)d.get("Descripcion"), (String)d.get("idVendedor"));
+            vehicle.add(mb);
+        }
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehiculos, true, this);
+            new GestionarVehiculosView(vehicle, true, this);
         });
             
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehiculos, false, this);
+            new GestionarVehiculosView(vehicle, false, this);
         });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);

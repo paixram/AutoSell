@@ -39,7 +39,7 @@ public class Vehiculo implements Almacenable {
     @FieldOrder(order = 8)
     private String idVendedor;
 
-    public Vehiculo(String id, String marca, String modelo, int precio, int km, String fotos, String Descripcion) {
+    public Vehiculo(String id, String marca, String modelo, int precio, int km, String fotos, String Descripcion, String idVendedor) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -47,6 +47,7 @@ public class Vehiculo implements Almacenable {
         this.km = km;
         this.fotos = fotos;
         this.Descripcion = Descripcion;
+        this.idVendedor = idVendedor;
     }
 
    
@@ -119,7 +120,7 @@ public class Vehiculo implements Almacenable {
         
         Malloc<Vehiculo> vehiculos = new Malloc();
         for(LinkedHashMap<String, Object> v : data) {
-            Vehiculo new_v = new Vehiculo((String)v.get("id"), (String)v.get("marca"), (String)v.get("modelo"), (int)v.get("precio"), (int)v.get("km"), (String)v.get("fotos"), (String)v.get("Descripcion"));
+            Vehiculo new_v = new Vehiculo((String)v.get("id"), (String)v.get("marca"), (String)v.get("modelo"), (int)v.get("precio"), (int)v.get("km"), (String)v.get("fotos"), (String)v.get("Descripcion"), (String)v.get("idVendedor"));
             vehiculos.add(new_v);
             System.out.println("Vehiculo agregado: " + new_v.toString());
         }

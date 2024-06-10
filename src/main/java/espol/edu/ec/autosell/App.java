@@ -62,30 +62,33 @@ public class App extends Application {
         mainStage.setScene(scene);
     }
     
-    public static void ShowVendedorView() {
-        Vendedor vendedor = new Vendedor();
-        VendedorView vv = new VendedorView();
+    public static void ShowVendedorView(Usuario user) {
+        Vendedor vendedor = new Vendedor(user);
+        VendedorView vv = new VendedorView(vendedor);
         VendedorController vc = new VendedorController(vv, vendedor);
         
+        
+        System.out.println("HELL OTHRER");
         scene = new Scene(vv.getView(), 800, 600);
         
         mainStage.setScene(scene);
         mainStage.setTitle("AutoSell - Vendedor");
     }
     
-    public static void showCompradorView() {
-        Comprador comprador = new Comprador();
+    public static void showCompradorView(Usuario user) {
+        Comprador comprador = new Comprador(user);
         CompradorView cv = new CompradorView();
         CompradorController cc = new CompradorController(cv, comprador);
         
+        cv.comprador = comprador;
         scene = new Scene(cv.getView(), 800, 600);
         
         mainStage.setScene(scene);
         mainStage.setTitle("AutoSell - Comprador");
     }
     
-    public static void showCrearVehiculo() {
-        CrearVehiculoView crearVehiculoView = new CrearVehiculoView();
+    public static void showCrearVehiculo(Vendedor v) {
+        CrearVehiculoView crearVehiculoView = new CrearVehiculoView(v);
         scene = new Scene(crearVehiculoView.getView(), 800, 600);
         mainStage.setScene(scene);
         mainStage.setTitle("AutoSell - Vendedor/Crear Vehiculo");

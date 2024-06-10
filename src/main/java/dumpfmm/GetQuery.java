@@ -51,28 +51,32 @@ public class GetQuery extends Query {
                 System.out.println("Objecto: " + objeto);
             }
             
-            
-        }
-        
-        if(filter_data.size() > 0) {
+            // FROM Vehiculo GET ..
+            // FROM Vehiculo GET IdVendedor
+            if(filter_data.size() > 0) {
+                // Devolver solo los campos que estan en columns
+                Malloc<LinkedHashMap<String, Object>> result = filterFields(filter_data, this.columns);
+                System.out.println("Resultados con campos especificados: ");
+                for (HashMap<String, Object> obj : result) {
+                    System.out.println("Objeto con campos especificados: " + obj);
+                }
+
+                return new Response(result);
+            }
+            return new Response(filter_data);
+        }else{
             // Devolver solo los campos que estan en columns
-            Malloc<LinkedHashMap<String, Object>> result = filterFields(filter_data, this.columns);
+            Malloc<LinkedHashMap<String, Object>> result = filterFields(data, this.columns);
             System.out.println("Resultados con campos especificados: ");
             for (HashMap<String, Object> obj : result) {
                 System.out.println("Objeto con campos especificados: " + obj);
             }
-            
+        
             return new Response(result);
         }
         
-        // Devolver solo los campos que estan en columns
-        Malloc<LinkedHashMap<String, Object>> result = filterFields(data, this.columns);
-        System.out.println("Resultados con campos especificados: ");
-        for (HashMap<String, Object> obj : result) {
-            System.out.println("Objeto con campos especificados: " + obj);
-        }
+     
         
-        return new Response(result);
     }
     
     private Malloc<LinkedHashMap<String, Object>> filterFields(Malloc<LinkedHashMap<String, Object>> data, LinkedHashMap<String, String> columns) {

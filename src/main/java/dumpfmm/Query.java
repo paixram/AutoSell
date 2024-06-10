@@ -58,6 +58,7 @@ abstract class Query {
             for(Condition condition : conditions) {
                 if(!condition.evaluate(row)) {
                     matchesAll = false;
+                    System.out.println("Mo cmpel");
                     break;
                 }
             }

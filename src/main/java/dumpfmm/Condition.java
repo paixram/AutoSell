@@ -42,6 +42,7 @@ public class Condition {
     }
     
      private boolean evaluateString(String fieldValue) {
+         //System.out.println("PASAAAAAAAAAAAAAAAAAAAAAAAA: " + value + "- " + fieldValue);
         switch (operator) {
             case EQUALS:
                 return fieldValue.equals(value);

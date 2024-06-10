@@ -9,5 +9,9 @@ package espol.edu.ec.autosell.model;
  * @author Luizzz
  */
 public class Comprador {
+    public Usuario user;
     
+    public Comprador(Usuario user) {
+        this.user = user;
+    }
 }
