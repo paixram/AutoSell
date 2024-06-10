@@ -4,12 +4,14 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import java.io.File;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,6 +51,9 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         kmTextField = new TextField(String.valueOf(vehiculo.getKm()));
         Label fotosLabel = new Label("Fotos:");
         fotosTextField = new TextField(vehiculo.getFotos());
+        Button seleccionarFotoButton = new Button("Seleccionar Foto");
+        configurarBoton(seleccionarFotoButton);
+        seleccionarFotoButton.setOnAction(event -> seleccionarFoto());
         Label descripcionLabel = new Label("Descripción:");
         descripcionTextArea = new TextArea(vehiculo.getDescripcion());
         descripcionTextArea.setPrefColumnCount(15);
@@ -58,10 +63,20 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> editarVehiculo());
 
-        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField, descripcionLabel, descripcionTextArea, editarButton);
+        view.getChildren().addAll(idLabel, idTextField, marcaLabel, marcaTextField, modeloLabel, modeloTextField, precioLabel, precioTextField, kmLabel, kmTextField, fotosLabel, fotosTextField,seleccionarFotoButton, descripcionLabel, descripcionTextArea, editarButton);
         super.base_view.getChildren().add(view);
     }
+    private void seleccionarFoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Foto");
+        
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg"));
+        File selectedFile = fileChooser.showOpenDialog(view.getScene().getWindow());
 
+        if (selectedFile != null) {
+            fotosTextField.setText(selectedFile.getAbsolutePath());
+        }
+    }
     
 
     private void editarVehiculo() {
@@ -84,7 +99,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         ((Stage) view.getScene().getWindow()).close();
     }
      private void configurarBoton(Button button) {
-        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 16px; -fx-cursor: hand;");
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 14px; -fx-cursor: hand;");
         button.setOnMouseEntered(e -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
             st.setToX(1.1);
