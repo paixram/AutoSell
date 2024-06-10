@@ -98,6 +98,10 @@ public class PrincipalView {
         searchField.textProperty().addListener((o, ov, nv) -> {
             this.filterVehicles(nv, null);
         });
+        filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filterVehicles(searchField.getText(), filterComboBox.getValue());
+        });
+        
         ImageView search_icon = new ImageView();
         search_icon.setImage(new Image(getClass().getClassLoader().getResource("app_images/search_icon.png").toString()));
         search_icon.setFitHeight(25);
@@ -135,11 +139,12 @@ public class PrincipalView {
         searchText = searchText.toLowerCase();
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
-            if(filterType == null || filterType.equals("Marca - Modelo")) {
+            if(filterType == null || filterType.equals("Marca y Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
             }else if(filterType.equals("Precio")) {
                 try{
                     int precio = Integer.parseInt(searchText);
+                    System.out.println("Se tranformo");
                     match = vehicle.getPrecio() <= precio;
                 }catch(NumberFormatException e) {
                     System.out.println("Error - numero sin formato");

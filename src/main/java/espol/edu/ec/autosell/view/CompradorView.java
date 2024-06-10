@@ -29,6 +29,10 @@ public class CompradorView extends PrincipalView {
         super.searchField.textProperty().addListener((o, ov, nv) -> {
             this.filterVehicles(nv, null);
         });
+        
+        super.filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filterVehicles(searchField.getText(), filterComboBox.getValue());
+        });
         this.showPublications();
     }
 
