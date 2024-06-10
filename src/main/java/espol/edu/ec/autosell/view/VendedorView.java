@@ -46,6 +46,11 @@ public class VendedorView extends PrincipalView{
         super.searchField.textProperty().addListener((o, ov, nv) -> {
             this.filterVehicles(nv, null);
         });
+        
+        super.filterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filterVehicles(searchField.getText(), filterComboBox.getValue());
+        });
+        
         this.showPublications();
     }
     
@@ -53,10 +58,25 @@ public class VendedorView extends PrincipalView{
     public void filterVehicles(String searchText, String filterType) {
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
         searchText = searchText.toLowerCase();
+        
         for(Vehiculo vehicle : this.vehiculos) {
             boolean match = false;
             if(filterType == null || filterType.equals("Marca - Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
+            }else if(filterType.equals("Precio")) {
+                try{
+                    int precio = Integer.parseInt(searchText);
+                    match = vehicle.getPrecio() <= precio;
+                }catch(NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                }
+            }else if(filterType.equals("Kilometraje")) {
+               try {
+                    int millas = Integer.parseInt(searchText);
+                    match = vehicle.getKm() <= millas;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                } 
             }
             
             if(match) {

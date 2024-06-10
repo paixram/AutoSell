@@ -59,6 +59,20 @@ public class CompradorView extends PrincipalView {
             boolean match = false;
             if(filterType == null || filterType.equals("Marca - Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
+            }else if(filterType.equals("Precio")) {
+                try{
+                    int precio = Integer.parseInt(searchText);
+                    match = vehicle.getPrecio() <= precio;
+                }catch(NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                }
+            }else if(filterType.equals("Kilometraje")) {
+               try {
+                    int millas = Integer.parseInt(searchText);
+                    match = vehicle.getKm() <= millas;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                } 
             }
             
             if(match) {

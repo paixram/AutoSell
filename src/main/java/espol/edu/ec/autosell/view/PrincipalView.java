@@ -46,7 +46,7 @@ public class PrincipalView {
     public Button nextButton = new Button();
     public Button comprar = null;
     
-    private ComboBox<String> filterComboBox = new ComboBox<>();
+    public ComboBox<String> filterComboBox = new ComboBox<>();
     private TextField marcaTextField = new TextField();
     private TextField modeloTextField = new TextField();
     private TextField minPrecioTextField = new TextField();
@@ -64,6 +64,7 @@ public class PrincipalView {
     public Label marcaModeloLabel;
     public Label kilometrajeLabel;
     public Label precioLabel;
+    
     
     
     
@@ -113,7 +114,7 @@ public class PrincipalView {
         search_container.getChildren().addAll(searchField, search_icon);
         searchBarAndFilter.getChildren().addAll(search_container);
 
-        ComboBox<String> filterComboBox = new ComboBox<>();
+        filterComboBox = new ComboBox<>();
         filterComboBox.getItems().addAll("Marca y Modelo", "Precio", "Kilometraje");
         filterComboBox.setPromptText("Seleccionar filtro...");
         filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
@@ -136,6 +137,20 @@ public class PrincipalView {
             boolean match = false;
             if(filterType == null || filterType.equals("Marca - Modelo")) {
                 match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
+            }else if(filterType.equals("Precio")) {
+                try{
+                    int precio = Integer.parseInt(searchText);
+                    match = vehicle.getPrecio() <= precio;
+                }catch(NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                }
+            }else if(filterType.equals("Kilometraje")) {
+               try {
+                    int millas = Integer.parseInt(searchText);
+                    match = vehicle.getKm() <= millas;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error - numero sin formato");
+                } 
             }
             
             if(match) {
