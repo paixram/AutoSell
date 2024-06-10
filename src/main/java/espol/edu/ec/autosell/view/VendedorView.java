@@ -41,7 +41,8 @@ public class VendedorView extends PrincipalView{
         // Mostrar el contenido en la ventana
         //setCenter(root);
         System.out.println("Agregado");
-
+        
+        super.showPublications();
     }
 
     private HBox crearBarraInferior() {
