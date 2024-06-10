@@ -4,16 +4,19 @@
  */
 package espol.edu.ec.autosell.utils;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 /**
  *
  * @author José Miguel
  */
-public class CircularLinkedList<E> {
-    public Node<E> head;
-    public Node<E> tail;
-    public Node<E> current;
+
+public class CircularLinkedList<E> implements Iterable<E> {
+    private Node<E> head;
+    private Node<E> tail;
+    private Node<E> current;
+
     private int size;
 
     public static class Node<E> {
@@ -97,6 +100,7 @@ public class CircularLinkedList<E> {
             current = current.next;
         } while (current != head);
     }
+
     public void remove(E element) {
         if (size == 0) return;
 
@@ -127,5 +131,33 @@ public class CircularLinkedList<E> {
     return head;
 }
 
+
+    
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private Node<E> current = head;
+            private boolean firstIteration = true;
+
+            @Override
+            public boolean hasNext() {
+                return current != null && (firstIteration || current != head);
+            }
+
+            @Override
+            public E next() {
+                if (current == null || (!firstIteration && current == head)) {
+                    throw new java.util.NoSuchElementException();
+                }
+                E element = current.element;
+                current = current.next;
+                firstIteration = false;
+                return element;
+            }
+        };
+    }
 }
+
+
+
 
