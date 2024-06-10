@@ -78,6 +78,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     private void seleccionarFoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Foto");
+        
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = fileChooser.showOpenDialog(view.getScene().getWindow());
 

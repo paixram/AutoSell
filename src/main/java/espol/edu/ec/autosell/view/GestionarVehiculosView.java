@@ -30,7 +30,7 @@ public class GestionarVehiculosView {
         this.editar = editar;
 
         Stage stage = new Stage();
-        stage.setTitle("Editar View");
+        stage.setTitle("Editar y Borrar View");
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
 

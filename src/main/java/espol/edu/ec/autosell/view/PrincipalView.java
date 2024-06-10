@@ -74,7 +74,7 @@ public class PrincipalView {
         this.is_registered = reg;
         showStackPane();
         vehiculos = PrincipalController.generatePublications();
-        
+        vehicleDetailsLabel = new Label();
         if(!this.is_registered) {
             ShowLoginButton();
             showPublications();
