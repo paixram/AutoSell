@@ -36,7 +36,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage mainStage;
-    private static final String filePath = "src/main/resources/file/archivo.txt";
+    //private static final String filePath = "src/main/resources/file/archivo.txt";
     private static Malloc<LinkedHashMap<String,Object>> vehiculos;
     // Database Settings
     public static dumpfmm database;
