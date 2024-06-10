@@ -4,7 +4,6 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

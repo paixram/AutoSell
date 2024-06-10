@@ -10,16 +10,6 @@ import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
 import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.view.PrincipalView;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import java.util.LinkedHashMap;
 /**
  *

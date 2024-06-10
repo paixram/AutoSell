@@ -6,20 +6,13 @@ package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
-import espol.edu.ec.autosell.utils.Malloc;
 import javafx.animation.ScaleTransition;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -51,6 +44,7 @@ public class CompradorView extends PrincipalView {
                 System.out.println("Vehículo comprado: " + currentVehiculo.getMarca() + " " + currentVehiculo.getModelo());
             }
         });
+
         super.showPublications();
     }
     

@@ -9,8 +9,6 @@ import dumpfmm.FieldOrder;
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.utils.Malloc;
 import java.util.LinkedHashMap;
-import java.util.List;
-
 /**
  *
  * @author José Miguel

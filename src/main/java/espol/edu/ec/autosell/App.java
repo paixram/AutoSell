@@ -3,12 +3,9 @@ package espol.edu.ec.autosell;
 import dumpfmm.dumpfmm;
 import espol.edu.ec.autosell.controller.CompradorController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 // import models
 import espol.edu.ec.autosell.model.Usuario;
@@ -31,7 +28,6 @@ import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.VendedorView;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * JavaFX App
@@ -47,8 +43,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        //PrincipalView principalView = new PrincipalView(true); // Asumimos que el usuario es vendedor
-        //principalView.mostrar();
+        
         mainStage = stage;
         showPrincipalView();
         mainStage.setTitle("AutoSell - Página Principal");
@@ -86,7 +81,7 @@ public class App extends Application {
         scene = new Scene(cv.getView(), 800, 600);
         
         mainStage.setScene(scene);
-        mainStage.setTitle("AutoSell - Vendedor");
+        mainStage.setTitle("AutoSell - Comprador");
     }
     
     public static void showCrearVehiculo() {
@@ -96,14 +91,7 @@ public class App extends Application {
         mainStage.setTitle("AutoSell - Vendedor/Crear Vehiculo");
     }
     
-    //public void start(Stage stage) throws IOException {
        
-      //  mainStage = stage;
-       // ShowLogin();
-       // mainStage.setTitle("AutoSell - Login");
-       // mainStage.show();
-    //}
-    
     public static void ShowLogin() {
         
         Usuario user_model = new Usuario();

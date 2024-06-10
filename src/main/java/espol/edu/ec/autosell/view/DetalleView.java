@@ -4,6 +4,7 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 /**
  *
  * @author José Miguel
@@ -70,7 +72,7 @@ public class DetalleView {
 
         // Botón de cerrar
         Button closeButton = new Button("Cerrar");
-        styleButton(closeButton);
+        configurarBoton(closeButton);
         closeButton.setOnAction(e -> stage.close());
 
         HBox bottomBox = new HBox(10);
@@ -92,17 +94,19 @@ public class DetalleView {
     public void show() {
         stage.showAndWait();
     }
-    private void styleButton(Button boton) {
-        boton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +
-            "-fx-border-radius: 10; " +
-            "-fx-font-size: 15px; " +
-            "-fx-padding: 5 10; " +
-            "-fx-border-color: black; " +
-            "-fx-border-width: 2px;" +
-            "-fx-cursor: hand;"
-        );
+    private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
     }
 }

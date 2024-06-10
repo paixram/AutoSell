@@ -6,20 +6,13 @@ package espol.edu.ec.autosell.controller;
 
 import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import espol.edu.ec.autosell.model.Usuario;
-import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.utils.UserRole;
 import espol.edu.ec.autosell.view.RegisterView;
-import espol.edu.ec.autosell.view.CompradorView;
-import espol.edu.ec.autosell.view.VendedorView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *

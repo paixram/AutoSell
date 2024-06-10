@@ -2,20 +2,11 @@ package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.controller.PrincipalController;
-import espol.edu.ec.autosell.model.Usuario;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
-import java.util.List;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -23,18 +14,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 
@@ -131,14 +116,8 @@ public class PrincipalView {
         filterComboBox.setPromptText("Seleccionar filtro...");
         filterComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
 
-        //HBox.setHgrow(searchField, Priority.ALWAYS);
-        
         searchBarAndFilter.getChildren().add(filterComboBox);
-        
-        //HBox.setHgrow(search_container, Priority.ALWAYS);
-        //HBox.setHgrow(filterComboBox, Priority.ALWAYS);
-        
-        //super.root.getChildren().add(searchBarAndFilter);
+                
         root.setTop(searchBarAndFilter);
         
         root.setOnMouseClicked(event -> {
@@ -228,18 +207,12 @@ public class PrincipalView {
         
         
         publication_card.setStyle(" -fx-border-width: 2; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, grey, 20, 0, 0, 0);");
-        //publication_card.getChildren().addAll(imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
+        
         publication_card.getChildren().addAll(items);
         
         centerBox = new VBox(10, publication_card);
         centerBox.setAlignment(Pos.CENTER);
-        //centerBox.getChildren().add(publication_card);
-        
-        //centerBox = new VBox(10, imageView, marcaModeloLabel, kilometrajeLabel, precioLabel);
-        //centerBox.setAlignment(Pos.CENTER);
-        //centerBox.setPadding(new Insets(20));
-        //centerBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: #f0f0f0; -fx-border-radius: 10; -fx-background-radius: 10;");
-    
+       
         root.setCenter(centerBox);
     }
     
@@ -287,13 +260,10 @@ public class PrincipalView {
 
     
     private void ShowLoginButton() {
-    //login_view.getLoginButton().setOnAction(e -> validateLogin());
-        //login_view.getSignUpButton().setOnAction(e -> showRegister());
-         //root = new BorderPane();
-        
+    
         // Contenedor para el botón de inicio de sesión a la derecha
         Button loginButton = new Button("Iniciar Sesión");
-        configurarBoton(loginButton);
+        styleButton(loginButton);
          
          
         loginButton.setOnAction(event -> {
@@ -318,7 +288,6 @@ public class PrincipalView {
         
         nextButton = new Button(">");
         styleButton(nextButton);
-
 
         
         root.setLeft(prevButton);
@@ -394,15 +363,8 @@ public class PrincipalView {
             vehicleDetailsLabel.setText("No hay vehículos disponibles.");
         }
     }
-    //private void AnteriorVehiculo(){
-      //  vehiculos.getPrevious();
-        //updateVehicleDetails();
-    //}
-    //}
-     //private void SiguienteVehiculo() {
-        //vehiculos.getNext();
-        //updateVehicleDetails();
-    //}
+    
+    
     public String getSelectedFilter() {
     // Suponiendo que tienes un ComboBox llamado filterComboBox
         return filterComboBox.getValue(); // Retorna el valor seleccionado del ComboBox
@@ -414,43 +376,43 @@ public class PrincipalView {
     }
 
     public String getModelo() {
-        // Suponiendo que tienes un TextField llamado modeloTextField
-        return modeloTextField.getText(); // Retorna el texto ingresado en el TextField del modelo
+        
+        return modeloTextField.getText(); 
     }
 
     public double getMinPrecio() {
-        // Suponiendo que tienes un TextField llamado minPrecioTextField para el precio mínimo
+        
         try {
-            return Double.parseDouble(minPrecioTextField.getText()); // Retorna el valor parseado del TextField de precio mínimo
+            return Double.parseDouble(minPrecioTextField.getText()); 
         } catch (NumberFormatException e) {
-            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+            return 0.0; 
         }
     }
 
     public double getMaxPrecio() {
-        // Suponiendo que tienes un TextField llamado maxPrecioTextField para el precio máximo
+        
         try {
-            return Double.parseDouble(maxPrecioTextField.getText()); // Retorna el valor parseado del TextField de precio máximo
+            return Double.parseDouble(maxPrecioTextField.getText()); 
         } catch (NumberFormatException e) {
-            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+            return 0.0; 
         }
     }
 
     public double getMinKilometraje() {
-        // Suponiendo que tienes un TextField llamado minKmTextField para el kilometraje mínimo
+        
         try {
-            return Double.parseDouble(minKmTextField.getText()); // Retorna el valor parseado del TextField de kilometraje mínimo
+            return Double.parseDouble(minKmTextField.getText()); 
         } catch (NumberFormatException e) {
-            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+            return 0.0; 
         }
     }
 
     public double getMaxKilometraje() {
-        // Suponiendo que tienes un TextField llamado maxKmTextField para el kilometraje máximo
+        
         try {
-            return Double.parseDouble(maxKmTextField.getText()); // Retorna el valor parseado del TextField de kilometraje máximo
+            return Double.parseDouble(maxKmTextField.getText()); 
         } catch (NumberFormatException e) {
-            return 0.0; // Retorna 0.0 si no se puede parsear como un número válido
+            return 0.0; 
         }
     }
     public void agregarVehiculo(Vehiculo vehiculo) {
