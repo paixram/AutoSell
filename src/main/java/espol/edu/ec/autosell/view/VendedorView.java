@@ -57,18 +57,23 @@ public class VendedorView extends PrincipalView{
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
-            if (vehiculo != null) { // Verifica si se ha seleccionado un vehículo
-                EditarVehiculoView editarVehiculoView = new EditarVehiculoView(this, vehiculo);
-                Scene scene = new Scene(editarVehiculoView.getView());
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                System.out.println("No se ha seleccionado ningún vehículo para editar.");
-            }
+            new GestionarVehiculosView(vehiculos, true, this);
         });
+            //if (vehiculo != null) { // Verifica si se ha seleccionado un vehículo
+               // EditarVehiculoView editarVehiculoView = new EditarVehiculoView(this, vehiculo);
+                //Scene scene = new Scene(editarVehiculoView.getView());
+                //Stage stage = new Stage();
+               // stage.setScene(scene);
+                //stage.show();
+            //} else {
+               // System.out.println("No se ha seleccionado ningún vehículo para editar.");
+            //}
+       
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
+        eliminarButton.setOnAction(event -> {
+            new GestionarVehiculosView(vehiculos, false, this);
+        });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);
         editarButton.setMaxWidth(Double.MAX_VALUE);

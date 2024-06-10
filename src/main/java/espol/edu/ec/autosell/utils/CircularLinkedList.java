@@ -5,20 +5,21 @@
 package espol.edu.ec.autosell.utils;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 /**
  *
  * @author José Miguel
  */
 public class CircularLinkedList<E> {
-    private Node<E> head;
-    private Node<E> tail;
-    private Node<E> current;
+    public Node<E> head;
+    public Node<E> tail;
+    public Node<E> current;
     private int size;
 
-    private static class Node<E> {
-        E element;
-        Node<E> next;
-        Node<E> prev;
+    public static class Node<E> {
+        public E element;
+        public Node<E> next;
+        public Node<E> prev;
 
         public Node(E element) {
             this.element = element;
@@ -96,5 +97,35 @@ public class CircularLinkedList<E> {
             current = current.next;
         } while (current != head);
     }
+    public void remove(E element) {
+        if (size == 0) return;
+
+        Node<E> current = head;
+        do {
+            if (current.element.equals(element)) {
+                if (size == 1) {
+                    head = null;
+                    tail = null;
+                    current = null;
+                } else {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                    if (current == head) {
+                        head = current.next;
+                    }
+                    if (current == tail) {
+                        tail = current.prev;
+                    }
+                }
+                size--;
+                return;
+            }
+            current = current.next;
+        } while (current != head);
+    }
+    public Node<E> getHead() {
+    return head;
+}
+
 }
 

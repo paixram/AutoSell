@@ -68,12 +68,12 @@ public class PrincipalView {
     private ImageView vehiculoImageView;
     
     protected VBox centerBox;
-    
+    protected Button detallesButton;
     // Publications widgets
-    private ImageView imageView;
-    private Label marcaModeloLabel;
-    private Label kilometrajeLabel;
-    private Label precioLabel;
+    public ImageView imageView;
+    public Label marcaModeloLabel;
+    public Label kilometrajeLabel;
+    public Label precioLabel;
     
     
     
@@ -133,7 +133,7 @@ public class PrincipalView {
         precioLabel.setFont(new Font("Arial", 18));
         precioLabel.setStyle("-fx-text-fill: green;");
 
-        Button detallesButton = new Button("Detalles");
+        detallesButton = new Button("Detalles");
         styleButton(detallesButton);
         detallesButton.setOnAction(e -> {
         Vehiculo currentVehiculo = vehiculos.getCurrent();
@@ -179,7 +179,7 @@ public class PrincipalView {
         root.setCenter(centerBox);
     }
     
-    private void updateLabels() {
+    protected void updateLabels() {
         Vehiculo vehiculo = this.vehiculos.getCurrent();
         if (vehiculo != null) {
             imageView.setImage(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
@@ -408,6 +408,9 @@ public class PrincipalView {
     }
     public void setCenter(StackPane center) {
         root.setCenter(center);
+    }
+    public void eliminarVehiculo(Vehiculo vehiculo) {
+        vehiculos.remove(vehiculo);
     }
     
 }
