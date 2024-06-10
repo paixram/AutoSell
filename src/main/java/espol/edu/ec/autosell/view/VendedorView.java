@@ -6,6 +6,7 @@ package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -91,7 +93,7 @@ public class VendedorView extends PrincipalView{
         this.vehiculo = vehiculo;
     }
     
-    private void configurarBoton(Button boton) {
+    //private void configurarBoton(Button boton) {
         /*boton.setStyle(
             "-fx-background-color: black;" +
             "-fx-text-fill: white;" +
@@ -103,8 +105,23 @@ public class VendedorView extends PrincipalView{
             "-fx-border-width: 2px;" +
             "-fx-cursor: hand;"
         );*/
-        boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+       // boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
 
+    //}
+    private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
     }
     
     

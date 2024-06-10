@@ -1,5 +1,6 @@
 package espol.edu.ec.autosell.view;
 
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -53,30 +55,12 @@ public class LoginView extends LoginRegisterBaseView {
         contraseniaField.setPrefWidth(250); 
         
         loginButton = new Button("Login");
-        loginButton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +     // Bordes cuadrados
-            "-fx-border-radius: 10; " +         // Bordes cuadrados
-            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
-            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
-            "-fx-border-color: black; " +      // Color del borde
-            "-fx-border-width: 2px;" +         // Ancho del borde
-            "-fx-cursor: hand;"
-        );
+        configurarBoton(loginButton);
+        
         
         signUpButton=new Button("Signup");
-        signUpButton.setStyle(
-            "-fx-background-color: black;" +
-            "-fx-text-fill: white;" +
-            "-fx-background-radius: 5; " +     // Bordes cuadrados
-            "-fx-border-radius: 10; " +         // Bordes cuadrados
-            "-fx-font-size: 15px; " +          // Tamaño de letra más grande
-            "-fx-padding: 5 10; " +           // Tamaño del botón más grande
-            "-fx-border-color: black; " +      // Color del borde
-            "-fx-border-width: 2px;" +          // Ancho del borde
-            "-fx-cursor: hand;"
-        );
+        configurarBoton(signUpButton);
+        
         
         // View Logic
         Font fontBold = Font.font("Arial", FontWeight.BOLD, 12);
@@ -137,5 +121,19 @@ public class LoginView extends LoginRegisterBaseView {
          return signUpButton;
     }
     
-    
+    private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
+    }
 }

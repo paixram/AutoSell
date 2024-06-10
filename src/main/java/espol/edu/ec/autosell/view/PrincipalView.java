@@ -286,7 +286,7 @@ public class PrincipalView {
         
         // Contenedor para el botón de inicio de sesión a la derecha
         Button loginButton = new Button("Iniciar Sesión");
-        configurarBoton(loginButton);
+        styleButton(loginButton);
          
          
         loginButton.setOnAction(event -> {
