@@ -3,12 +3,9 @@ package espol.edu.ec.autosell;
 import dumpfmm.dumpfmm;
 import espol.edu.ec.autosell.controller.CompradorController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 // import models
 import espol.edu.ec.autosell.model.Usuario;
@@ -31,7 +28,6 @@ import espol.edu.ec.autosell.view.PrincipalView;
 import espol.edu.ec.autosell.view.RegisterView;
 import espol.edu.ec.autosell.view.VendedorView;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * JavaFX App

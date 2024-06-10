@@ -3,11 +3,7 @@ package espol.edu.ec.autosell.model;
 // Import Enums
 import dumpfmm.Almacenable;
 import dumpfmm.FieldOrder;
-import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.utils.UserRole;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
 
 public class Usuario implements Almacenable {
     @FieldOrder(order = 1)

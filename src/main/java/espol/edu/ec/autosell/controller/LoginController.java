@@ -5,21 +5,9 @@
 package espol.edu.ec.autosell.controller;
 import dumpfmm.Response;
 import espol.edu.ec.autosell.App;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import java.io.IOException;
 import java.util.List;
 import espol.edu.ec.autosell.model.Usuario;
-import espol.edu.ec.autosell.utils.Malloc;
 import espol.edu.ec.autosell.view.LoginView;
-import espol.edu.ec.autosell.utils.UserRole;
-import espol.edu.ec.autosell.view.CompradorView;
-import espol.edu.ec.autosell.view.RegisterView;
-import espol.edu.ec.autosell.view.VendedorView;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -32,16 +20,14 @@ public class LoginController {
     
     private Usuario user_model;
     private LoginView login_view;
-    //private Malloc<HashMap<String, Object>> usuarios= new Malloc<>();
-    private List<String[]> userData;
+    //private List<String[]> userData;
     private Stage primaryStage;
     public LoginController(Usuario um, LoginView lv, Stage primaryStage) {
         user_model = um;
         login_view = lv;
         this.primaryStage = primaryStage;
         initialize();
-        //this.userData = Metodos.readDataFromFile("src/main/resources/file/archivo.txt");
-        //this.usuarios = Metodos.readUsersFromFile("src/main/resources/file/archivo.txt");
+        
     }
     
     public void initialize() {
@@ -81,8 +67,7 @@ public class LoginController {
             case "COMPRADOR":
                 App.showCompradorView();
         }
-        // TODO: Aqui ya se obtiene el usuario, verficiar si es comprador o vendedor y crear las vistas
-        // ShowHome(); o algo asi
+        
     }
     
   
