@@ -152,7 +152,7 @@ public class App extends Application {
        String query_raw2_toyota_rav4 = "FROM Vehiculo SET \"8\", \"Toyota\", \"RAV4\", 35200, 17500, \"Images/Toyota-Rav4 1.jpg\", \"El Toyota RAV4 es un SUV compacto popular que ofrece una conducción cómoda, un diseño atractivo y una amplia gama de funciones. Tiene un motor de 2.0 litros y 177 CV.\"";
        String query_raw2_hyundai_tucson = "FROM Vehiculo SET \"9\", \"Hyundai\", \"Tucson\", 30500, 20500, \"Images/Hyundai 2.jpeg\", \"El Hyundai Tucson es un SUV compacto moderno y tecnológico que ofrece una conducción segura, un interior espacioso y una amplia gama de tecnologías. Tiene un motor de 1.6 litros y 150 CV.\"";
        String query_raw2_kia_sportage = "FROM Vehiculo SET \"10\", \"Kia\", \"Sportage\", 32700, 19800, \"Images/kia sportage1.jpg\", \"El Kia Sportage es un SUV compacto elegante y deportivo que ofrece una conducción divertida, un diseño atractivo y una garantía de 7 años. Tiene un motor de 1.6 litros y 180 CV.\"";
-       App.database.executeQuery(query_raw2_jeep);
+       /*App.database.executeQuery(query_raw2_jeep);
        App.database.executeQuery(query_raw2_tesla);
        App.database.executeQuery(query_raw2_toyota_hilux);
        App.database.executeQuery(query_raw2_ford_ranger);
@@ -161,7 +161,7 @@ public class App extends Application {
        App.database.executeQuery(query_raw2_isuzu_dmax);
        App.database.executeQuery(query_raw2_toyota_rav4);
        App.database.executeQuery(query_raw2_hyundai_tucson);
-       App.database.executeQuery(query_raw2_kia_sportage);
+       App.database.executeQuery(query_raw2_kia_sportage);*/
        
        String query_fotos= "FROM Vehiculo GET fotos";
        App.database.executeQuery(query_fotos);

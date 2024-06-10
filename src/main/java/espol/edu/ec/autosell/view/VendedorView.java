@@ -6,6 +6,7 @@ package espol.edu.ec.autosell.view;
 
 import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
+import espol.edu.ec.autosell.utils.CircularLinkedList;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -36,9 +37,32 @@ public class VendedorView extends PrincipalView{
         
         System.out.println("Agregado");
         
-        super.showPublications();
+        super.searchField.textProperty().addListener((o, ov, nv) -> {
+            this.filterVehicles(nv, null);
+        });
+        this.showPublications();
     }
-
+    
+    @Override
+    public void filterVehicles(String searchText, String filterType) {
+        CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
+        searchText = searchText.toLowerCase();
+        for(Vehiculo vehicle : this.vehiculos) {
+            boolean match = false;
+            if(filterType == null || filterType.equals("Marca - Modelo")) {
+                match = vehicle.getMarca().toLowerCase().contains(searchText) || vehicle.getModelo().toLowerCase().contains(searchText.toLowerCase());
+            }
+            
+            if(match) {
+                filteredVehicles.add(vehicle);
+            }
+        }
+        
+        // Mostrar los filtrados
+        System.out.println(filteredVehicles);
+        showPublications(filteredVehicles);
+    }
+    
     private HBox crearBarraInferior() {
         HBox bottomBar = new HBox(0);
         bottomBar.setAlignment(Pos.CENTER);
@@ -78,6 +102,22 @@ public class VendedorView extends PrincipalView{
     }
     
     private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
+    }
+    
+    private void styleButton(Button button) {
         button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
         button.setOnMouseEntered(e -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(200), button);

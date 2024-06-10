@@ -35,6 +35,9 @@ public class Vehiculo implements Almacenable {
     
     @FieldOrder(order = 7)
     String Descripcion;
+    
+    @FieldOrder(order = 8)
+    private String id_vendedor;
 
     public Vehiculo(String id, String marca, String modelo, int precio, int km, String fotos, String Descripcion) {
         this.id = id;

@@ -94,7 +94,9 @@ public class PrincipalView {
         
         searchField.setStyle("-fx-border-radius: 5; -fx-padding: 10; -fx-background-color: rgba(0, 0, 0, 0);");
         searchField.setFont(new Font("Arial", 15));
-        
+        searchField.textProperty().addListener((o, ov, nv) -> {
+            this.filterVehicles(nv, null);
+        });
         ImageView search_icon = new ImageView();
         search_icon.setImage(new Image(getClass().getClassLoader().getResource("app_images/search_icon.png").toString()));
         search_icon.setFitHeight(25);
