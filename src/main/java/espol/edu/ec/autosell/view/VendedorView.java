@@ -121,13 +121,13 @@ public class VendedorView extends PrincipalView{
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, true);
+            new GestionarVehiculosView(vehicle, true,this);
         });
             
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, false);
+            new GestionarVehiculosView(vehicle, false,this);
         });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);

@@ -28,11 +28,11 @@ import javafx.util.Duration;
 public class GestionarVehiculosView {
     private boolean editar;
     private Map<Vehiculo, VBox> vehiculoBoxMap = new HashMap<>();;
-    
+    private PrincipalView principalView;
 
-    public GestionarVehiculosView(CircularLinkedList<Vehiculo> vehiculos, boolean editar) {
+    public GestionarVehiculosView(CircularLinkedList<Vehiculo> vehiculos, boolean editar,PrincipalView principalView) {
         this.editar = editar;
-
+        this.principalView = principalView;
         Stage stage = new Stage();
         stage.setTitle("Editar y Borrar View");
         BorderPane root = new BorderPane();
@@ -65,7 +65,7 @@ public class GestionarVehiculosView {
                     button.setOnAction(event -> {
                         if (editar) {
                             Stage editStage = new Stage();
-                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(vehiculo);
+                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(vehiculo, principalView);
                             Scene scene = new Scene(editarVehiculoView.getView());
                             editStage.setScene(scene);
                             editStage.show();
