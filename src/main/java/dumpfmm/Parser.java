@@ -50,7 +50,7 @@ public class Parser {
                 case "SET":
                     return parseSetQuery(model);
                 case "UPDATE":
-                    break;
+                    return parseUpdateQuery(model);
                 case "DELETE":
                     return parseDeleteQuery(model);
                 default:
@@ -134,24 +134,7 @@ public class Parser {
         
         String pathReference = (String) model_sets.get("Path Reference");
         Malloc<String> v = new Malloc();
-        // Verificar que exista un autoincrement
-        /*if(currentToken().getType() == TokenType.IDENTIFIER && currentToken().getValue().equals("AUTOINCREMENT")) {
-            // Obtener todos
-            //String query = "FROM " + model + "GET ..";
-            Malloc<LinkedHashMap<String, Object>> data = Query.DumpFileModelDataFORMAT(pathReference, model_arguments);
-            System.out.println("DATAAAAAAA: " + data);
-            int size = data.size();
-            LinkedHashMap<String, Object> last_model = data.get(size - 1);
-            System.out.println("DATAAAAAAA: " + last_model);
-            //last_model.get(); // en la key va el field 0
-            String target_id = "";
-            for(Map.Entry<String,String> d : model_arguments.entrySet()) {
-                String index = d.getValue().split(",")[1];
-                if(index.equals("0")) {
-                    target_id = d.getKey();
-                }
-            }
-        }*/
+       
         
         
         int position = 0;
@@ -223,6 +206,35 @@ public class Parser {
         //System.out.println("DATTOS:  " + values);
         // Formatear data con los valores
         return new SetQuery(model, v, pathReference, model_arguments); // Aqui quede
+    }
+    
+    private Query parseUpdateQuery(String model) {
+        System.out.println("El current token: " + currentToken().getValue());
+        
+        // Recoger todos los campos de la metadata del model 
+        LinkedHashMap<String, Object> model_sets = (LinkedHashMap<String, Object>) metadata.get(model);
+        LinkedHashMap<String, String> model_arguments = (LinkedHashMap<String, String>) model_sets.get("Fields");
+        
+        LinkedHashMap<String, String> columns = new LinkedHashMap<>();
+         while (currentToken().getType() != TokenType.CONSULTOR) {
+             while (true) {
+                        //columns.put(currentToken().getValue());
+                        model_arguments.forEach((k, v) -> {
+                            if (k.equals(currentToken().getValue())) {
+                                columns.put(k, v);
+                            }
+                        });
+                        peek();
+
+                        if (currentToken().getType() == TokenType.COMMA) {
+                            peek();
+                        } else {
+                            break;
+                        }
+                    }
+         }
+        
+        return null;
     }
     
     private Query parseDeleteQuery(String model) {

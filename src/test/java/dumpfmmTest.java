@@ -113,12 +113,12 @@ public class dumpfmmTest {
        // Delete by fields
        String query_raw = "FROM Vehiculo UPDATE " +
         "id = " + 12 +
-        ", marca = '" + "elpepe" + "'" +
-        ", modelo = '" + "modular" + "'" +
+        ", marca = \"" + "elpepe" + "\"" +
+        ", modelo = \"" + "modular" + "\"" +
         ", precio = " + 23324 +
         ", km = " + 43435 +
-        ", fotos = '" + "Images/ellcaha.png" + "'" +
-        ", descripcion = '" + "actualziado con exito" + "'" +
+        ", fotos = \"" + "Images/ellcaha.png" + "\"" +
+        ", descripcion = \"" + "actualziado con exito" + "\"" +
         " WHERE id = " + 11;
        
        System.out.println("My Query: " + query_raw);

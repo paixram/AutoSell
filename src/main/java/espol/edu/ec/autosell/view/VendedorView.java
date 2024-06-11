@@ -123,7 +123,7 @@ public class VendedorView extends PrincipalView{
                 (String) d.get("idVendedor")
             );            vehicles.add(mb);
             }
-            new GestionarVehiculosView(vehicles, true);
+            new GestionarVehiculosView(vehicles, true, this);
         });
             
         Button eliminarButton = new Button("Eliminar Vehículo");
@@ -146,7 +146,7 @@ public class VendedorView extends PrincipalView{
                 (String) d.get("idVendedor")
             );            vehicles.add(mb);
             }
-            new GestionarVehiculosView(vehicles, false);
+            new GestionarVehiculosView(vehicles, false, this);
         });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);
