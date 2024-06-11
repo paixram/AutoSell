@@ -160,6 +160,11 @@ public class PrincipalView {
     }
     
     public void filterVehicles(String searchText, String filterType) {
+        
+        if(searchText.equals("")) {
+            showPublications(vehiculos);
+            return;
+        }
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
         System.out.println("Searchtext: " + searchText + "Type: " + filterType);
         searchText = searchText.toLowerCase();
@@ -264,7 +269,8 @@ public class PrincipalView {
         root.setCenter(centerBox);
     }
     
-
+    
+    
     
 
     protected void updateLabels(CircularLinkedList<Vehiculo> vehiculos) {
@@ -490,7 +496,7 @@ public class PrincipalView {
     public void setCenter(StackPane center) {
         root.setCenter(center);
     }
-    public void eliminarVehiculo(Vehiculo vehiculo) {
+    public static void eliminarVehiculo(Vehiculo vehiculo) {
         vehiculos.remove(vehiculo);
     }
     

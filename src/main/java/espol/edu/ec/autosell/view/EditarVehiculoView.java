@@ -32,7 +32,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
     private PrincipalView principalView;
     private Vehiculo vehiculo;
     private TextArea descripcionTextArea;
-    public EditarVehiculoView(PrincipalView principalView, Vehiculo vehiculo) {
+    public EditarVehiculoView(Vehiculo vehiculo) {
         super();
         this.principalView = principalView;
         this.vehiculo = vehiculo;

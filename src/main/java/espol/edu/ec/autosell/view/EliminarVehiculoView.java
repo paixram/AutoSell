@@ -16,12 +16,10 @@ import javafx.stage.Stage;
 
 public class EliminarVehiculoView extends LoginRegisterBaseView{
     private VBox view;
-    private PrincipalView principalView;
     private Vehiculo vehiculo;
 
-    public EliminarVehiculoView(PrincipalView principalView, Vehiculo vehiculo) {
+    public EliminarVehiculoView(Vehiculo vehiculo) {
         super();
-        this.principalView = principalView;
         this.vehiculo = vehiculo;
         view = new VBox(10);
 
@@ -40,7 +38,7 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
     }
 
     private void eliminarVehiculo() {
-        principalView.eliminarVehiculo(vehiculo);
+        PrincipalView.eliminarVehiculo(vehiculo);
         ((Stage) view.getScene().getWindow()).close();
     }
 
