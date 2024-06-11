@@ -35,6 +35,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
     public EditarVehiculoView(Vehiculo vehiculo, PrincipalView principalView) {
         super();
         this.vehiculo = vehiculo;
+        this.principalView = principalView;
         view = new VBox(10);
         view.setMinWidth(400);
         view.setMinHeight(550);
