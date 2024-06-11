@@ -71,8 +71,13 @@ public class GestionarVehiculosView {
                             PrincipalView.vehiculos.remove(vehiculo);
                             //PrincipalView.updateLabels(vehiculos);
                             EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo);
-                            
-                            // TODO 75
+                        
+                            // Crear una nueva ventana para mostrar EliminarVehiculoView
+                            Stage eliminarStage = new Stage();
+                            Scene eliminarScene = new Scene(eliminar_v.getView());
+                            eliminarStage.setScene(eliminarScene);
+                            eliminarStage.setTitle("Eliminar Vehículo");
+                            eliminarStage.show();
                         }
                     });
 

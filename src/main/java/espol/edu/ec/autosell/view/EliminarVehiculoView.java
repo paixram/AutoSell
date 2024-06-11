@@ -4,10 +4,13 @@
  */
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
+import javafx.animation.ScaleTransition;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -22,7 +25,8 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
         super();
         this.vehiculo = vehiculo;
         view = new VBox(10);
-
+        view.setPrefSize(650, 200); // Ajusta el tamaño preferido según tus necesidades
+        view.setPadding(new Insets(20));
         Label confirmLabel = new Label("¿Estás seguro de que deseas eliminar este vehículo?");
         Label vehiculoLabel = new Label(vehiculo.toString());
         Button eliminarButton = new Button("Eliminar");
@@ -42,8 +46,19 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
         ((Stage) view.getScene().getWindow()).close();
     }
 
-   private void configurarBoton(Button boton) {
-        boton.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 20px; -fx-cursor: hand;");
-
+   private void configurarBoton(Button button) {
+        button.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-border-color: black; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 16px; -fx-cursor: hand;");
+        button.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+        button.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+        });
     }
 }
