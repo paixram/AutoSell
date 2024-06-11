@@ -26,7 +26,7 @@ import javafx.util.Duration;
 public class GestionarVehiculosView {
     private boolean editar;
 
-    public GestionarVehiculosView(CircularLinkedList<Vehiculo> vehiculos, boolean editar, PrincipalView principalView) {
+    public GestionarVehiculosView(boolean editar) {
         this.editar = editar;
 
         Stage stage = new Stage();
@@ -37,8 +37,8 @@ public class GestionarVehiculosView {
         VBox vehiculosContainer = new VBox(10);
         vehiculosContainer.setAlignment(Pos.CENTER);
 
-        if (vehiculos.size() > 0) {
-            CircularLinkedList.Node<Vehiculo> current = vehiculos.getHead();
+        if (PrincipalView.vehiculos.size() > 0) {
+            CircularLinkedList.Node<Vehiculo> current = PrincipalView.vehiculos.getHead();
             do {
                 Vehiculo vehiculo = current.element;
 
@@ -46,6 +46,7 @@ public class GestionarVehiculosView {
                 vehiculoBox.setAlignment(Pos.CENTER);
 
                 if (!vehiculo.getFotos().isEmpty()) {
+               
                     ImageView imageView = new ImageView(new Image(getClass().getClassLoader().getResource(vehiculo.getFotos()).toString()));
                     imageView.setFitWidth(175); 
                     imageView.setPreserveRatio(true);
@@ -60,14 +61,18 @@ public class GestionarVehiculosView {
                     button.setOnAction(event -> {
                         if (editar) {
                             Stage editStage = new Stage();
-                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(principalView, vehiculo);
+                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(vehiculo);
                             Scene scene = new Scene(editarVehiculoView.getView());
                             editStage.setScene(scene);
                             editStage.show();
                         } else {
-                            principalView.eliminarVehiculo(vehiculo);
-                            vehiculos.remove(vehiculo);
-                            stage.close();
+                            System.out.println("El vehiculazo: " + vehiculo);
+                            //principalView.eliminarVehiculo(vehiculo);
+                            PrincipalView.vehiculos.remove(vehiculo);
+                            //PrincipalView.updateLabels(vehiculos);
+                            EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo);
+                            
+                            // TODO 75
                         }
                     });
 
@@ -81,7 +86,7 @@ public class GestionarVehiculosView {
                 vehiculosContainer.getChildren().add(vehiculoBox);
 
                 current = current.next;
-            } while (current != vehiculos.getHead());
+            } while (current != PrincipalView.vehiculos.getHead());
         }
 
         ScrollPane scrollPane = new ScrollPane(vehiculosContainer);

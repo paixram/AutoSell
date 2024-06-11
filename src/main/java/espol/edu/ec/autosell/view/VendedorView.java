@@ -54,6 +54,11 @@ public class VendedorView extends PrincipalView{
     
     @Override
     public void filterVehicles(String searchText, String filterType) {
+        if(searchText.equals("")) {
+            showPublications(vehiculos);
+            System.out.println("POR AHI YO NO PÁSO");
+            return;
+        }
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
         searchText = searchText.toLowerCase();
         
@@ -116,13 +121,13 @@ public class VendedorView extends PrincipalView{
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, true, this);
+            new GestionarVehiculosView(true);
         });
             
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, false, this);
+            new GestionarVehiculosView(false);
         });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);

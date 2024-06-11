@@ -55,6 +55,11 @@ public class CompradorView extends PrincipalView {
     
     @Override
     public void filterVehicles(String searchText, String filterType) {
+        if(searchText.equals("")) {
+            
+            showPublications(vehiculos);
+            return;
+        }
         CircularLinkedList<Vehiculo> filteredVehicles = new CircularLinkedList();
         searchText = searchText.toLowerCase();
         for(Vehiculo vehicle : this.vehiculos) {
