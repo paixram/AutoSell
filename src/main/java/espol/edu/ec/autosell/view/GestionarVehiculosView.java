@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package espol.edu.ec.autosell.view;
+import espol.edu.ec.autosell.App;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
 import java.util.HashMap;
@@ -32,7 +33,6 @@ public class GestionarVehiculosView {
 
     public GestionarVehiculosView(CircularLinkedList<Vehiculo> vehiculos, boolean editar) {
         this.editar = editar;
-
         Stage stage = new Stage();
         stage.setTitle("Editar y Borrar View");
         BorderPane root = new BorderPane();
@@ -79,8 +79,15 @@ public class GestionarVehiculosView {
                             EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo, () -> {
                                 vehiculosContainer.getChildren().remove(vehiculoBoxMap.get(vehiculo));
                                 vehiculoBoxMap.remove(vehiculo);
+                                
+                                // execute query with values
+                                PrincipalView.vehiculos.remove(vehiculo);
+                                String query = "FROM Vehiculo DELETE WHEN id=" + vehiculo.getId();
+                                App.database.executeQuery(query);
+                                
+                              
                             });
-                            System.out.println("Pasap or aqui");
+                            
                             
                             // Crear una nueva ventana para mostrar EliminarVehiculoView
                             Stage eliminarStage = new Stage();

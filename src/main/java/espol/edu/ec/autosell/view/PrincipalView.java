@@ -498,6 +498,12 @@ public class PrincipalView {
     }
     public static void eliminarVehiculo(Vehiculo vehiculo) {
         vehiculos.remove(vehiculo);
+        
+    }
+    
+    public void refreshPublications() {
+        vehiculos.resetIndex();  // Restablece el índice de la lista circular
+        this.showPublications(vehiculos);  // Muestra nuevamente las publicaciones
     }
     
 }

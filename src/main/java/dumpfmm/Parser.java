@@ -52,7 +52,7 @@ public class Parser {
                 case "UPDATE":
                     break;
                 case "DELETE":
-                    break;
+                    return parseDeleteQuery(model);
                 default:
                     throw new RuntimeException("Unknown operation: " + op);
             }
@@ -224,6 +224,37 @@ public class Parser {
         // Formatear data con los valores
         return new SetQuery(model, v, pathReference, model_arguments); // Aqui quede
     }
+    
+    private Query parseDeleteQuery(String model) {
+        System.out.println("Current Token: " + currentToken().getValue());
+        
+        // Recoger todos los campos de la metadata del model 
+        LinkedHashMap<String, Object> model_sets = (LinkedHashMap<String, Object>) metadata.get(model);
+        LinkedHashMap<String, String> model_arguments = (LinkedHashMap<String, String>) model_sets.get("Fields");
+        // expectear el condicional
+        Malloc<Condition> cd = new Malloc();
+        
+        while(CurrentTokenIs(TokenType.CONSULTOR, "WHEN")) {
+            peek();
+            Condition conditionn = parseCondition(model_arguments);
+            cd.add(conditionn);
+        }
+        if(CurrentTypeTokenIs(TokenType.DOT)) {
+            // si es punto entonces debe tener otro punto aqui adentro
+            peek();
+            if(CurrentTypeTokenIs(TokenType.DOT)) {
+                // Si si es todo especificar todo
+                peek();
+            }else{
+                throw new RuntimeException("Expected . but found" + currentToken().getValue());
+            }
+        }
+        
+        expect(TokenType.ENDQUERY, "");
+        
+        String pathReference = (String) model_sets.get("Path Reference");
+        return new DeleteQuery(model, cd, pathReference, model_arguments);
+    } 
 
     private Condition parseCondition(HashMap<String, String> md) {
 

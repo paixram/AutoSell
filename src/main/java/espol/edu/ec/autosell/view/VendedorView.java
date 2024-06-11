@@ -102,32 +102,49 @@ public class VendedorView extends PrincipalView{
             App.showCrearVehiculo(this.vendedor);
         });
         
-        // Obtener los vehiculos del vendedor
-        String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
-        Response resp = App.database.executeQuery(query);
-        CircularLinkedList<Vehiculo> vehicle = new CircularLinkedList();
-        for(HashMap<String, Object> d : resp.data()) {
-        Vehiculo mb = new Vehiculo(
-            (int) d.get("id"), 
-            (String) d.get("marca"), 
-            (String) d.get("modelo"), 
-            (int) d.get("precio"), 
-            (int) d.get("km"), 
-            (String) d.get("fotos"), 
-            (String) d.get("Descripcion"), 
-            (String) d.get("idVendedor")
-        );            vehicle.add(mb);
-        }
+        
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, true);
+            // Obtener los vehiculos del vendedor
+            String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
+            Response resp = App.database.executeQuery(query);
+            CircularLinkedList<Vehiculo> vehicles = new CircularLinkedList();
+            for(HashMap<String, Object> d : resp.data()) {
+            Vehiculo mb = new Vehiculo(
+                (int) d.get("id"), 
+                (String) d.get("marca"), 
+                (String) d.get("modelo"), 
+                (int) d.get("precio"), 
+                (int) d.get("km"), 
+                (String) d.get("fotos"), 
+                (String) d.get("Descripcion"), 
+                (String) d.get("idVendedor")
+            );            vehicles.add(mb);
+            }
+            new GestionarVehiculosView(vehicles, true);
         });
             
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
-            new GestionarVehiculosView(vehicle, false);
+            // Obtener los vehiculos del vendedor
+            String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
+            Response resp = App.database.executeQuery(query);
+            CircularLinkedList<Vehiculo> vehicles = new CircularLinkedList();
+            for(HashMap<String, Object> d : resp.data()) {
+            Vehiculo mb = new Vehiculo(
+                (int) d.get("id"), 
+                (String) d.get("marca"), 
+                (String) d.get("modelo"), 
+                (int) d.get("precio"), 
+                (int) d.get("km"), 
+                (String) d.get("fotos"), 
+                (String) d.get("Descripcion"), 
+                (String) d.get("idVendedor")
+            );            vehicles.add(mb);
+            }
+            new GestionarVehiculosView(vehicles, false);
         });
         
         crearButton.setMaxWidth(Double.MAX_VALUE);

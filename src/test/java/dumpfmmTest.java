@@ -76,4 +76,25 @@ public class dumpfmmTest {
        
        mydb.executeQuery(query_raw);
     }
+     
+    
+    @Test
+     public void deleteVehiculos() {
+        dumpfmm mydb = new dumpfmm();
+        
+        // Models
+        Usuario user_model = new Usuario();
+        Vehiculo vehiculo = new Vehiculo();
+        // Register models
+        mydb.RegModel(user_model);
+        mydb.RegModel(vehiculo);
+       
+       //System.out.println( System.getProperty("user.home"));
+       // Delete by fields
+       String query_raw = "FROM Vehiculo DELETE ..";
+       
+       System.out.println("My Query: " + query_raw);
+       
+       mydb.executeQuery(query_raw);
+    }
 }

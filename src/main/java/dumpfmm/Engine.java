@@ -140,6 +140,37 @@ public class Engine {
         return __DATA__;
     }
     
+    public static void clearModel(String path_model) {
+        try (FileWriter fileWriter = new FileWriter(path_model)) {
+            // Al abrir el archivo en modo escritura sin el modo append, se borra el contenido
+            System.out.println("El contenido del archivo ha sido borrado.");
+            
+            fileWriter.close();
+        } catch (IOException e) {
+            System.err.println("Error al borrar el contenido del archivo: " + e.getMessage());
+        }
+    }
+    
+    public static void overwriteModel(String pathReference, Malloc<LinkedHashMap<String, Object>> data) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathReference))) {
+            for (LinkedHashMap<String, Object> row : data) {
+                StringBuilder line = new StringBuilder();
+                for (Object value : row.values()) {
+                    if (line.length() > 0) {
+                        line.append(",");
+                    }
+                    line.append(value.toString());
+                }
+                writer.write(line.toString());
+                writer.newLine();
+            }
+            
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     // getters and setters
     public static String getExtension() {
