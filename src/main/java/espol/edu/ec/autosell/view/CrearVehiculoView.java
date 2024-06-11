@@ -115,7 +115,8 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
     
     private String guardarImagen(File imagen) throws IOException {
         // Define la ruta del directorio donde se guardarán las imágenes
-        String destinationDir = "src/main/resources/Images/";
+        String destinationDir = getClass().getClassLoader().getResource("Images/").getPath();
+        System.out.println("EL PATH: " + destinationDir);
         File destDir = new File(destinationDir);
 
         // Crea el directorio si no existe
@@ -124,8 +125,21 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         }
 
         // Copia el archivo seleccionado al directorio destino
-        System.out.println("RONWEjhgII: " + Paths.get(destinationDir + imagen.getName()));
-        Files.copy(selectedFile.toPath(), Paths.get(destinationDir + imagen.getName()));
+        //System.out.println("RONWEjhgII: " + Paths.get(destinationDir + imagen.getName()));
+        Files.copy(selectedFile.toPath(), Paths.get(destDir.getAbsolutePath(), imagen.getName()));
+        
+        
+        // copiarla tambien en resources
+        String desttDir = "src/main/resources/Images/";
+        File destFileDir = new File(desttDir);
+
+        // Crea el directorio si no existe
+        if (!destFileDir.exists()) {
+            destFileDir.mkdirs();
+        }
+
+        // Copia el archivo seleccionado al directorio destino
+        Files.copy(selectedFile.toPath(), Paths.get(desttDir + imagen.getName()));
         
         return "Images/" + selectedFile.getName();
     }
@@ -148,7 +162,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
                    System.out.println("HOLAAAA");
                 Vehiculo v = PrincipalView.vehiculos.getLast();
                 Vehiculo nuevoVehiculo = new Vehiculo(v.getId()+1, marca, modelo, precio, km, fotos, descripcion, String.valueOf(vendedor.user.getIdUsuario()));
-                PrincipalView.add_vehicle(nuevoVehiculo);
+                //PrincipalView.add_vehicle(nuevoVehiculo);
                 //((Stage) view.getScene().getWindow()).close();
                 
                 App.ShowVendedorView(vendedor.user);

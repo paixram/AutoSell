@@ -286,6 +286,7 @@ public class PrincipalView {
     
     private void scrollLeft(CircularLinkedList<Vehiculo> vehiculos) {
         Vehiculo prevPublicacion = vehiculos.prev();
+        System.out.println("Vehiculinho: " + prevPublicacion.toString());
         updateLabelsWithAnimation(prevPublicacion, 600);
     }
 
@@ -298,6 +299,7 @@ public class PrincipalView {
          if(vehiculo == null) {
              return;
          }
+         
         StackPane publicationCard = (StackPane) centerBox.getChildren().get(0);
 
         TranslateTransition transitionOut = new TranslateTransition(Duration.millis(500), publicationCard);

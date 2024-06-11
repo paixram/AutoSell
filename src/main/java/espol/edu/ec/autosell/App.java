@@ -62,6 +62,8 @@ public class App extends Application {
         mainStage.setScene(scene);
     }
     
+    
+    
     public static void ShowVendedorView(Usuario user) {
         Vendedor vendedor = new Vendedor(user);
         VendedorView vv = new VendedorView(vendedor);
