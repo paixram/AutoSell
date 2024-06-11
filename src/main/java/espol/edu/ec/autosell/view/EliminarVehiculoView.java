@@ -22,10 +22,12 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
     private Vehiculo vehiculo;
     
     public static boolean is_delete = false;
+    private Runnable  onDelete;
 
-    public EliminarVehiculoView(Vehiculo vehiculo) {
+    public EliminarVehiculoView(Vehiculo vehiculo, Runnable onDelete) {
         super();
         this.vehiculo = vehiculo;
+        this.onDelete = onDelete;
         view = new VBox(10);
         view.setPrefSize(650, 200); // Ajusta el tamaño preferido según tus necesidades
         view.setPadding(new Insets(20));
@@ -45,7 +47,9 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
 
     private void eliminarVehiculo() {
         PrincipalView.eliminarVehiculo(vehiculo);
-        EliminarVehiculoView.is_delete = true;
+        if (onDelete != null) {
+            onDelete.run();
+        }
         ((Stage) view.getScene().getWindow()).close();
     }
 

@@ -76,13 +76,12 @@ public class GestionarVehiculosView {
                             //vehiculos.remove(vehiculo);
                             
                             //PrincipalView.updateLabels(vehiculos);
-                            EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo);
-                            if(EliminarVehiculoView.is_delete) {
-                                // Remover de base de datros y de la lista
+                            EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo, () -> {
                                 vehiculosContainer.getChildren().remove(vehiculoBoxMap.get(vehiculo));
-                                EliminarVehiculoView.is_delete = false;
-
-                            }
+                                vehiculoBoxMap.remove(vehiculo);
+                            });
+                            System.out.println("Pasap or aqui");
+                            
                             // Crear una nueva ventana para mostrar EliminarVehiculoView
                             Stage eliminarStage = new Stage();
                             Scene eliminarScene = new Scene(eliminar_v.getView());
