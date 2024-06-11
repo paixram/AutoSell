@@ -8,12 +8,9 @@ import espol.edu.ec.autosell.model.Comprador;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
 import javafx.animation.ScaleTransition;
-import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 /**
@@ -47,9 +44,10 @@ public class CompradorView extends PrincipalView {
             if (currentVehiculo != null) {
                 // Lógica para comprar el vehículo
                 System.out.println("Vehículo comprado: " + currentVehiculo.getMarca() + " " + currentVehiculo.getModelo());
+                showContactAlert();
             }
         });
-
+        
         super.showPublications();
     }
     
@@ -101,5 +99,13 @@ public class CompradorView extends PrincipalView {
             st.setToY(1.0);
             st.play();
         });
+    }
+     private void showContactAlert() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Información de Contacto");
+        alert.setHeaderText(null);
+        alert.setContentText("Contáctenos al siguiente número: +5939956874527");
+
+        alert.showAndWait();
     }
 }

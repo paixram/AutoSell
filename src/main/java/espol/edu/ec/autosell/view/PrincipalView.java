@@ -130,6 +130,7 @@ public class PrincipalView {
         
         orderComboBox = new ComboBox<>();
         orderComboBox.getItems().addAll( "Precio", "Kilometraje");
+        orderComboBox.setStyle("-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 10; -fx-border-color: grey;");
         orderComboBox.setPromptText("Ordenar Por");
         orderComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             //filterVehicles(searchField.getText(), filterComboBox.getValue())
