@@ -65,7 +65,7 @@ public class GestionarVehiculosView {
                     button.setOnAction(event -> {
                         if (editar) {
                             Stage editStage = new Stage();
-                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(vehiculo, principalView);
+                            EditarVehiculoView editarVehiculoView = new EditarVehiculoView(vehiculo);
                             Scene scene = new Scene(editarVehiculoView.getView());
                             editStage.setScene(scene);
                             editStage.show();

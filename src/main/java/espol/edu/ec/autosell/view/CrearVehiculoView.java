@@ -126,7 +126,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
 
         // Copia el archivo seleccionado al directorio destino
         //System.out.println("RONWEjhgII: " + Paths.get(destinationDir + imagen.getName()));
-        Files.copy(selectedFile.toPath(), Paths.get(destDir.getAbsolutePath(), imagen.getName()));
+        Files.copy(selectedFile.toPath(), Paths.get(destDir.getAbsolutePath(), imagen.getName()).toAbsolutePath());
         
         
         // copiarla tambien en resources
@@ -139,7 +139,7 @@ public class CrearVehiculoView extends LoginRegisterBaseView{
         }
 
         // Copia el archivo seleccionado al directorio destino
-        Files.copy(selectedFile.toPath(), Paths.get(desttDir + imagen.getName()));
+        Files.copy(selectedFile.toPath(), Paths.get(desttDir + imagen.getName()).toAbsolutePath());
         
         return "Images/" + selectedFile.getName();
     }

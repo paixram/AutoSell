@@ -32,9 +32,8 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
     private PrincipalView principalView;
     private Vehiculo vehiculo;
     private TextArea descripcionTextArea;
-    public EditarVehiculoView(Vehiculo vehiculo, PrincipalView principalView) {
+    public EditarVehiculoView(Vehiculo vehiculo) {
         super();
-        this.principalView = principalView;
         this.vehiculo = vehiculo;
         view = new VBox(10);
         view.setMinWidth(400);
@@ -96,6 +95,18 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         vehiculo.setFotos(fotos);
         vehiculo.setDescripcion(descripcion);
         principalView.updateVehicleDetails();
+        
+        String query = "FROM Vehiculo UPDATE " +
+        "id = " + id +
+        ", marca = '" + marca + "'" +
+        ", modelo = '" + modelo + "'" +
+        ", precio = " + precio +
+        ", km = " + km +
+        ", fotos = '" + fotos + "'" +
+        ", descripcion = '" + descripcion + "'" +
+        " WHERE id = " + id;
+        
+        
         ((Stage) view.getScene().getWindow()).close();
     }
      private void configurarBoton(Button button) {

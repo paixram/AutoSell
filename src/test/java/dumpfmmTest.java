@@ -97,4 +97,32 @@ public class dumpfmmTest {
        
        mydb.executeQuery(query_raw);
     }
+     
+     @Test
+     public void UpdateVehiculo() {
+        dumpfmm mydb = new dumpfmm();
+        
+        // Models
+        Usuario user_model = new Usuario();
+        Vehiculo vehiculo = new Vehiculo();
+        // Register models
+        mydb.RegModel(user_model);
+        mydb.RegModel(vehiculo);
+       
+       //System.out.println( System.getProperty("user.home"));
+       // Delete by fields
+       String query_raw = "FROM Vehiculo UPDATE " +
+        "id = " + 12 +
+        ", marca = '" + "elpepe" + "'" +
+        ", modelo = '" + "modular" + "'" +
+        ", precio = " + 23324 +
+        ", km = " + 43435 +
+        ", fotos = '" + "Images/ellcaha.png" + "'" +
+        ", descripcion = '" + "actualziado con exito" + "'" +
+        " WHERE id = " + 11;
+       
+       System.out.println("My Query: " + query_raw);
+       
+       mydb.executeQuery(query_raw);
+    }
 }
