@@ -106,6 +106,7 @@ public class VendedorView extends PrincipalView{
         Button editarButton = new Button("Editar Vehículo");
         configurarBoton(editarButton);
         editarButton.setOnAction(event -> {
+
             // Obtener los vehiculos del vendedor
             String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
             Response resp = App.database.executeQuery(query);
@@ -128,6 +129,7 @@ public class VendedorView extends PrincipalView{
         Button eliminarButton = new Button("Eliminar Vehículo");
         configurarBoton(eliminarButton);
         eliminarButton.setOnAction(event -> {
+
             // Obtener los vehiculos del vendedor
             String query = "FROM Vehiculo GET .. WHEN idVendedor=\"" + this.vendedor.user.getIdUsuario() + "\"";
             Response resp = App.database.executeQuery(query);
