@@ -20,6 +20,8 @@ import javafx.util.Duration;
 public class EliminarVehiculoView extends LoginRegisterBaseView{
     private VBox view;
     private Vehiculo vehiculo;
+    
+    public static boolean is_delete = false;
 
     public EliminarVehiculoView(Vehiculo vehiculo) {
         super();
@@ -43,6 +45,7 @@ public class EliminarVehiculoView extends LoginRegisterBaseView{
 
     private void eliminarVehiculo() {
         PrincipalView.eliminarVehiculo(vehiculo);
+        EliminarVehiculoView.is_delete = true;
         ((Stage) view.getScene().getWindow()).close();
     }
 

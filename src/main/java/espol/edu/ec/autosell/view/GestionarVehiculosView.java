@@ -5,6 +5,8 @@
 package espol.edu.ec.autosell.view;
 import espol.edu.ec.autosell.model.Vehiculo;
 import espol.edu.ec.autosell.utils.CircularLinkedList;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,8 +27,10 @@ import javafx.util.Duration;
  */
 public class GestionarVehiculosView {
     private boolean editar;
+    private Map<Vehiculo, VBox> vehiculoBoxMap = new HashMap<>();;
+    
 
-    public GestionarVehiculosView(boolean editar) {
+    public GestionarVehiculosView(CircularLinkedList<Vehiculo> vehiculos, boolean editar) {
         this.editar = editar;
 
         Stage stage = new Stage();
@@ -37,8 +41,8 @@ public class GestionarVehiculosView {
         VBox vehiculosContainer = new VBox(10);
         vehiculosContainer.setAlignment(Pos.CENTER);
 
-        if (PrincipalView.vehiculos.size() > 0) {
-            CircularLinkedList.Node<Vehiculo> current = PrincipalView.vehiculos.getHead();
+        if (vehiculos.size() > 0) {
+            CircularLinkedList.Node<Vehiculo> current = vehiculos.getHead();
             do {
                 Vehiculo vehiculo = current.element;
 
@@ -68,10 +72,17 @@ public class GestionarVehiculosView {
                         } else {
                             System.out.println("El vehiculazo: " + vehiculo);
                             //principalView.eliminarVehiculo(vehiculo);
-                            PrincipalView.vehiculos.remove(vehiculo);
+                            //PrincipalView.vehiculos.remove(vehiculo);
+                            //vehiculos.remove(vehiculo);
+                            
                             //PrincipalView.updateLabels(vehiculos);
                             EliminarVehiculoView eliminar_v = new EliminarVehiculoView(vehiculo);
-                        
+                            if(EliminarVehiculoView.is_delete) {
+                                // Remover de base de datros y de la lista
+                                vehiculosContainer.getChildren().remove(vehiculoBoxMap.get(vehiculo));
+                                EliminarVehiculoView.is_delete = false;
+
+                            }
                             // Crear una nueva ventana para mostrar EliminarVehiculoView
                             Stage eliminarStage = new Stage();
                             Scene eliminarScene = new Scene(eliminar_v.getView());
@@ -89,9 +100,11 @@ public class GestionarVehiculosView {
                 vehiculoBox.getChildren().add(new javafx.scene.control.Label(vehiculoInfo));
 
                 vehiculosContainer.getChildren().add(vehiculoBox);
+                
+                vehiculoBoxMap.put(vehiculo, vehiculoBox);
 
                 current = current.next;
-            } while (current != PrincipalView.vehiculos.getHead());
+            } while (current != vehiculos.getHead());
         }
 
         ScrollPane scrollPane = new ScrollPane(vehiculosContainer);
