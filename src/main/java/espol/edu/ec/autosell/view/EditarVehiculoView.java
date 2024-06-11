@@ -95,7 +95,7 @@ public class EditarVehiculoView extends LoginRegisterBaseView{
         vehiculo.setKm(km);
         vehiculo.setFotos(fotos);
         vehiculo.setDescripcion(descripcion);
-        principalView.updateVehicleDetails();
+        principalView.updateVehicles(vehiculo);
         
         String query = "FROM Vehiculo UPDATE " +
         "id = " + id +
